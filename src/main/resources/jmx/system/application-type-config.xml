@@ -1,0 +1,131 @@
+<application-type-config>
+
+	<modules>
+		
+		<module id="weblogic" connectionFactory="com.appleframework.jmx.core.modules.weblogic.WLServerConnectionFactory">
+			<config class="com.appleframework.jmx.core.modules.weblogic.WeblogicApplicationConfig"
+				displayHost="true" 
+				displayPort="true" 
+				displayURL="false"
+				displayUsername="true" 
+				displayPassword="true" />
+		</module>
+		
+		<module id="weblogic9" connectionFactory="com.appleframework.jmx.core.modules.weblogic9.Weblogic9ServerConnectionFactory">
+			<config class="com.appleframework.jmx.core.modules.weblogic9.Weblogic9ApplicationConfig"
+				displayHost="false" 
+				displayPort="false" 
+				displayURL="true"
+				displayUsername="true" 
+				displayPassword="true" />
+		</module>
+		
+		<module id="jsr160" connectionFactory="com.appleframework.jmx.core.modules.jsr160.JSR160ServerConnectionFactory">
+			<config class="com.appleframework.jmx.core.modules.jsr160.JSR160ApplicationConfig"
+				displayHost="false" 
+				displayPort="false" 
+				displayURL="true"
+				displayUsername="true" 
+				displayPassword="true" />
+		</module>
+		
+		<module id="jboss" connectionFactory="com.appleframework.jmx.core.modules.jboss.JBossServerConnectionFactory">
+			<config class="com.appleframework.jmx.core.modules.jboss.JBossApplicationConfig"
+				displayHost="true" 
+				displayPort="true" 
+				displayURL="false"
+				displayUsername="true" 
+				displayPassword="true" />
+		</module>
+		
+		<module id="websphere" connectionFactory="com.appleframework.jmx.core.modules.websphere.WebSphereServerConnectionFactory">
+			<config class="com.appleframework.jmx.core.modules.websphere.WebSphereApplicationConfig"
+				displayHost="true" 
+				displayPort="true" 
+				displayURL="false"
+				displayUsername="true" 
+				displayPassword="true" />
+		</module>
+		
+		<module id="snmp" connectionFactory="com.appleframework.jmx.core.modules.snmp.SNMPAgentConnectionFactory">
+			<config class="com.appleframework.jmx.core.modules.snmp.SNMPApplicationConfig"
+				displayHost="true" 
+				displayPort="true" 
+				displayURL="false"
+				displayUsername="false" 
+				displayPassword="false" />
+		</module>
+
+		<module id="connector" connectionFactory="com.appleframework.jmx.core.modules.connector.ConnectorAgentConnectionFactory">
+			<config class="com.appleframework.jmx.core.modules.connector.ConnectorApplicationConfig"
+				displayHost="false" 
+				displayPort="false" 
+				displayURL="false"
+				displayUsername="false" 
+				displayPassword="false" />
+		</module>
+		
+		<module id="local" connectionFactory="com.appleframework.jmx.core.modules.local.LocalServerConnectionFactory">
+			<config class="com.appleframework.jmx.core.modules.local.LocalApplicationConfig"
+				displayHost="false" 
+				displayPort="false" 
+				displayURL="false"
+				displayUsername="false" 
+				displayPassword="false" />
+		</module>
+		
+	</modules>
+
+	<application-types>
+		
+		<application-type id="weblogic" 
+			name="Weblogic 6, 7, 8"
+			module="weblogic" 
+			compatibleJMX="false" 
+			defaultHost="localhost"
+			defaultPort="7001" />
+			
+		<application-type id="weblogic9" 
+			name="Weblogic 9"
+			module="weblogic9" 
+			compatibleJMX="true"
+			defaultURL="service:jmx:t3://localhost:7001/jndi/weblogic.management.mbeanservers.domainruntime" />
+			
+		<application-type id="jsr160" 
+			name="JSR160 Application"
+			module="jsr160" 
+			compatibleJMX="true" />
+			
+		<application-type id="jboss" 
+			name="JBoss" module="jboss"
+			compatibleJMX="true" 
+			defaultHost="localhost" 
+			defaultPort="1099" />
+			
+		<application-type id="websphere" 
+			name="WebSphere"
+			module="websphere" 
+			compatibleJMX="false" 
+			defaultHost="localhost"
+			defaultPort="8880" />
+			
+		<application-type id="snmp" 
+			name="SNMP Device"
+			module="snmp" 
+			compatibleJMX="true" 
+			defaultHost="localhost"
+			defaultPort="161" />
+			
+		<application-type id="connector" 
+			name="Connector"
+			module="connector" 
+			compatibleJMX="true" />
+			
+		<application-type id="local" 
+			name="apple-monitor" 
+			module="local"
+			compatibleJMX="true" />
+			
+	</application-types>
+
+</application-type-config>
