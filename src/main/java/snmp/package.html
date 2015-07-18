@@ -1,0 +1,34 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="sevy">
+   <meta name="GENERATOR" content="Mozilla/4.5 [en] (Win98; I) [Netscape]">
+   <title>SNMP package</title>
+</head>
+<body>
+The snmp package defines classes used to communicate with SNMP
+devices. Classes corresponding to each of the basic SNMP data types are
+defined, each extending the SNMPObject abstarct class. In addition, some
+utility classes provide additional functionality.
+<p>Each of the SNMPObject subclasses defines methods to create an object,
+either from a "reasonable" representation (e.g., Java.lang.Integer for
+an SNMPInteger object, or a suitable String such as "1.2.1.1.3.2.1.1.0"
+for an SNMPObjectIdentifier), or from a byte array presumed to contain
+a valid ASN.1 Basic Encoding Rules (BER) encoding of a value of the appropriate
+type. The objects also define methods that permit their values to be set,
+and generate their BER encodings.
+<p>SNMPSequence subclasses, in particular, contain Vectors of other SNMPObject
+subclasses. They can be created "manually", with objects added as desired,
+or can be created from a BER encoding of the sequence contents, recursively
+creating the contained objects. BER generation also recursively generates
+the BER for each contained component; thus calling&nbsp; mySequence.getBerEncoding()
+automatically generates the encoding for the entire sequence, including
+the contained components. SNMPBERCodec contains a number of static utility
+methods for converting to and from BER encodings, as well as constants
+used by the various classes.
+<p>Finally, SNMPv1CommunicationsInterface defines methods for sending SNMP
+Get and Set requests to devices; this class handles all of the communication
+tasks needed for developing simple SNMP applications.
+</body>
+</html>
