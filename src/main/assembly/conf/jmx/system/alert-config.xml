@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<alertConfig>
+	<deliveryTypes>
+		<delivery type="email" className="com.appleframework.jmx.core.alert.delivery.EmailDelivery" />
+		<delivery type="console" className="com.appleframework.jmx.core.alert.delivery.ConsoleDelivery" />
+	</deliveryTypes>
+</alertConfig>
