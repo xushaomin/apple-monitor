@@ -1,0 +1,165 @@
+package com.appleframework.monitor.receiver;
+
+import java.text.MessageFormat;
+import java.util.Properties;
+
+import org.apache.log4j.Logger;
+import org.jgroups.JChannel;
+import org.jgroups.Message;
+import org.jgroups.ReceiverAdapter;
+import org.jgroups.View;
+
+import com.appleframework.jmx.core.config.ApplicationClusterConfig;
+import com.appleframework.jmx.core.config.ApplicationConfig;
+import com.appleframework.jmx.core.config.ApplicationConfigManager;
+import com.appleframework.jmx.core.modules.jsr160.JSR160ApplicationConfig;
+import com.appleframework.jmx.database.entity.AppClusterEntity;
+import com.appleframework.jmx.database.entity.AppInfoEntity;
+import com.appleframework.jmx.database.entity.NodeInfoEntity;
+import com.appleframework.jmx.database.service.AppClusterService;
+import com.appleframework.jmx.database.service.AppInfoService;
+import com.appleframework.jmx.database.service.NodeInfoService;
+import com.appleframework.jmx.monitoring.downtime.ApplicationDowntimeService;
+
+public class AppInfoReceiver extends ReceiverAdapter {
+	
+	protected final static Logger logger = Logger.getLogger(AppInfoReceiver.class);
+	
+	private NodeInfoService nodeInfoService;
+	
+	private AppClusterService appClusterService;
+	
+	private AppInfoService appInfoService;
+	
+	private ApplicationConfigManager applicationConfigManager;
+	
+	private ApplicationDowntimeService applicationDowntimeService;
+
+	private JChannel channel;
+
+	public void start() throws Exception {
+		// 创建一个通道
+		channel = new JChannel();
+		// 创建一个接收器
+		channel.setReceiver(this);
+		// 加入一个群
+		channel.connect("MonitorContainer");
+	}
+
+	// 覆盖父类的方法
+	@Override
+	public void receive(Message msg) {
+		Object object = msg.getObject();
+		if (object instanceof Properties) {
+			
+			Properties prop = (Properties) object;
+			
+			String appName = prop.getProperty("application.name");
+			String nodeIp = prop.getProperty("node.ip");
+			String nodeHost = prop.getProperty("node.host");
+
+			String installPath = prop.getProperty("install.path");
+			String webContext = prop.getProperty("web.context");
+			
+			String webPortStr = prop.getProperty("web.port");
+			String jmxPortStr = prop.getProperty("jmx.port");
+			String servicePortStr = prop.getProperty("service.port");
+			
+			String confGroup = prop.getProperty("deploy.group");
+			String confDataId = prop.getProperty("deploy.dataId");
+			String confEnv = prop.getProperty("deploy.env");
+			
+			int webPort = 0;
+			int jmxPort = 0;
+			int servicePort = 0;
+			
+			if(null != webPortStr) {
+				webPort = Integer.parseInt(webPortStr);
+			}
+			if(null != jmxPortStr) {
+				jmxPort = Integer.parseInt(jmxPortStr);
+			}
+			if(null != servicePortStr) {
+				servicePort = Integer.parseInt(servicePortStr);
+			}
+			
+			NodeInfoEntity nodeInfo = nodeInfoService.saveWithHost(nodeHost, nodeIp);
+			AppClusterEntity appCluster = appClusterService.saveWithName(appName);
+			
+			AppInfoEntity appInfo = new AppInfoEntity();
+			appInfo.setAppName(appName);
+			appInfo.setClusterId(appCluster.getId());
+			appInfo.setNodeId(nodeInfo.getId());
+			appInfo.setInstallPath(installPath);
+			appInfo.setRemark("");
+			appInfo.setState((short)1);
+			appInfo.setWebContext(webContext);
+			appInfo.setWebPort(webPort);
+			appInfo.setServicePort(servicePort);
+			appInfo.setJmxPort(jmxPort);
+			appInfo.setDisorder(100);
+			appInfo.setConfGroup(confGroup);
+			appInfo.setConfEnv(confEnv);
+			appInfo.setConfDataid(confDataId);
+			appInfo = appInfoService.saveOrUpdate(appInfo);
+			
+			appClusterService.calibratedAppNum(appCluster.getId());
+			
+			ApplicationClusterConfig clusterConfig 
+				= new ApplicationClusterConfig(String.valueOf(appCluster.getId()), appCluster.getClusterName());
+			
+			String url = MessageFormat.format(JSR160ApplicationConfig.URL_FORMAT, nodeInfo.getIp(), String.valueOf(jmxPort));
+			
+			ApplicationConfig appConfig = new JSR160ApplicationConfig();
+			appConfig.setApplicationId(appInfo.getId() + "");
+			appConfig.setHost(nodeInfo.getHost());
+			appConfig.setName(appCluster.getClusterName());
+			appConfig.setType("jsr160");
+			appConfig.setPort(jmxPort);
+			appConfig.setUrl(url);
+			appConfig.setUsername(null);
+			appConfig.setPassword(null);
+			appConfig.setCluster(false);
+			appConfig.setClusterConfig(clusterConfig);
+						
+			try {
+				applicationConfigManager.addOrUpdateApplication(appConfig);
+				
+				applicationDowntimeService.addOrUpdateApplication(appConfig);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		} else if (object instanceof String) {
+			logger.warn(object.toString());
+		}
+	}
+
+	@Override
+	public void viewAccepted(View new_view) {
+		logger.warn("** view: " + new_view);
+	}
+
+	public void setNodeInfoService(NodeInfoService nodeInfoService) {
+		this.nodeInfoService = nodeInfoService;
+	}
+
+	public void setAppClusterService(AppClusterService appClusterService) {
+		this.appClusterService = appClusterService;
+	}
+
+	public void setAppInfoService(AppInfoService appInfoService) {
+		this.appInfoService = appInfoService;
+	}
+
+	public void setApplicationConfigManager(
+			ApplicationConfigManager applicationConfigManager) {
+		this.applicationConfigManager = applicationConfigManager;
+	}
+
+	public void setApplicationDowntimeService(
+			ApplicationDowntimeService applicationDowntimeService) {
+		this.applicationDowntimeService = applicationDowntimeService;
+	}
+	
+}
