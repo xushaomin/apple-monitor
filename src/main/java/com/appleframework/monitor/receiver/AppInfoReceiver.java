@@ -92,10 +92,9 @@ public class AppInfoReceiver extends ReceiverAdapter {
 			appInfo.setConfGroup(confGroup);
 			appInfo.setConfEnv(confEnv);
 			appInfo.setConfDataid(confDataId);
+			
 			appInfo = appInfoService.saveOrUpdate(appInfo);
-			
-			appClusterService.calibratedAppNum(appCluster.getId());
-			
+						
 			/*ApplicationClusterConfig clusterConfig 
 				= new ApplicationClusterConfig(String.valueOf(appCluster.getId()), appCluster.getClusterName());
 			

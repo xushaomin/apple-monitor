@@ -175,7 +175,7 @@ public class AppInfoInterceptor {
 					logger.error(e);
 				}
 			}
-		
+			appClusterService.calibratedAppNum(appInfo.getClusterId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e);
