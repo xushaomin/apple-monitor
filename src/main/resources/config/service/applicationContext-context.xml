@@ -35,8 +35,6 @@
 		<property name="nodeInfoService" ref="nodeInfoService" />
 		<property name="appClusterService" ref="appClusterService" />
 		<property name="appInfoService" ref="appInfoService" />
-		<property name="applicationConfigManager" ref="applicationConfigManager" />
-		<property name="applicationDowntimeService" ref="applicationDowntimeService" />		
 	</bean>	
 	
 </beans>

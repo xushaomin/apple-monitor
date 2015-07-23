@@ -16,7 +16,7 @@
   
   <select id="selectByPage" resultMap="BaseResultMap">
     select *
-    from t_app_cluster where 1=1
+    from t_app_cluster where ( state = 0 or state = 1)
     <if test="se.keyword != null" >
        and ( cluster_name like '%${se.keyword}%' or cluster_desc like '%${se.keyword}%' )
     </if>

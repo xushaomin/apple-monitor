@@ -29,7 +29,7 @@
   <select id="selectByPage" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from t_app_info where 1=1
+    from t_app_info where ( state = 0 or state = 1)
     <if test="se.keyword != null" >
        and ( app_name like '%${se.keyword}%' or install_path like '%${se.keyword}%' )
     </if>
