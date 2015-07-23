@@ -102,7 +102,7 @@
 			<td>
 				<a class="btn_icon btn_edit"   href="javascript:;" operatId="${info.id}" title="编辑"></a>
                 <a class="btn_icon btn_detail" href="javascript:;" operatId="${info.id}" title="详情"></a>
-                <a class="btn_icon btn_detail" href="javascript:;" operatId="${info.id}" title="日志"></a>
+                <a class="btn_icon btn_delete" href="javascript:;" operatId="${info.id}" title="删除"></a>
 			</td>
         </tr>
         </#list>
