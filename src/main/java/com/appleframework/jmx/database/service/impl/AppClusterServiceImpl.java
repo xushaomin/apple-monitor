@@ -8,6 +8,9 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
+import com.appleframework.exception.ServiceException;
+import com.appleframework.jmx.database.constant.IsCluster;
+import com.appleframework.jmx.database.constant.StateType;
 import com.appleframework.jmx.database.entity.AppClusterEntity;
 import com.appleframework.jmx.database.entity.AppClusterEntityExample;
 import com.appleframework.jmx.database.mapper.AppClusterEntityMapper;
@@ -85,8 +88,8 @@ public class AppClusterServiceImpl implements AppClusterService {
 			appCluster.setCreateTime(new Date());
 			appCluster.setDisorder(1);
 			appCluster.setRemark("");
-			appCluster.setState((short)1);
-			appCluster.setIsCluster((short)0);
+			appCluster.setState(StateType.START.getIndex());
+			appCluster.setIsCluster(IsCluster.NO.getIndex());
 			appCluster.setAppNum(0);
 			this.save(appCluster);
 			return appCluster;
@@ -102,17 +105,36 @@ public class AppClusterServiceImpl implements AppClusterService {
 		return appClusterEntityMapper.selectByExample(example);
 	}
 	
+	public List<AppClusterEntity> findListByStart() {
+		AppClusterEntityExample example = new AppClusterEntityExample();
+		example.createCriteria().andStateEqualTo(StateType.START.getIndex());
+		return appClusterEntityMapper.selectByExample(example);
+	}
+	
+	//跳转AppNum字段个数
 	public void calibratedAppNum(Integer id) {
 		int appNum = appInfoService.countByClusterId(id);
 		AppClusterEntity entity = this.get(id);
 		if(appNum > 1) {
-			entity.setIsCluster((short)1);
+			entity.setIsCluster(IsCluster.YES.getIndex());
 		}
 		else {
-			entity.setIsCluster((short)0);
+			entity.setIsCluster(IsCluster.NO.getIndex());
 		}
 		entity.setAppNum(appNum);
 		this.update(entity);
+	}
+	
+	public Integer delete(Integer id) throws ServiceException {
+		int appNum = appInfoService.countByClusterId(id);
+		if(appNum > 0) {
+			throw new ServiceException("ERROR", "还有应用存在，不能删除");
+		}
+		
+		AppClusterEntity entity = this.get(id);
+		entity.setState(StateType.DELETE.getIndex());
+		appClusterEntityMapper.updateByPrimaryKey(entity);
+		return id;
 	}
 
 }

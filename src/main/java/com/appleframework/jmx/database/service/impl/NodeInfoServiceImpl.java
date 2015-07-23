@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
+import com.appleframework.jmx.database.constant.StateType;
 import com.appleframework.jmx.database.entity.NodeInfoEntity;
 import com.appleframework.jmx.database.entity.NodeInfoEntityExample;
 import com.appleframework.jmx.database.mapper.NodeInfoEntityMapper;
@@ -83,7 +84,7 @@ public class NodeInfoServiceImpl implements NodeInfoService {
 			nodeInfo.setHost(host);
 			nodeInfo.setIp(ip);
 			nodeInfo.setRemark("");
-			nodeInfo.setState((short)1);
+			nodeInfo.setState(StateType.START.getIndex());
 			this.save(nodeInfo);
 			return nodeInfo;
 		}

@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import com.appleframework.jmx.database.constant.StateType;
 import com.appleframework.jmx.database.entity.AppInfoEntity;
 import com.appleframework.jmx.database.entity.AppInfoEntityExample;
 import com.appleframework.jmx.database.mapper.AppInfoEntityMapper;
@@ -89,8 +90,16 @@ public class AppInfoServiceImpl implements AppInfoService {
 	
 	public int countByClusterId(Integer clusterId) {
 		AppInfoEntityExample example = new AppInfoEntityExample();
-		example.createCriteria().andClusterIdEqualTo(clusterId);
+		example.createCriteria().andClusterIdEqualTo(clusterId)
+			.andStateBetween(StateType.STOP.getIndex(), StateType.START.getIndex());
 		return appInfoEntityMapper.countByExample(example);
+	}
+	
+	public Integer delete(Integer id) {
+		AppInfoEntity entity = this.get(id);
+		entity.setState(StateType.DELETE.getIndex());
+		appInfoEntityMapper.updateByPrimaryKey(entity);
+		return id;
 	}
 	
 

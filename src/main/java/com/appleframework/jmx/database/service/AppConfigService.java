@@ -17,4 +17,6 @@ public interface AppConfigService {
 	
 	public List<AppConfigEntity> findListByClusterId(Integer clusterId);
 	
+	public List<AppConfigEntity> findListByClusterIdAndStart(Integer clusterId);
+	
 }

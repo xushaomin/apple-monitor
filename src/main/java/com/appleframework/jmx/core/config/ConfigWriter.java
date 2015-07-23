@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import com.appleframework.jmx.core.crypto.Crypto;
 import com.appleframework.jmx.core.modules.jsr160.JSR160ApplicationConfig;
+import com.appleframework.jmx.database.constant.StateType;
 import com.appleframework.jmx.database.entity.AppConfigEntity;
 import com.appleframework.jmx.database.service.AppConfigService;
 
@@ -80,13 +81,25 @@ public class ConfigWriter {
         	entity = new AppConfigEntity();
         	entity.setId(applicationId);
         	entity.setClusterId(clusterId);
-        	entity.setState((short)1);
+        	entity.setState(StateType.START.getIndex());
         	entity.setAppConfig(content);
         	appConfigService.insert(entity);
 		}
         else {
         	entity.setAppConfig(content);
         	appConfigService.update(entity);
+        }
+    }
+    
+    public void delete(ApplicationConfig application) {
+        try {
+        	String applicationId = application.getApplicationId();
+        	AppConfigEntity entity = appConfigService.get(Integer.parseInt(applicationId));
+        	entity.setState(StateType.DELETE.getIndex());
+        	appConfigService.update(entity);            
+        } catch (Exception e) {
+        	e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
     

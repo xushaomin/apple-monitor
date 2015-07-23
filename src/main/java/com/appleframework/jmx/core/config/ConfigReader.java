@@ -58,7 +58,7 @@ public class ConfigReader implements ConfigConstants {
      */
     public Config read(){
     	List<ApplicationConfig> appConfigList = new ArrayList<ApplicationConfig>();
-    	List<AppClusterEntity> appClusterList = appClusterService.findAll();
+    	List<AppClusterEntity> appClusterList = appClusterService.findListByStart();
     	for (AppClusterEntity appCluster : appClusterList) {
     		Integer applicationId = appCluster.getId();
     		String applicationName = appCluster.getClusterName();
@@ -67,7 +67,7 @@ public class ConfigReader implements ConfigConstants {
     			= new ApplicationClusterConfig(String.valueOf(applicationId), applicationName);
     		//applicationClusterConfig.setCluster(Boolean.valueOf(appCluster.getIsCluster() + ""));
     		
-    		List<AppConfigEntity> appConfigEntityList = appConfigService.findListByClusterId(applicationId);
+    		List<AppConfigEntity> appConfigEntityList = appConfigService.findListByClusterIdAndStart(applicationId);
 
     		
 			for (AppConfigEntity appConfigEntity : appConfigEntityList) {

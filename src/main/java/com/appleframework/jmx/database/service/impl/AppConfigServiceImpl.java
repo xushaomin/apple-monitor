@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import com.appleframework.jmx.database.constant.StateType;
 import com.appleframework.jmx.database.entity.AppConfigEntity;
 import com.appleframework.jmx.database.entity.AppConfigEntityExample;
 import com.appleframework.jmx.database.mapper.AppConfigEntityMapper;
@@ -60,7 +61,15 @@ public class AppConfigServiceImpl implements AppConfigService {
 	
 	public List<AppConfigEntity> findListByClusterId(Integer clusterId) {
 		AppConfigEntityExample example = new AppConfigEntityExample();
-		example.createCriteria().andClusterIdEqualTo(clusterId);
+		example.createCriteria()
+			.andClusterIdEqualTo(clusterId)
+			.andStateBetween(StateType.STOP.getIndex(), StateType.START.getIndex());
+		return appConfigEntityMapper.selectByExample(example);
+	}
+	
+	public List<AppConfigEntity> findListByClusterIdAndStart(Integer clusterId) {
+		AppConfigEntityExample example = new AppConfigEntityExample();
+		example.createCriteria().andClusterIdEqualTo(clusterId).andStateEqualTo(StateType.START.getIndex());
 		return appConfigEntityMapper.selectByExample(example);
 	}
 

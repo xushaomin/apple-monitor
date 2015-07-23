@@ -1,6 +1,5 @@
 package com.appleframework.monitor.receiver;
 
-import java.text.MessageFormat;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -9,17 +8,13 @@ import org.jgroups.Message;
 import org.jgroups.ReceiverAdapter;
 import org.jgroups.View;
 
-import com.appleframework.jmx.core.config.ApplicationClusterConfig;
-import com.appleframework.jmx.core.config.ApplicationConfig;
-import com.appleframework.jmx.core.config.ApplicationConfigManager;
-import com.appleframework.jmx.core.modules.jsr160.JSR160ApplicationConfig;
+import com.appleframework.jmx.database.constant.StateType;
 import com.appleframework.jmx.database.entity.AppClusterEntity;
 import com.appleframework.jmx.database.entity.AppInfoEntity;
 import com.appleframework.jmx.database.entity.NodeInfoEntity;
 import com.appleframework.jmx.database.service.AppClusterService;
 import com.appleframework.jmx.database.service.AppInfoService;
 import com.appleframework.jmx.database.service.NodeInfoService;
-import com.appleframework.jmx.monitoring.downtime.ApplicationDowntimeService;
 
 public class AppInfoReceiver extends ReceiverAdapter {
 	
@@ -31,10 +26,6 @@ public class AppInfoReceiver extends ReceiverAdapter {
 	
 	private AppInfoService appInfoService;
 	
-	private ApplicationConfigManager applicationConfigManager;
-	
-	private ApplicationDowntimeService applicationDowntimeService;
-
 	private JChannel channel;
 
 	public void start() throws Exception {
@@ -92,7 +83,7 @@ public class AppInfoReceiver extends ReceiverAdapter {
 			appInfo.setNodeId(nodeInfo.getId());
 			appInfo.setInstallPath(installPath);
 			appInfo.setRemark("");
-			appInfo.setState((short)1);
+			appInfo.setState(StateType.START.getIndex());
 			appInfo.setWebContext(webContext);
 			appInfo.setWebPort(webPort);
 			appInfo.setServicePort(servicePort);
@@ -105,7 +96,7 @@ public class AppInfoReceiver extends ReceiverAdapter {
 			
 			appClusterService.calibratedAppNum(appCluster.getId());
 			
-			ApplicationClusterConfig clusterConfig 
+			/*ApplicationClusterConfig clusterConfig 
 				= new ApplicationClusterConfig(String.valueOf(appCluster.getId()), appCluster.getClusterName());
 			
 			String url = MessageFormat.format(JSR160ApplicationConfig.URL_FORMAT, nodeInfo.getIp(), String.valueOf(jmxPort));
@@ -128,7 +119,7 @@ public class AppInfoReceiver extends ReceiverAdapter {
 				applicationDowntimeService.addOrUpdateApplication(appConfig);
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
+			}*/
 			
 		} else if (object instanceof String) {
 			logger.warn(object.toString());
@@ -150,16 +141,6 @@ public class AppInfoReceiver extends ReceiverAdapter {
 
 	public void setAppInfoService(AppInfoService appInfoService) {
 		this.appInfoService = appInfoService;
-	}
-
-	public void setApplicationConfigManager(
-			ApplicationConfigManager applicationConfigManager) {
-		this.applicationConfigManager = applicationConfigManager;
-	}
-
-	public void setApplicationDowntimeService(
-			ApplicationDowntimeService applicationDowntimeService) {
-		this.applicationDowntimeService = applicationDowntimeService;
 	}
 	
 }

@@ -23,6 +23,10 @@ public interface AppClusterService {
 	
 	public List<AppClusterEntity> findAll();
 	
+	public List<AppClusterEntity> findListByStart();
+	
 	public void calibratedAppNum(Integer id);
+	
+	public Integer delete(Integer id) throws ServiceException;
 	
 }

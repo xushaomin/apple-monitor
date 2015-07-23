@@ -26,4 +26,6 @@ public interface AppInfoService {
 	
 	public int countByClusterId(Integer clusterId);
 	
+	public Integer delete(Integer id);
+	
 }

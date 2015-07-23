@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.appleframework.exception.ServiceException;
 import com.appleframework.jmx.database.entity.AppClusterEntity;
 import com.appleframework.jmx.database.service.AppClusterService;
 import com.appleframework.model.Search;
 import com.appleframework.model.page.Pagination;
 
 import com.appleframework.monitor.service.AppClusterSearchService;
+import com.appleframework.web.bean.Message;
 
 @Controller
 @RequestMapping("/app_cluster")
@@ -77,5 +79,16 @@ public class AppClusterController extends BaseController {
 		AppClusterEntity info = appClusterService.get(id);
 		model.addAttribute("info", info);
 		return viewModel + "edit";
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public @ResponseBody
+	Message delete(Integer id) {
+		try {
+			appClusterService.delete(id);
+			return SUCCESS_MESSAGE;
+		} catch (ServiceException e) {
+			return Message.error(e.getMessage());
+		}
 	}
 }

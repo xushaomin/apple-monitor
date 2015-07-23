@@ -200,6 +200,8 @@ public class ApplicationConfigManager {
 	public ApplicationConfig deleteApplication(String applicationId) {
 		assert applicationId != null : "applicationId is null";
 		ApplicationConfig config = getApplicationConfig(applicationId);
+		if(null == config)
+			return null;
 		assert config != null : "there is no application with id=" + applicationId;
 		if (config.isCluster())
 			deleteApplication(config, true);
@@ -235,11 +237,15 @@ public class ApplicationConfigManager {
 		} else {
 			logger.warn("ApplicationConfig not found for removal:" + config.getName());
 		}
-		saveConfig(config);
+		deleteConfig(config);
 	}
 
 	private void saveConfig(ApplicationConfig config) {
 		configWriter.write(config);
+	}
+	
+	private void deleteConfig(ApplicationConfig config) {
+		configWriter.delete(config);
 	}
 
 	public static List<ApplicationConfig> getAllApplications() {

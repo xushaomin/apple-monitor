@@ -24,6 +24,7 @@ import com.appleframework.model.Search;
 import com.appleframework.model.page.Pagination;
 import com.appleframework.monitor.model.AppInfoSo;
 import com.appleframework.monitor.service.AppInfoSearchService;
+import com.appleframework.web.bean.Message;
 
 @Controller
 @RequestMapping("/app_info")
@@ -117,6 +118,17 @@ public class AppInfoController extends BaseController {
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String add(Model model, HttpServletResponse response) throws Exception {
 		return "app_info/add";
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public @ResponseBody
+	Message delete(Integer id) {
+		try {
+			appInfoService.delete(id);
+			return SUCCESS_MESSAGE;
+		} catch (Exception e) {
+			return Message.error(e.getMessage());
+		}
 	}
 	
 	/*

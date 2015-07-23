@@ -120,6 +120,16 @@ public class ApplicationDowntimeService {
 		}
     }
     
+    public void deleteApplication(String applicationId) {
+		assert applicationId != null : "applicationId is null";
+		for (ApplicationHeartBeatThread thread : threads) {
+			if (thread.getApplicationConfig().getAppId().equals(applicationId)) {
+				ApplicationConfig appConfig = thread.getApplicationConfig();
+				this.removeApplication(appConfig);
+			}
+		}
+	}
+    
     private void addApplication(ApplicationConfig appConfig) {
         ApplicationHeartBeatThread thread = new ApplicationHeartBeatThread(appConfig);
         threads.add(thread);
