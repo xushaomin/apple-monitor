@@ -36,9 +36,7 @@ public abstract class ConnectorSupport implements MBeanRegistration {
     protected MBeanServer mbeanServer;
     protected ObjectName objectName;
 
-    public ObjectName preRegister(MBeanServer server, ObjectName name) 
-        throws Exception {
-
+    public ObjectName preRegister(MBeanServer server, ObjectName name) throws Exception {
         this.mbeanServer = server; 
         this.objectName = name;        
         return name;        
@@ -46,12 +44,10 @@ public abstract class ConnectorSupport implements MBeanRegistration {
 
     public void postRegister(Boolean registrationDone) {
         if (registrationDone.booleanValue()) {
-            logger.info( this.getClass().getName() + 
-                    ": Registered MBean " + this.objectName);
+            logger.info( this.getClass().getName() + ": Registered MBean " + this.objectName);
         }
         else {
-            logger.info( this.getClass().getName() + 
-                    ": Failed to register MBean " + this.objectName);
+            logger.info( this.getClass().getName() + ": Failed to register MBean " + this.objectName);
         }
     }
 

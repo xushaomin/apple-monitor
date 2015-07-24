@@ -122,8 +122,7 @@ public class ConnectorLoader {
                 JarEntry entry;
                 while (e.hasMoreElements()) {
                     entry = (JarEntry) e.nextElement();
-                    if ((!entry.isDirectory()) &&
-                            (entry.getName().endsWith(CONNECTOR_XML))) {
+                    if ((!entry.isDirectory()) && (entry.getName().endsWith(CONNECTOR_XML))) {
                         InputStream is = jar.getInputStream(entry);
                         return is;
                     }

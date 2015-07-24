@@ -44,8 +44,7 @@ public class DataFormatUtil {
     private static final String NULL_VALUE = "null.value";
 
     private static Object[][] classToFormatMapping = new Object[0][2];
-    private static Map<String, DataFormat> compositeTypeToFormatMapping = 
-    	new HashMap<String, DataFormat>();
+    private static Map<String, DataFormat> compositeTypeToFormatMapping =  new HashMap<String, DataFormat>();
 
     // properties
     private static String listDelimiter = System.getProperty("line.separator");
@@ -54,8 +53,7 @@ public class DataFormatUtil {
     private static int formatCount = 0;
 
     static{
-        String formatFile =
-                System.getProperty("com.appleframework.jmx.core.management.data.formatConfig");
+        String formatFile = System.getProperty("com.appleframework.jmx.core.management.data.formatConfig");
         if(formatFile != null){
             try {
                 InputStream is = new FileInputStream(formatFile);
@@ -64,28 +62,24 @@ public class DataFormatUtil {
                 is.close();
                 // note that array is bigger than number of formatters
                 classToFormatMapping = new Object[props.keySet().size()][2];
-                for(Iterator it=props.keySet().iterator(); it.hasNext();){
+                for(Iterator<?> it=props.keySet().iterator(); it.hasNext();){
                     String property = (String)it.next();
                     if(property.startsWith(FORMAT_PREFIX)){
                         String className = property.substring(FORMAT_PREFIX.length());
                         // todo: it will be better to load the data class using the application classloader
                         // the data format class can be loaded in the base classloader - rk
-                        Class clazz = Class.forName(className);
+                        Class<?> clazz = Class.forName(className);
                         classToFormatMapping[formatCount][0] = clazz;
-                        classToFormatMapping[formatCount][1] =
-                                Class.forName(props.getProperty(property)).newInstance();
+                        classToFormatMapping[formatCount][1] = Class.forName(props.getProperty(property)).newInstance();
                         formatCount ++;
                     }else if(property.startsWith(COMPOSITE_TYPE_FORMAT_PREFIX)){
                         String compositeType = property.substring(COMPOSITE_TYPE_FORMAT_PREFIX.length());
-                        DataFormat formatter =
-                                (DataFormat)Class.forName(props.getProperty(property)).newInstance();
-                        compositeTypeToFormatMapping.put(compositeType,
-                                formatter);
+                        DataFormat formatter = (DataFormat)Class.forName(props.getProperty(property)).newInstance();
+                        compositeTypeToFormatMapping.put(compositeType, formatter);
                     }else if(property.equals(LIST_DELIMITER)){
                         listDelimiter = props.getProperty(property);
                     }else if(property.equals(ESCAPE_HTML)){
-                        escapeHtml =
-                                Boolean.valueOf(props.getProperty(property)).booleanValue();
+                        escapeHtml = Boolean.valueOf(props.getProperty(property)).booleanValue();
                     }else if(property.equals(NULL_VALUE)){
                         nullValue = props.getProperty(property);
                     }else{
@@ -93,11 +87,9 @@ public class DataFormatUtil {
                     }
                 }
             } catch (IOException e) {
-                logger.error( "Error reading data format config file:" +
-                        formatFile + ". DataFormatUtil is not initialized.", e);
+                logger.error( "Error reading data format config file:" + formatFile + ". DataFormatUtil is not initialized.", e);
             } catch (Exception e) {
-                logger.error( "Config file:" + formatFile +
-                        ". DataFormatUtil is not initialized.", e);
+                logger.error( "Config file:" + formatFile + ". DataFormatUtil is not initialized.", e);
             }
         }
     }
@@ -152,21 +144,19 @@ public class DataFormatUtil {
         return buff.toString();
     }
 
-    private static final DefaultDataFormat defaultFormatter =
-            new DefaultDataFormat();
+    private static final DefaultDataFormat defaultFormatter = new DefaultDataFormat();
 
     private static DataFormat findDataFormat(Object data){
         /* first check if this data is CompositeData type */
         if(CompositeData.class.isInstance(data)){
             CompositeType type = ((CompositeData)data).getCompositeType();
-            DataFormat dataFormat =
-                    (DataFormat)compositeTypeToFormatMapping.get(type.getTypeName());
+            DataFormat dataFormat = (DataFormat)compositeTypeToFormatMapping.get(type.getTypeName());
             if(dataFormat != null)
                 return dataFormat;
         }
         /* now look for other formatters */
         for(int i=0; i<formatCount; i++){
-            Class clazz = (Class)classToFormatMapping[i][0];
+            Class<?> clazz = (Class<?>)classToFormatMapping[i][0];
             if(clazz.isInstance(data)){
                 return (DataFormat)classToFormatMapping[i][1];
             }

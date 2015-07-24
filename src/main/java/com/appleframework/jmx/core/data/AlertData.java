@@ -24,8 +24,7 @@ public class AlertData implements java.io.Serializable {
 
 	private static final long serialVersionUID = -9162087563843549805L;
 
-	private static final SimpleDateFormat formatter =
-            new SimpleDateFormat("yyyy, MMM dd HH:mm:ss");
+	private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy, MMM dd HH:mm:ss");
 
     // unique id for the alert
     private String alertId = null;

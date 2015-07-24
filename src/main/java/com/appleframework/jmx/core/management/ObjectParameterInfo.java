@@ -76,7 +76,8 @@ public class ObjectParameterInfo extends ObjectFeatureInfo {
         return false;
     }
 
-    public void applyMetaData(ObjectParameterInfo metaParameterInfo, ExpressionProcessor exprProcessor) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public void applyMetaData(ObjectParameterInfo metaParameterInfo, ExpressionProcessor exprProcessor) {
         if(metaParameterInfo.getName() != null){
             name = metaParameterInfo.getName();
         } 

@@ -95,14 +95,15 @@ public class Repository implements Serializable {
         return new ObjectInfo(objectName, null, description, attributes, null, operations, null);
     }
     
-    private static ObjectAttributeInfo[] getObjectAttributeInfo(Element mbean){
-        
-        List attributes = mbean.getChildren("attribute");
+    @SuppressWarnings("unchecked")
+	private static ObjectAttributeInfo[] getObjectAttributeInfo(Element mbean){
+        List<Element> attributes = mbean.getChildren("attribute");
         ObjectAttributeInfo[] attributeInfo = new ObjectAttributeInfo[attributes.size()];
         int index = 0;
-        for(Iterator it = attributes.iterator(); it.hasNext(); index++){
+        for(Iterator<Element> it = attributes.iterator(); it.hasNext(); index++){
             Element attribute = (Element)it.next();
-            attributeInfo[index] = new ObjectAttributeInfo(attribute.getAttributeValue("name"),
+            attributeInfo[index] = new ObjectAttributeInfo(
+            					attribute.getAttributeValue("name"),
                                 attribute.getAttributeValue("description"),
                                 null, // not overridden
                                 false,// not overridden
@@ -113,14 +114,15 @@ public class Repository implements Serializable {
         return attributeInfo;
     }
     
-    private static ObjectOperationInfo[] getObjectOperationInfo(Element mbean){
-        
-        List operations = mbean.getChildren("operation");
+    @SuppressWarnings("unchecked")
+	private static ObjectOperationInfo[] getObjectOperationInfo(Element mbean){
+        List<Element> operations = mbean.getChildren("operation");
         ObjectOperationInfo[] operationInfo = new ObjectOperationInfo[operations.size()];
         int index = 0;
-        for(Iterator it = operations.iterator(); it.hasNext(); index++){
+        for(Iterator<Element> it = operations.iterator(); it.hasNext(); index++){
             Element operation = (Element)it.next();
-            operationInfo[index] = new ObjectOperationInfo(operation.getAttributeValue("name"),
+            operationInfo[index] = new ObjectOperationInfo(
+            		operation.getAttributeValue("name"),
                     operation.getAttributeValue("description"),
                     getSignature(operation),
                     null, // not overridden
@@ -130,13 +132,15 @@ public class Repository implements Serializable {
         return operationInfo;
     }
     
-    private static ObjectParameterInfo[] getSignature(Element operation){
-        List parameters = operation.getChildren("parameter");
+    @SuppressWarnings("unchecked")
+	private static ObjectParameterInfo[] getSignature(Element operation){
+        List<Element> parameters = operation.getChildren("parameter");
         ObjectParameterInfo[] parameterInfo = new ObjectParameterInfo[parameters.size()];
         int index = 0;
-        for(Iterator it = parameters.iterator(); it.hasNext(); index++){
+        for(Iterator<Element> it = parameters.iterator(); it.hasNext(); index++){
             Element parameter = (Element)it.next();
-            parameterInfo[index] = new ObjectParameterInfo(parameter.getAttributeValue("name"),
+            parameterInfo[index] = new ObjectParameterInfo(
+            		parameter.getAttributeValue("name"),
                     parameter.getAttributeValue("description"),
                     parameter.getAttributeValue("type"),
                     parameter.getAttributeValue("legalValues"));
@@ -146,8 +150,8 @@ public class Repository implements Serializable {
     }
     
     private static class XMLFilter implements FilenameFilter {
-	public boolean accept(File dir, String name) {
-	    return (name.endsWith(".xml") || name.endsWith(".XML"));
-	}
+		public boolean accept(File dir, String name) {
+		    return (name.endsWith(".xml") || name.endsWith(".XML"));
+		}
     }
 }

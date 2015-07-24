@@ -15,6 +15,8 @@ package com.appleframework.jmx.core.services;
 
 import java.util.List;
 
+import com.appleframework.jmx.core.alert.AlertInfo;
+
 /**
  *
  * Date:  Aug 2, 2005
@@ -28,7 +30,7 @@ public interface AlertService {
      * @return list of AlertInfo objects
      * @throws ServiceException
      */
-    public List getConsoleAlerts(ServiceContext context) throws ServiceException;
+    public List<AlertInfo> getConsoleAlerts(ServiceContext context) throws ServiceException;
 
     public void removeConsoleAlert(ServiceContext context, String alertId);
 

@@ -29,7 +29,6 @@ import java.util.*;
  */
 public abstract class TabularDataFormat implements DataFormat {
 
-    @SuppressWarnings("unchecked")
 	public String format(Object data) {
         TabularData tabularData = (TabularData) data;
 
@@ -38,8 +37,7 @@ public abstract class TabularDataFormat implements DataFormat {
 
         /* get the header and index names */
         Set<String> itemNamesSet = rowType.keySet();
-        String[] itemNames =
-                (String[])itemNamesSet.toArray(new String[itemNamesSet.size()]);
+        String[] itemNames = (String[])itemNamesSet.toArray(new String[itemNamesSet.size()]);
 
         final List<String> indexNamesList = tabularData.getTabularType().getIndexNames();
         final String[] indexNames =
@@ -63,7 +61,7 @@ public abstract class TabularDataFormat implements DataFormat {
         final int dataRowsCount = tabularData.size();
         final TabularDataData  tabularDataData[] = new TabularDataData[dataRowsCount];
         int  ii = 0;
-        for (Iterator it = tabularData.values().iterator(); it.hasNext();) {
+        for (Iterator<?> it = tabularData.values().iterator(); it.hasNext();) {
             CompositeData compositeData = (CompositeData) it.next();
             final Object[] indices = compositeData.getAll(indexNames);
             tabularDataData[ii++] = new TabularDataData(indices, compositeData);
@@ -100,7 +98,8 @@ public abstract class TabularDataFormat implements DataFormat {
 
 
     // provided by Jess Hole
-    private static class TabularDataData implements Comparable {
+    @SuppressWarnings("rawtypes")
+	private static class TabularDataData implements Comparable {
 
         TabularDataData(final Object indices[], final CompositeData compositeData) {
             this.indices = indices;

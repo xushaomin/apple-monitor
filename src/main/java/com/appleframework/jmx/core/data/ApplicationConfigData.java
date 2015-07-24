@@ -37,7 +37,7 @@ public class ApplicationConfigData implements Serializable {
     private String password;
     private String type;
     private boolean isCluster;
-    private List childApplications;
+    private List<ApplicationConfigData> childApplications;
     protected Map<String, String> paramValues;
 
     public String getApplicationId() {
@@ -123,11 +123,11 @@ public class ApplicationConfigData implements Serializable {
         return isCluster;
     }
 
-    public List getChildApplications() {
+    public List<ApplicationConfigData> getChildApplications() {
         return childApplications;
     }
 
-    public void setChildApplications(List childApplications) {
+    public void setChildApplications(List<ApplicationConfigData> childApplications) {
         assert isCluster;
         this.childApplications = childApplications;
     }

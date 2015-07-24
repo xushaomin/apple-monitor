@@ -24,7 +24,6 @@ import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
 import com.appleframework.jmx.core.config.ApplicationConfig;
 import com.appleframework.jmx.core.config.ApplicationConfigFactory;
-import com.appleframework.jmx.core.config.ApplicationTypes;
 import com.appleframework.jmx.core.management.ObjectAttributeInfo;
 import com.appleframework.jmx.core.management.ObjectInfo;
 import com.appleframework.jmx.core.management.ObjectName;

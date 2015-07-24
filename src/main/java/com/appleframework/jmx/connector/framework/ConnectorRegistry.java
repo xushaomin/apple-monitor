@@ -173,8 +173,7 @@ public class ConnectorRegistry extends Registry {
     }
     
     private void unregisterAllMBeans(String appId) throws Exception {
-        Set<ObjectName> objNames = this.server.queryNames(
-                new ObjectName("*:appId=" + appId + ",*"), null);
+        Set<ObjectName> objNames = this.server.queryNames(new ObjectName("*:appId=" + appId + ",*"), null);
         for(ObjectName name : objNames) {
             logger.info("Unregistered MBean: " + name);
             this.server.unregisterMBean(name);

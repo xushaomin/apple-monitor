@@ -19,25 +19,25 @@ import com.appleframework.jmx.core.config.ApplicationConfig;
 import java.util.Map;
 
 /**
- * @author	Tak-Sang Chan
+ * @author Tak-Sang Chan
  */
 public class ConnectorApplicationConfig extends ApplicationConfig {
 
-    public String getConnectorId() {
-        Map paramValues = getParamValues();
-        return (String) paramValues.get("connectorId");
-    }
-    
-    public String getHost() {
-        return null;
-    }
+	public String getConnectorId() {
+		Map<String, String> paramValues = getParamValues();
+		return paramValues.get("connectorId");
+	}
 
-    public Integer getPort() {
-        return null;
-    }
-    
-    public String getURL() {
-        return "";
-    }
-    
+	public String getHost() {
+		return null;
+	}
+
+	public Integer getPort() {
+		return null;
+	}
+
+	public String getURL() {
+		return "";
+	}
+
 }

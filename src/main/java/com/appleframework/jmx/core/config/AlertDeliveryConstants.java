@@ -16,12 +16,13 @@
 package com.appleframework.jmx.core.config;
 
 /**
- * Date: May 25, 2005  3:18:12 PM
+ * Date: May 25, 2005 3:18:12 PM
+ * 
  * @author Bhavana
  */
 public class AlertDeliveryConstants {
 
-    public static final String EMAIL_ALERT_DELIVERY_TYPE="email";
-    public static final String CONSOLE_ALERT_DELIVERY_TYPE="console";
+	public static final String EMAIL_ALERT_DELIVERY_TYPE = "email";
+	public static final String CONSOLE_ALERT_DELIVERY_TYPE = "console";
 
 }

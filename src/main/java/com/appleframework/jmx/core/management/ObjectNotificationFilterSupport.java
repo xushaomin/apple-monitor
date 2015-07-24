@@ -46,7 +46,7 @@ public class ObjectNotificationFilterSupport implements ObjectNotificationFilter
      *
      * @return a list of notification types that are enabled.
      */
-    public Collection getEnabledTypes() {
+    public Collection<String> getEnabledTypes() {
         return notificationTypes;
     }
 }

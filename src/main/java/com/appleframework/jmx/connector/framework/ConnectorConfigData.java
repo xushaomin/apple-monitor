@@ -72,10 +72,8 @@ public class ConnectorConfigData {
     public String[] getFieldDefaultValues() {
         String[] values = new String[fieldNames.size()];
         for (int i = 0; i < fieldNames.size(); i++) {
-            ConnectorConfigField attr =
-                    (ConnectorConfigField) fields.get(fieldNames.get(i));
-            values[i] = attr.getDefaultValue() != null ?
-                    attr.getDefaultValue() : "";
+            ConnectorConfigField attr = (ConnectorConfigField) fields.get(fieldNames.get(i));
+            values[i] = attr.getDefaultValue() != null ? attr.getDefaultValue() : "";
         }
         return values;
     }

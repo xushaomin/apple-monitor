@@ -21,4 +21,5 @@ package com.appleframework.jmx.core.alert;
 public interface AlertDelivery {
 
     public void deliver(AlertInfo alertInfo);
+    
 }

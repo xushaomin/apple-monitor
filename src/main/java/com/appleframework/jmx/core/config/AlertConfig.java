@@ -31,11 +31,12 @@ public class AlertConfig {
     public static String getNextAlertId(){
         return String.valueOf(System.currentTimeMillis());
     }
+    
     public AlertConfig(){
 
     }
-    public AlertConfig(String alertId, String alertName,
-                       String[] alertDelivery, String emailAddress){
+    
+    public AlertConfig(String alertId, String alertName, String[] alertDelivery, String emailAddress){
         this.alertId = alertId;
         this.alertName = alertName;
         this.alertDelivery = alertDelivery;

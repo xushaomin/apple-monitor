@@ -37,8 +37,7 @@ import java.net.URL;
  */
 public class ConnectorConfigRegistry {
 
-    private static final Logger logger =
-        Loggers.getLogger(ConnectorConfigRegistry.class);
+    private static final Logger logger = Loggers.getLogger(ConnectorConfigRegistry.class);
     
     private static final String ELEM_FIELDS = "fields";    
     private static final String ATTR_NAME = "name";    

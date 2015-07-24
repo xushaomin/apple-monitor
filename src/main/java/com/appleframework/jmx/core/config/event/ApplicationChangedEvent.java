@@ -18,18 +18,17 @@ package com.appleframework.jmx.core.config.event;
 import com.appleframework.jmx.core.config.ApplicationConfig;
 
 /**
- * Used to communicate changes to the basic application configuration changes. 
- * The changes to application child elements such as Alerts, Dashboards, etc, 
- * do not result in this event.
- *  
+ * Used to communicate changes to the basic application configuration changes.
+ * The changes to application child elements such as Alerts, Dashboards, etc, do
+ * not result in this event.
+ * 
  * @author rkalra
  */
 public class ApplicationChangedEvent extends ApplicationEvent {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public ApplicationChangedEvent(ApplicationConfig config){
-        super(config);
-    }
+	public ApplicationChangedEvent(ApplicationConfig config) {
+		super(config);
+	}
 }
-  
