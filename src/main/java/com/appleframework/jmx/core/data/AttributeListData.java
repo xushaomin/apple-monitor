@@ -17,6 +17,8 @@ package com.appleframework.jmx.core.data;
 
 import java.util.List;
 
+import com.appleframework.jmx.core.management.ObjectAttribute;
+
 /**
  *
  * Date:  Mar 15, 2005
@@ -27,7 +29,7 @@ public class AttributeListData implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 	
 	private final String appName;
-    private final List attributeList;
+    private final List<ObjectAttribute> attributeList;
     private boolean error = false;
 
     public AttributeListData(String appName){
@@ -35,7 +37,7 @@ public class AttributeListData implements java.io.Serializable {
         error = true;
     }
 
-    public AttributeListData(String appName, List attributeList){
+    public AttributeListData(String appName, List<ObjectAttribute> attributeList){
         this.appName = appName;
         this.attributeList = attributeList;
     }
@@ -44,7 +46,7 @@ public class AttributeListData implements java.io.Serializable {
         return appName;
     }
 
-    public List getAttributeList() {
+    public List<ObjectAttribute> getAttributeList() {
         return attributeList;
     }
 
