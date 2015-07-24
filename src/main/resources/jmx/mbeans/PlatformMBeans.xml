@@ -19,8 +19,7 @@ b) operation meta-data e.g."Are you sure you want to execute this operation?"
 	</mbean>
 	<mbean name="java.lang:type=GarbageCollector,name=Copy" description="The management interface for the garbage collection of the Java virtual machine. Garbage collection is the process that the Java virtual machine uses to find and reclaim unreachable objects to free up memory space.">
 		<attribute name="CollectionCount" description="The total number of collections that have occurred. This returns -1 if the collection count is undefined for this collector."/>
-		<attribute name="CollectionTime" description="The approximate accumulated collection elapsed time in milliseconds. This returns -1 if the collection elapsed time is undefined for this collector."
-					units="milliseconds"/>
+		<attribute name="CollectionTime" description="The approximate accumulated collection elapsed time in milliseconds. This returns -1 if the collection elapsed time is undefined for this collector." units="milliseconds"/>
 		<attribute name="LastGcInfo" description="LastGcInfo"/>
 		<attribute name="MemoryPoolNames" description="The name of memory pools that this garbage collector manages."/>
 		<attribute name="Name" description="Name of this Garbage Collector."/>
@@ -28,8 +27,7 @@ b) operation meta-data e.g."Are you sure you want to execute this operation?"
 	</mbean>
 	<mbean name="java.lang:type=GarbageCollector,name=MarkSweepCompact" description="The management interface for the garbage collection of the Java virtual machine. Garbage collection is the process that the Java virtual machine uses to find and reclaim unreachable objects to free up memory space.">
 		<attribute name="CollectionCount" description="The total number of collections that have occurred. This returns -1 if the collection count is undefined for this collector."/>
-		<attribute name="CollectionTime" description="The approximate accumulated collection elapsed time in milliseconds. This returns -1 if the collection elapsed time is undefined for this collector."
-					units="milliseconds"/>
+		<attribute name="CollectionTime" description="The approximate accumulated collection elapsed time in milliseconds. This returns -1 if the collection elapsed time is undefined for this collector." units="milliseconds"/>
 		<attribute name="LastGcInfo" description="LastGcInfo"/>
 		<attribute name="MemoryPoolNames" description="The name of memory pools that this garbage collector manages."/>
 		<attribute name="Name" description="Name of this Garbage Collector."/>
@@ -189,10 +187,7 @@ b) operation meta-data e.g."Are you sure you want to execute this operation?"
 	<mbean name="java.util.logging:type=Logging" description="The management interface for the logging facility.">
 		<attribute name="LoggerNames" description="Returns the list of currently registered loggers."/>
 	    <operation name="getParentLoggerName" description="Returns the name of the parent for the specified logger. If the specified logger does not exist, null is returned. If the specified logger is the root Logger in the namespace, the result will be an empty string.">
-			<parameter name="Logger Name" 
-					   type="java.lang.String"
-					   legalValues="${LoggerNames}"
-					   description="The name of a Logger."/>
+			<parameter name="Logger Name" type="java.lang.String" legalValues="${LoggerNames}" description="The name of a Logger."/>
 		</operation>
 	    <operation name="getLoggerLevel" description="Gets the name of the log level associated with the specified logger. If the specified logger does not exist, null is returned. If the Level of the specified logger is null, which means that this logger's effective level is inherited from its parent, an empty string will be returned.">
 			<parameter name="Logger Name" type="java.lang.String" legalValues="${LoggerNames}" description="The name of the Logger to be retrieved."/>
@@ -228,7 +223,7 @@ b) operation meta-data e.g."Are you sure you want to execute this operation?"
 		<operation name="assignInfoLevel" description="assigns the INFO level to the RootLogger." />
 		<operation name="assignWarnLevel" description="assigns the WARN level to the RootLogger." />
 		<operation name="assignErrorLevel" description="assigns the ERROR level to the RootLogger." />
-		<operation name="assignDebug" description="assigns the DEBUG level to the RootLogger." />
+		<operation name="assignDebugLevel" description="assigns the DEBUG level to the RootLogger." />
 		<operation name="assignFatalLevel" description="assigns the FATAL level to the RootLogger." />
 		<operation name="assignTraceLevel" description="assigns the TRACE level to the RootLogger." />
 		<operation name="deactivateLogging" description="deactivates the logging of the RootLogger." />
