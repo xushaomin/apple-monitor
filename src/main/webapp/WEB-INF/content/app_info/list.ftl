@@ -12,6 +12,29 @@
 	function callback() {
 	 	$("#searchButton").click();
 	}
+	$().ready( function() {
+		$("#listTable .btn_examine").bind("click", function(){
+			var id = $(this).attr("operatId");
+			var title = $(this).attr("title");
+			
+			art.dialog.open('/jmx_log4j/view?id=' + id, {
+				id: 'viewFrame',
+				title: title,
+				close: function () {}
+			}, false);
+		});
+		
+		$("#listTable .btn_effect").bind("click", function(){
+			var id = $(this).attr("operatId");
+			var title = $(this).attr("title");
+			
+			art.dialog.open('/jmx_log4j/edit?id=' + id, {
+				id: 'viewFrame',
+				title: title,
+				close: function () {}
+			}, false);
+		});
+	});
 </script>
 
 
@@ -74,7 +97,7 @@
         	<th width="6%" class="sort" orderField="asc" name="totalSumNumber">状态</th>
         	<th width="8%">最新发布</th>
         	<th width="8%">创建时间</th>
-			<th width="10%">操作</th>
+			<th width="15%">操作</th>
         </tr>
         <#list page.list as info>
         <tr class="even">
@@ -103,6 +126,12 @@
 				<a class="btn_icon btn_edit"   href="javascript:;" operatId="${info.id}" title="编辑"></a>
                 <a class="btn_icon btn_detail" href="javascript:;" operatId="${info.id}" title="详情"></a>
                 <a class="btn_icon btn_delete" href="javascript:;" operatId="${info.id}" title="删除"></a>
+                <@appStatus appId = info.id>
+					<#if isUp == true>
+						<a class="btn_icon btn_examine" href="javascript:;" operatId="${info.id}" title="日志信息"></a>
+						<a class="btn_icon btn_effect" href="javascript:;" operatId="${info.id}" title="修改日志级别"></a>
+					</#if>
+				</@appStatus>
 			</td>
         </tr>
         </#list>
