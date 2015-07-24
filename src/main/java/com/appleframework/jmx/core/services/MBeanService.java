@@ -22,6 +22,7 @@ import com.appleframework.jmx.core.data.AttributeListData;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -31,8 +32,7 @@ import java.util.Map;
  */
 public interface MBeanService {
 
-    public List<MBeanData> queryMBeans(ServiceContext context, String filter)
-            throws ServiceException;
+    public List<MBeanData> queryMBeans(ServiceContext context, String filter) throws ServiceException;
 
     /**
      * if datatypes is null then Map will contain all the MBeans
@@ -43,7 +43,7 @@ public interface MBeanService {
      * @param dataTypes
      * @return
      */
-    public Map queryMBeansOutputMap(ServiceContext context, String filter,
+    public Map<String, Set<String>> queryMBeansOutputMap(ServiceContext context, String filter,
                                     String[] dataTypes, String applyAttribFilter);
 
     /**
@@ -53,28 +53,28 @@ public interface MBeanService {
      * @return  instance of ObjectInfo
      * @throws ServiceException
      */
-    public ObjectInfo getMBeanInfo(ServiceContext context)
-            throws ServiceException;
+    public ObjectInfo getMBeanInfo(ServiceContext context) throws ServiceException;
 
     /**
      * @return list of all attribute values
      */
-    public AttributeListData[] getAttributes(ServiceContext context)
+    public AttributeListData[] getAttributes(ServiceContext context) throws ServiceException;
+
+    public AttributeListData[] getAttributes(ServiceContext context, String[] attributes, boolean handleCluster)
             throws ServiceException;
 
-    public AttributeListData[] getAttributes(ServiceContext context,
-                                             String[] attributes,
-                                             boolean handleCluster)
+    public List<ObjectAttributeInfo> filterAttributes(ServiceContext context, ObjectName objectName,
+                                 ObjectAttributeInfo[] objAttrInfo, String[] dataTypes)
             throws ServiceException;
 
-    public List filterAttributes(ServiceContext context,
-                                 ObjectName objectName,
-                                 ObjectAttributeInfo[] objAttrInfo,
-                                 String[] dataTypes)
-            throws ServiceException;
+    public ObjectAttribute getObjectAttribute(ServiceContext context, String attribute) throws ServiceException;
 
-    public ObjectAttribute getObjectAttribute(ServiceContext context,
-                                              String attribute)
+    /**
+     * Invokes MBean operation
+     * @return
+     * @throws ServiceException
+     */
+    public OperationResultData[] invoke(ServiceContext context, String operationName, String[] params)
             throws ServiceException;
 
     /**
@@ -82,21 +82,8 @@ public interface MBeanService {
      * @return
      * @throws ServiceException
      */
-    public OperationResultData[] invoke(ServiceContext context,
-                                        String operationName,
-                                        String[] params)
-            throws ServiceException;
-
-    /**
-     * Invokes MBean operation
-     * @return
-     * @throws ServiceException
-     */
-    public OperationResultData[] invoke(ServiceContext context,
-                                        String operationName,
-                                        String[] params,
-                                        String[] signature)
-        throws ServiceException;
+    public OperationResultData[] invoke(ServiceContext context, String operationName, String[] params, String[] signature)
+    		throws ServiceException;
 
 
     /**
@@ -104,17 +91,12 @@ public interface MBeanService {
      * @return
      * @throws ServiceException
      */
-    public OperationResultData[] invoke(ServiceContext context,
-                                        ObjectName objectName,
-                                        String operationName,
-                                        String[] params,
-                                        String[] signature)
-        throws ServiceException;
+    public OperationResultData[] invoke(ServiceContext context, ObjectName objectName, String operationName,
+    		String[] params, String[] signature) throws ServiceException;
 
     
     
-    public AttributeListData[] setAttributes(ServiceContext context,
-                                             String[][] attributes)
+    public AttributeListData[] setAttributes(ServiceContext context, String[][] attributes)
             throws ServiceException;
 
     /**
@@ -125,8 +107,7 @@ public interface MBeanService {
      * @param attributes
      * @throws ServiceException
      */
-    public AttributeListData[] setAttributes(ServiceContext context,
-                                             Map attributes)
+    public AttributeListData[] setAttributes(ServiceContext context, Map<String, String[]> attributes)
             throws ServiceException;
 
     public Map<String, ObjectNotificationInfo[]> queryMBeansWithNotifications(ServiceContext context)
@@ -139,13 +120,9 @@ public interface MBeanService {
      * @return
      * @throws ServiceException
      */
-    public String getAttributeDataType(ServiceContext context,
-                                       String attributeName,
-                                       String objectName)
+    public String getAttributeDataType(ServiceContext context, String attributeName, String objectName)
             throws ServiceException;
 
-    public ObjectOperationInfo getOperationInfo(ServiceContext context,
-                                       String operationName,
-                                       String[] signature)
+    public ObjectOperationInfo getOperationInfo(ServiceContext context, String operationName, String[] signature)
             throws ServiceException;
 }

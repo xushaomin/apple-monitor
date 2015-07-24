@@ -18,6 +18,7 @@ import com.appleframework.jmx.core.util.CoreUtils;
 import com.appleframework.jmx.core.util.Loggers;
 
 import java.util.*;
+
 import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.io.FileInputStream;
@@ -29,10 +30,9 @@ import snmp.*;
  * @author Rakesh Kalra
  * Date: Jul 31, 2005
  */
-public class SNMPAgentConnection implements ServerConnection{
+public class SNMPAgentConnection implements ServerConnection {
 
-    private static final Logger logger =
-            Loggers.getLogger(SNMPAgentConnection.class);
+    private static final Logger logger = Loggers.getLogger(SNMPAgentConnection.class);
 
     private final SNMPv1CommunicationInterface comInterface;
     private final String mBeanObjectName = "snmp:name=SNMPAgent";
@@ -43,8 +43,7 @@ public class SNMPAgentConnection implements ServerConnection{
     static{
         try {
             OIDToAttributeMap = new Properties();
-            OIDToAttributeMap .load(new FileInputStream(CoreUtils.getConfigDir() +
-                    "/" + "snmp-oids.properties"));
+            OIDToAttributeMap .load(new FileInputStream(CoreUtils.getConfigDir() + "/" + "snmp-oids.properties"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -53,8 +52,7 @@ public class SNMPAgentConnection implements ServerConnection{
             String attribute = (String)OIDToAttributeMap.get(OID);
             attributeToOIDMap.put(attribute, OID);
         }
-        assert OIDToAttributeMap.size() == attributeToOIDMap.size():
-                "duplicate attribute name found";
+        assert OIDToAttributeMap.size() == attributeToOIDMap.size(): "duplicate attribute name found";
     }
 
     public SNMPAgentConnection(SNMPv1CommunicationInterface comInterface) {
@@ -102,7 +100,7 @@ public class SNMPAgentConnection implements ServerConnection{
      * @return attribute value
      */
     public Object getAttribute(ObjectName objectName, String attributeName) {
-        List attrList = getAttributes(objectName, new String[]{attributeName});
+        List<ObjectAttribute> attrList = getAttributes(objectName, new String[]{attributeName});
         if(attrList.size() > 0){
             ObjectAttribute objAttr = (ObjectAttribute)attrList.get(0);
             return objAttr.getValue();
@@ -110,7 +108,7 @@ public class SNMPAgentConnection implements ServerConnection{
         return null; // todo: null is probably not the right value here
     }
 
-    public List getAttributes(ObjectName objectName, String[] attributeNames) {
+    public List<ObjectAttribute> getAttributes(ObjectName objectName, String[] attributeNames) {
 
         Set<String> OIDs = new HashSet<String>();
         for(int i=0;i<attributeNames.length; i++){
@@ -129,7 +127,7 @@ public class SNMPAgentConnection implements ServerConnection{
         return attributeList;
     }
 
-    public List setAttributes(ObjectName objectName, List attributeList) {
+    public List<ObjectAttribute> setAttributes(ObjectName objectName, List<ObjectAttribute> attributeList){
         return null;
     }
 
@@ -236,7 +234,8 @@ public class SNMPAgentConnection implements ServerConnection{
      * @param objectName
      * @return
      */
-    private SNMPVarBindList getMIBDetails(ObjectName objectName, Set OIDs){
+    @SuppressWarnings("rawtypes")
+	private SNMPVarBindList getMIBDetails(ObjectName objectName, Set OIDs){
         SNMPVarBindList varBindList = new SNMPVarBindList();
         for(Iterator<?> it=OIDs.iterator(); it.hasNext();){
             String OID = (String)it.next();

@@ -24,6 +24,7 @@ import javax.management.*;
 import javax.management.openmbean.CompositeData;
 import javax.management.openmbean.TabularData;
 import java.util.*;
+
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Method;
@@ -59,11 +60,11 @@ public abstract class JMXServerConnection implements ServerConnection{
      * @param objectName the ObjectName pattern
      * @return Set of ObjectName objects
      */
-    public Set<ObjectName> queryNames(ObjectName objectName){
-
+    @SuppressWarnings("unchecked")
+	public Set<ObjectName> queryNames(ObjectName objectName){
         Class<?>[] methodSignature = new Class[]{javax.management.ObjectName.class, javax.management.QueryExp.class};
         Object[] methodArgs = new Object[]{toJMXObjectName(objectName), null};
-        Set<ObjectName> mbeans = (Set)callMBeanServer("queryNames", methodSignature, methodArgs);
+        Set<ObjectName> mbeans = (Set<ObjectName>)callMBeanServer("queryNames", methodSignature, methodArgs);
         return toJmanageObjectNameInstance(mbeans);
     }
 
@@ -78,10 +79,7 @@ public abstract class JMXServerConnection implements ServerConnection{
      * @param signature
      * @return
      */
-    public Object invoke(ObjectName objectName,
-                         String operationName,
-                         Object[] params,
-                         String[] signature) {
+    public Object invoke(ObjectName objectName, String operationName, Object[] params, String[] signature) {
 
         Class<?>[] methodSignature = new Class[]{javax.management.ObjectName.class,
                                            String.class,
@@ -160,11 +158,9 @@ public abstract class JMXServerConnection implements ServerConnection{
                                         ObjectNotificationFilter filter,
                                         Object handback){
 
-        NotificationListener notifListener =
-                toJMXNotificationListener(listener);
+        NotificationListener notifListener = toJMXNotificationListener(listener);
         notifications.put(listener, notifListener);
-        NotificationFilter notifFilter =
-                toJMXNotificationFilter(filter);
+        NotificationFilter notifFilter = toJMXNotificationFilter(filter);
         notifFilters.put(filter, notifFilter);
 
         Class<?>[] methodSignature = new Class[]{javax.management.ObjectName.class,
@@ -183,10 +179,8 @@ public abstract class JMXServerConnection implements ServerConnection{
                                            ObjectNotificationFilter filter,
                                            Object handback){
 
-        NotificationListener notifListener =
-                (NotificationListener)notifications.remove(listener);
-        NotificationFilter notifFilter =
-                (NotificationFilter)notifFilters.remove(filter);
+        NotificationListener notifListener = (NotificationListener)notifications.remove(listener);
+        NotificationFilter notifFilter = (NotificationFilter)notifFilters.remove(filter);
         assert notifListener != null;
         assert notifFilter != null;
 
@@ -202,21 +196,16 @@ public abstract class JMXServerConnection implements ServerConnection{
     }
 
     // todo: this method will need to throw InstanceAlreadyExistsException
-    public void createMBean(String className,
-                            ObjectName name,
-                            Object[] params,
-                            String[] signature){
+    public void createMBean(String className, ObjectName name, Object[] params, String[] signature){
         Class<?>[] methodSignature = new Class[]{String.class,
                                            javax.management.ObjectName.class,
                                            new Object[0].getClass(),
                                            new String[0].getClass()};
-        Object[] methodArgs = new Object[]{className, toJMXObjectName(name),
-                                           params, signature};
+        Object[] methodArgs = new Object[]{className, toJMXObjectName(name), params, signature};
         callMBeanServer("createMBean", methodSignature, methodArgs);
     }
 
     public void unregisterMBean(ObjectName objectName){
-
         Class<?>[] methodSignature = new Class[]{javax.management.ObjectName.class};
         Object[] methodArgs = new Object[]{toJMXObjectName(objectName)};
         callMBeanServer("unregisterMBean", methodSignature, methodArgs);
@@ -244,8 +233,7 @@ public abstract class JMXServerConnection implements ServerConnection{
             callMBeanServer("getMBeanCount", methodSignature, methodArgs);
             return true;
         } catch (Exception e) {
-            logger.info( "Connection to the server is lost. " +
-                    "Error message: " + e.getMessage());
+            logger.info( "Connection to the server is lost. " + "Error message: " + e.getMessage());
             return false;
         }
     }
@@ -260,16 +248,12 @@ public abstract class JMXServerConnection implements ServerConnection{
     ///////////////////////////////////////////////////////////////////////////
     // Utility methods
 
-    private Object callMBeanServer(String methodName,
-                                   Class<?>[] params,
-                                   Object[] args){
-
+    private Object callMBeanServer(String methodName, Class<?>[] params, Object[] args){
         try {
             Method method = mbeanServerClass.getMethod(methodName, params);
             return method.invoke(mbeanServer, args);
         } catch (InvocationTargetException e) {
-            if(e.getCause() != null &&
-                    e.getCause() instanceof RuntimeException){
+            if(e.getCause() != null && e.getCause() instanceof RuntimeException){
                 throw (RuntimeException)e.getCause();
             }
             throw new RuntimeException(e.getCause());
@@ -282,8 +266,7 @@ public abstract class JMXServerConnection implements ServerConnection{
         }
     }
 
-    protected static javax.management.ObjectName
-            toJMXObjectName(ObjectName objectName){
+    protected static javax.management.ObjectName toJMXObjectName(ObjectName objectName){
         try {
             return new javax.management.ObjectName(objectName.toString());
         } catch (javax.management.MalformedObjectNameException e) {
@@ -291,10 +274,8 @@ public abstract class JMXServerConnection implements ServerConnection{
         }
     }
 
-    protected static ObjectName toJmanageObjectName(
-            javax.management.ObjectName objectName){
-        return new ObjectName(objectName.toString(),
-                objectName.getCanonicalName());
+    protected static ObjectName toJmanageObjectName(javax.management.ObjectName objectName){
+        return new ObjectName(objectName.toString(), objectName.getCanonicalName());
     }
 
     /**
@@ -310,9 +291,7 @@ public abstract class JMXServerConnection implements ServerConnection{
         return output;
     }
 
-    protected static ObjectInfo toObjectInfo(ObjectName objectName,
-                                             MBeanInfo mbeanInfo){
-
+    protected static ObjectInfo toObjectInfo(ObjectName objectName, MBeanInfo mbeanInfo){
         ObjectAttributeInfo[] attributes = toObjectAttributes(mbeanInfo.getAttributes());
         ObjectConstructorInfo[] constructors = toObjectConstructors(mbeanInfo.getConstructors());
         ObjectOperationInfo[] operations = toObjectOperations(mbeanInfo.getOperations());

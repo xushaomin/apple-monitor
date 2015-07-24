@@ -77,4 +77,14 @@ public class ServiceContextImpl implements ServiceContext {
         ServiceUtils.close(serverConnection);
         serverConnection = null;
     }
+
+	public ServiceContextImpl(String appId, String mbeanName) {
+		super();
+		this.appId = appId;
+		this.mbeanName = mbeanName;
+	}
+    
+	public ServiceContextImpl() {
+		super();
+	}
 }

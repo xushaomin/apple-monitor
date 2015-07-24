@@ -34,8 +34,7 @@ public class ObjectName implements java.io.Serializable {
     public ObjectName(String objectName){
         this.objectName = objectName;
         try {
-            this.canonicalName =
-                    new javax.management.ObjectName(objectName).getCanonicalName();
+            this.canonicalName = new javax.management.ObjectName(objectName).getCanonicalName();
         } catch (MalformedObjectNameException e) {
             throw new RuntimeException(e);
         } catch (NullPointerException e) {
@@ -57,8 +56,7 @@ public class ObjectName implements java.io.Serializable {
     }
 
     public String getDisplayName(){
-        return JManageProperties.isDisplayCanonicalName()?
-                canonicalName : objectName;
+        return JManageProperties.isDisplayCanonicalName()?canonicalName : objectName;
     }
 
     public static String getShortName(String objectName){

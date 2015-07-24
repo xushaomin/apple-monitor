@@ -18,6 +18,7 @@ package com.appleframework.jmx.core.management.metadata;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -41,16 +42,18 @@ import com.appleframework.jmx.core.util.Loggers;
  * 
  * @author Rakesh Kalra
  */
-public class Repository {
+public class Repository implements Serializable {
 
-    private static Logger logger = Loggers.getLogger(Repository.class);
+
+	private static final long serialVersionUID = -8058067999672861635L;
+	
+	private static Logger logger = Loggers.getLogger(Repository.class);
     private static Map<ObjectName, ObjectInfo> mbeanToObjectInfoMap = new HashMap<ObjectName, ObjectInfo>();
     
     public static ObjectInfo applyMetaData(ObjectInfo objInfo, ServerConnection connection){
         ObjectInfo metaObjectInfo = mbeanToObjectInfoMap.get(objInfo.getObjectName());
         if(metaObjectInfo != null){
-            objInfo.applyMetaData(metaObjectInfo, 
-                    new ExpressionProcessor(connection, objInfo.getObjectName()));
+            objInfo.applyMetaData(metaObjectInfo, new ExpressionProcessor(connection, objInfo.getObjectName()));
         }
         return objInfo;
     }
@@ -65,9 +68,9 @@ public class Repository {
 		}
     }
     
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	private static void load() throws JDOMException, IOException{
-		File metadataRepository = new File(CoreUtils.getConfigDir() + "/mbeans");
+		File metadataRepository = new File(CoreUtils.getRootDir() + "/mbeans");
 		assert metadataRepository.isDirectory() : "repository not found";
 		File[] metadataFiles = metadataRepository.listFiles(new XMLFilter());
 		for (File file : metadataFiles) {
