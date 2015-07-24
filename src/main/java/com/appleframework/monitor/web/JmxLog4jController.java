@@ -74,6 +74,7 @@ public class JmxLog4jController extends BaseController {
 			ApplicationConfig appConfig = ApplicationConfigManager.getApplicationConfig(id.toString());
 			ServiceContext serviceContext = new ServiceContextImpl(appConfig.getAppId(), MBEAN_NAME);
 			String [] dates = {};
+			//ServiceFactory.getMBeanService();
 			OperationResultData date[] = mbeanService.invoke(serviceContext, operateName, dates);
 			for (int i = 0; i < date.length; i++) {
 				OperationResultData operationResultData = date[i];
