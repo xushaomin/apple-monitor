@@ -155,7 +155,7 @@ import java.math.*;
 
 */
 
-
+@SuppressWarnings("rawtypes")
 public class SNMPv1TrapPDU extends SNMPSequence
 {
     

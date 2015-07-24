@@ -48,8 +48,8 @@ import java.util.*;
 *    methods.
 */
 
-public class SNMPTrapReceiverInterface
-                        implements Runnable
+@SuppressWarnings("rawtypes")
+public class SNMPTrapReceiverInterface implements Runnable
 {
     public static final int SNMP_TRAP_PORT = 162;
     

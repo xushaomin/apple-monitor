@@ -56,25 +56,21 @@ import java.util.*;
 
 */
 
+@SuppressWarnings("rawtypes")
+public class SNMPVariablePair extends SNMPSequence {
 
-public class SNMPVariablePair extends SNMPSequence
-{
-    
-    /**
-    *    Create a new variable pair having the supplied object identifier and vale.
-    */
-    
-    @SuppressWarnings("unchecked")
-	public SNMPVariablePair(SNMPObjectIdentifier objectID, SNMPObject value)
-        throws SNMPBadValueException
-    {
-        super();
-        Vector contents = new Vector();
-        contents.insertElementAt(objectID, 0);
-        contents.insertElementAt(value, 1);
-        this.setValue(contents);
-    }
+	/**
+	 * Create a new variable pair having the supplied object identifier and
+	 * vale.
+	 */
 
-    
-    
+	@SuppressWarnings("unchecked")
+	public SNMPVariablePair(SNMPObjectIdentifier objectID, SNMPObject value) throws SNMPBadValueException {
+		super();
+		Vector contents = new Vector();
+		contents.insertElementAt(objectID, 0);
+		contents.insertElementAt(value, 1);
+		this.setValue(contents);
+	}
+
 }

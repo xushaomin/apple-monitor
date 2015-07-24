@@ -86,7 +86,7 @@ RFC1157-SNMP DEFINITIONS
 
 */
 
-
+@SuppressWarnings("rawtypes")
 public class SNMPMessage extends SNMPSequence
 {
     
@@ -97,11 +97,10 @@ public class SNMPMessage extends SNMPSequence
     *    provided through RFC 1157.
     */
     
-    @SuppressWarnings("unchecked")
 	public SNMPMessage(int version, String community, SNMPPDU pdu)
     {
         super();
-        Vector contents = new Vector();
+        Vector<Object> contents = new Vector<Object>();
         contents.insertElementAt(new SNMPInteger(version), 0);
         contents.insertElementAt(new SNMPOctetString(community), 1);
         contents.insertElementAt(pdu, 2);
@@ -124,11 +123,10 @@ public class SNMPMessage extends SNMPSequence
     *    provided through RFC 1157.
     */
     
-    @SuppressWarnings("unchecked")
 	public SNMPMessage(int version, String community, SNMPv1TrapPDU pdu)
     {
         super();
-        Vector contents = new Vector();
+        Vector<Object> contents = new Vector<Object>();
         contents.insertElementAt(new SNMPInteger(version), 0);
         contents.insertElementAt(new SNMPOctetString(community), 1);
         contents.insertElementAt(pdu, 2);
@@ -151,11 +149,10 @@ public class SNMPMessage extends SNMPSequence
     *    Use version = 1.
     */
     
-    @SuppressWarnings("unchecked")
 	public SNMPMessage(int version, String community, SNMPv2TrapPDU pdu)
     {
         super();
-        Vector contents = new Vector();
+        Vector<Object> contents = new Vector<Object>();
         contents.insertElementAt(new SNMPInteger(version), 0);
         contents.insertElementAt(new SNMPOctetString(community), 1);
         contents.insertElementAt(pdu, 2);
@@ -178,8 +175,7 @@ public class SNMPMessage extends SNMPSequence
     *    @throws SNMPBadValueException Indicates invalid SNMP message encoding supplied.
     */
     
-    protected SNMPMessage(byte[] enc)
-        throws SNMPBadValueException
+    protected SNMPMessage(byte[] enc) throws SNMPBadValueException
     {
         super(enc);
         
@@ -290,7 +286,8 @@ public class SNMPMessage extends SNMPSequence
     *   second component of the sequence, after the version.
     */
     
-    public String getCommunityName()
+    
+	public String getCommunityName()
         throws SNMPBadValueException
     {
         Vector contents = (Vector)(this.getValue());

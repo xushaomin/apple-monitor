@@ -44,8 +44,8 @@ import java.util.*;
 *    via UDP, using port 162, the standard SNMP trap port, as the destination port.
 */
 
-public class SNMPv1AgentInterface
-                    implements Runnable
+@SuppressWarnings("rawtypes")
+public class SNMPv1AgentInterface implements Runnable
 {
     public static final int SNMP_PORT = 161;
     

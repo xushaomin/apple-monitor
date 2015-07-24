@@ -110,12 +110,12 @@ public class SNMPUInteger32 extends SNMPInteger
         }
         else if (newValue instanceof Integer)
         {
-            value = value = new BigInteger(newValue.toString());
+            value = new BigInteger(newValue.toString());
             value = value.mod(maxValue);    // wrap when value exceeds 2^32
         }
         else if (newValue instanceof String)
         {
-            value = value = new BigInteger((String)newValue);
+            value = new BigInteger((String)newValue);
             value = value.mod(maxValue);    // wrap when value exceeds 2^32
         }
         else
