@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+TODO: Further meta-data can be provided for:
+a) presentation e.g. HTML attribute values display
+b) operation meta-data e.g."Are you sure you want to execute this operation?"
+
+-->
+
+<mbeans>
+	<mbean name="java.lang:type=MemoryManager,name=CodeCacheManager" description="The management interface for a memory manager. A memory manager manages one or more memory pools of the Java virtual machine. A Java virtual machine has one or more memory managers. This is memory manager for Code Cache.">
+		<attribute name="MemoryPoolNames" description="The name of memory pools that this memory manager manages."/>
+		<attribute name="Name" description="The name representing this memory manager."/>
+		<attribute name="Valid" description="Tests if this memory manager is valid in the Java virtual machine. A memory manager becomes invalid once the Java virtual machine removes it from the memory system."/>
+	</mbean>
+	<mbean name="java.lang:type=Compilation" description="The management interface for the compilation system of the Java virtual machine.">
+		<attribute name="CompilationTimeMonitoringSupported" description="Tests if the Java virtual machine supports the monitoring of compilation time."/>
+		<attribute name="Name" description="Name of the Just-in-time (JIT) compiler."/>
+		<attribute name="TotalCompilationTime" description="Returns the approximate accumlated elapsed time (in milliseconds) spent in compilation. If multiple threads are used for compilation, this value is summation of the approximate time that each thread spent in compilation. This method is optionally supported by the platform. A Java virtual machine implementation may not support the compilation time monitoring. The isCompilationTimeMonitoringSupported() method can be used to determine if the Java virtual machine supports this operation. This value does not indicate the level of performance of the Java virtual machine and is not intended for performance comparisons of different virtual machine implementations. The implementations may have different definitions and different measurements of the compilation time. " units="milliseconds"/>
+	</mbean>
+	<mbean name="java.lang:type=GarbageCollector,name=Copy" description="The management interface for the garbage collection of the Java virtual machine. Garbage collection is the process that the Java virtual machine uses to find and reclaim unreachable objects to free up memory space.">
+		<attribute name="CollectionCount" description="The total number of collections that have occurred. This returns -1 if the collection count is undefined for this collector."/>
+		<attribute name="CollectionTime" description="The approximate accumulated collection elapsed time in milliseconds. This returns -1 if the collection elapsed time is undefined for this collector."
+					units="milliseconds"/>
+		<attribute name="LastGcInfo" description="LastGcInfo"/>
+		<attribute name="MemoryPoolNames" description="The name of memory pools that this garbage collector manages."/>
+		<attribute name="Name" description="Name of this Garbage Collector."/>
+		<attribute name="Valid" description="Tests if this collector is valid in the Java virtual machine."/>
+	</mbean>
+	<mbean name="java.lang:type=GarbageCollector,name=MarkSweepCompact" description="The management interface for the garbage collection of the Java virtual machine. Garbage collection is the process that the Java virtual machine uses to find and reclaim unreachable objects to free up memory space.">
+		<attribute name="CollectionCount" description="The total number of collections that have occurred. This returns -1 if the collection count is undefined for this collector."/>
+		<attribute name="CollectionTime" description="The approximate accumulated collection elapsed time in milliseconds. This returns -1 if the collection elapsed time is undefined for this collector."
+					units="milliseconds"/>
+		<attribute name="LastGcInfo" description="LastGcInfo"/>
+		<attribute name="MemoryPoolNames" description="The name of memory pools that this garbage collector manages."/>
+		<attribute name="Name" description="Name of this Garbage Collector."/>
+		<attribute name="Valid" description="Tests if this collector is valid in the Java virtual machine."/>s
+	</mbean>
+	<mbean name="java.lang:type=MemoryPool,name=Eden Space" description="The management interface for a memory pool. A memory pool represents the memory resource managed by the Java virtual machine and is managed by one or more memory managers.">
+		<attribute name="CollectionUsage" description="The memory usage after the Java virtual machine most recently expended effort in recycling unused objects in this memory pool."/>
+		<attribute name="CollectionUsageThreshold" description="The collection usage threshold value of this memory pool in bytes." units="bytes"/>
+		<attribute name="CollectionUsageThresholdCount" description="The number of times that the Java virtual machine has detected that the memory usage has reached or exceeded the collection usage threshold."/>
+		<attribute name="CollectionUsageThresholdExceeded" description="Tests if the memory usage of this memory pool after the most recent collection on which the Java virtual machine has expended effort has reached or exceeded its collection usage threshold."/>
+		<attribute name="CollectionUsageThresholdSupported" description=" Tests if this memory pool supports a collection usage threshold."/>
+		<attribute name="MemoryManagerNames" description="The name of memory managers that manages this memory pool."/>
+		<attribute name="Name" description="The name representing this memory pool."/>
+		<attribute name="PeakUsage" description="The peak memory usage of this memory pool since the Java virtual machine was started or since the peak was reset."/>
+		<attribute name="Type" description="The type of this memory pool."/>
+		<attribute name="Usage" description="An estimate of the memory usage of this memory pool."/>
+		<attribute name="UsageThreshold" description="The usage threshold value of this memory pool in bytes." units="bytes"/>
+		<attribute name="UsageThresholdCount" description="The number of times that the memory usage has crossed the usage threshold."/>
+		<attribute name="UsageThresholdExceeded" description="Tests if the memory usage of this memory pool reaches or exceeds its usage threshold value."/>
+		<attribute name="UsageThresholdSupported" description="Tests if this memory pool supports usage threshold."/>
+		<attribute name="Valid" description="Tests if this memory pool is valid in the Java virtual machine."/>
+		<operation name="resetPeakUsage" description="Resets the peak memory usage statistic of this memory pool to the current memory usage."/>
+	</mbean>
+	<mbean name="java.lang:type=MemoryPool,name=Survivor Space" description="The management interface for a memory pool. A memory pool represents the memory resource managed by the Java virtual machine and is managed by one or more memory managers.">
+		<attribute name="CollectionUsage" description="The memory usage after the Java virtual machine most recently expended effort in recycling unused objects in this memory pool."/>
+		<attribute name="CollectionUsageThreshold" description="The collection usage threshold value of this memory pool in bytes." units="bytes"/>
+		<attribute name="CollectionUsageThresholdCount" description="The number of times that the Java virtual machine has detected that the memory usage has reached or exceeded the collection usage threshold."/>
+		<attribute name="CollectionUsageThresholdExceeded" description="Tests if the memory usage of this memory pool after the most recent collection on which the Java virtual machine has expended effort has reached or exceeded its collection usage threshold."/>
+		<attribute name="CollectionUsageThresholdSupported" description=" Tests if this memory pool supports a collection usage threshold."/>
+		<attribute name="MemoryManagerNames" description="The name of memory managers that manages this memory pool."/>
+		<attribute name="Name" description="The name representing this memory pool."/>
+		<attribute name="PeakUsage" description="The peak memory usage of this memory pool since the Java virtual machine was started or since the peak was reset."/>
+		<attribute name="Type" description="The type of this memory pool."/>
+		<attribute name="Usage" description="An estimate of the memory usage of this memory pool."/>
+		<attribute name="UsageThreshold" description="The usage threshold value of this memory pool in bytes." units="bytes"/>
+		<attribute name="UsageThresholdCount" description="The number of times that the memory usage has crossed the usage threshold."/>
+		<attribute name="UsageThresholdExceeded" description="Tests if the memory usage of this memory pool reaches or exceeds its usage threshold value."/>
+		<attribute name="UsageThresholdSupported" description="Tests if this memory pool supports usage threshold."/>
+		<attribute name="Valid" description="Tests if this memory pool is valid in the Java virtual machine."/>
+		<operation name="resetPeakUsage" description="Resets the peak memory usage statistic of this memory pool to the current memory usage."/>
+	</mbean>
+	<mbean name="java.lang:type=MemoryPool,name=Code Cache" description="The management interface for a memory pool. A memory pool represents the memory resource managed by the Java virtual machine and is managed by one or more memory managers.">
+		<attribute name="CollectionUsage" description="The memory usage after the Java virtual machine most recently expended effort in recycling unused objects in this memory pool."/>
+		<attribute name="CollectionUsageThreshold" description="The collection usage threshold value of this memory pool in bytes." units="bytes"/>
+		<attribute name="CollectionUsageThresholdCount" description="The number of times that the Java virtual machine has detected that the memory usage has reached or exceeded the collection usage threshold."/>
+		<attribute name="CollectionUsageThresholdExceeded" description="Tests if the memory usage of this memory pool after the most recent collection on which the Java virtual machine has expended effort has reached or exceeded its collection usage threshold."/>
+		<attribute name="CollectionUsageThresholdSupported" description=" Tests if this memory pool supports a collection usage threshold."/>
+		<attribute name="MemoryManagerNames" description="The name of memory managers that manages this memory pool."/>
+		<attribute name="Name" description="The name representing this memory pool."/>
+		<attribute name="PeakUsage" description="The peak memory usage of this memory pool since the Java virtual machine was started or since the peak was reset."/>
+		<attribute name="Type" description="The type of this memory pool."/>
+		<attribute name="Usage" description="An estimate of the memory usage of this memory pool."/>
+		<attribute name="UsageThreshold" description="The usage threshold value of this memory pool in bytes." units="bytes"/>
+		<attribute name="UsageThresholdCount" description="The number of times that the memory usage has crossed the usage threshold."/>
+		<attribute name="UsageThresholdExceeded" description="Tests if the memory usage of this memory pool reaches or exceeds its usage threshold value."/>
+		<attribute name="UsageThresholdSupported" description="Tests if this memory pool supports usage threshold."/>
+		<attribute name="Valid" description="Tests if this memory pool is valid in the Java virtual machine."/>
+		<operation name="resetPeakUsage" description="Resets the peak memory usage statistic of this memory pool to the current memory usage."/>
+	</mbean>
+	<mbean name="java.lang:type=MemoryPool,name=Tenured Gen" description="The management interface for a memory pool. A memory pool represents the memory resource managed by the Java virtual machine and is managed by one or more memory managers.">
+		<attribute name="CollectionUsage" description="The memory usage after the Java virtual machine most recently expended effort in recycling unused objects in this memory pool."/>
+		<attribute name="CollectionUsageThreshold" description="The collection usage threshold value of this memory pool in bytes." units="bytes"/>
+		<attribute name="CollectionUsageThresholdCount" description="The number of times that the Java virtual machine has detected that the memory usage has reached or exceeded the collection usage threshold."/>
+		<attribute name="CollectionUsageThresholdExceeded" description="Tests if the memory usage of this memory pool after the most recent collection on which the Java virtual machine has expended effort has reached or exceeded its collection usage threshold."/>
+		<attribute name="CollectionUsageThresholdSupported" description=" Tests if this memory pool supports a collection usage threshold."/>
+		<attribute name="MemoryManagerNames" description="The name of memory managers that manages this memory pool."/>
+		<attribute name="Name" description="The name representing this memory pool."/>
+		<attribute name="PeakUsage" description="The peak memory usage of this memory pool since the Java virtual machine was started or since the peak was reset."/>
+		<attribute name="Type" description="The type of this memory pool."/>
+		<attribute name="Usage" description="An estimate of the memory usage of this memory pool."/>
+		<attribute name="UsageThreshold" description="The usage threshold value of this memory pool in bytes." units="bytes"/>
+		<attribute name="UsageThresholdCount" description="The number of times that the memory usage has crossed the usage threshold."/>
+		<attribute name="UsageThresholdExceeded" description="Tests if the memory usage of this memory pool reaches or exceeds its usage threshold value."/>
+		<attribute name="UsageThresholdSupported" description="Tests if this memory pool supports usage threshold."/>
+		<attribute name="Valid" description="Tests if this memory pool is valid in the Java virtual machine."/>
+		<operation name="resetPeakUsage" description="Resets the peak memory usage statistic of this memory pool to the current memory usage."/>
+	</mbean>
+	<mbean name="java.lang:type=MemoryPool,name=Perm Gen" description="The management interface for a memory pool. A memory pool represents the memory resource managed by the Java virtual machine and is managed by one or more memory managers.">
+		<attribute name="CollectionUsage" description="The memory usage after the Java virtual machine most recently expended effort in recycling unused objects in this memory pool."/>
+		<attribute name="CollectionUsageThreshold" description="The collection usage threshold value of this memory pool in bytes." units="bytes"/>
+		<attribute name="CollectionUsageThresholdCount" description="The number of times that the Java virtual machine has detected that the memory usage has reached or exceeded the collection usage threshold."/>
+		<attribute name="CollectionUsageThresholdExceeded" description="Tests if the memory usage of this memory pool after the most recent collection on which the Java virtual machine has expended effort has reached or exceeded its collection usage threshold."/>
+		<attribute name="CollectionUsageThresholdSupported" description=" Tests if this memory pool supports a collection usage threshold."/>
+		<attribute name="MemoryManagerNames" description="The name of memory managers that manages this memory pool."/>
+		<attribute name="Name" description="The name representing this memory pool."/>
+		<attribute name="PeakUsage" description="The peak memory usage of this memory pool since the Java virtual machine was started or since the peak was reset."/>
+		<attribute name="Type" description="The type of this memory pool."/>
+		<attribute name="Usage" description="An estimate of the memory usage of this memory pool."/>
+		<attribute name="UsageThreshold" description="The usage threshold value of this memory pool in bytes." units="bytes"/>
+		<attribute name="UsageThresholdCount" description="The number of times that the memory usage has crossed the usage threshold."/>
+		<attribute name="UsageThresholdExceeded" description="Tests if the memory usage of this memory pool reaches or exceeds its usage threshold value."/>
+		<attribute name="UsageThresholdSupported" description="Tests if this memory pool supports usage threshold."/>
+		<attribute name="Valid" description="Tests if this memory pool is valid in the Java virtual machine."/>
+		<operation name="resetPeakUsage" description="Resets the peak memory usage statistic of this memory pool to the current memory usage."/>
+	</mbean>
+
+	<mbean name="java.lang:type=Runtime" description="The management interface for the runtime system of the Java virtual machine.">
+		<attribute name="BootClassPath" description="The boot class path that is used by the bootstrap class loader to search for class files."/>
+		<attribute name="BootClassPathSupported" description="Tests if the Java virtual machine supports the boot class path mechanism used by the bootstrap class loader to search for class files."/>
+		<attribute name="ClassPath" description="The Java class path that is used by the system class loader to search for class files."/>
+		<attribute name="InputArguments" description="The input arguments passed to the Java virtual machine which does not include the arguments to the main method."/>
+		<attribute name="LibraryPath" description="The Java library path."/>
+		<attribute name="ManagementSpecVersion" description="The version of the specification for the management interface implemented by the running Java virtual machine."/>
+		<attribute name="Name" description="The name representing the running Java virtual machine."/>
+		<attribute name="SpecName" description="The Java virtual machine specification name."/>
+		<attribute name="SpecVendor" description="The Java virtual machine specification vendor."/>
+		<attribute name="SpecVersion" description="The Java virtual machine specification version."/>
+		<attribute name="StartTime" description="The start time of the Java virtual machine in milliseconds." units="milliseconds"/>
+		<attribute name="SystemProperties" description="A map of names and values of all system properties."/>
+		<attribute name="Uptime" description="The uptime of the Java virtual machine in milliseconds." units="milliseconds"/>
+		<attribute name="VmName" description="The Java virtual machine implementation name."/>
+		<attribute name="VmVendor" description="The Java virtual machine implementation vendor."/>
+		<attribute name="VmVersion" description="The Java virtual machine implementation version."/>
+	</mbean>
+	<mbean name="java.lang:type=ClassLoading" description="The management interface for the class loading system of the Java virtual machine.">
+		<attribute name="LoadedClassCount" description="The number of classes that are currently loaded in the Java virtual machine."/>
+		<attribute name="TotalLoadedClassCount" description="The total number of classes that have been loaded since the Java virtual machine has started execution."/>
+		<attribute name="UnloadedClassCount" description="The total number of classes unloaded since the Java virtual machine has started execution."/>
+		<attribute name="Verbose" description="Enables or disables the verbose output for the class loading system."/>
+	</mbean>
+	<mbean name="java.lang:type=Threading" description="The management interface for the thread system of the Java virtual machine.">
+		<attribute name="AllThreadIds" description="All live thread IDs in the JVM."/>
+		<attribute name="CurrentThreadCpuTime" description="The total CPU time for the current thread in nanoseconds." units="nanoseconds"/>
+		<attribute name="CurrentThreadCpuTimeSupported" description="Tests if the Java virtual machine supports CPU time measurement for the current thread."/>
+		<attribute name="CurrentThreadUserTime" description="The CPU time that the current thread has executed in user mode in nanoseconds." units="nanoseconds"/>
+		<attribute name="DaemonThreadCount" description="The current number of live daemon threads."/>
+		<attribute name="PeakThreadCount" description="The peak live thread count since the Java virtual machine started or peak was reset."/>
+		<attribute name="ThreadContentionMonitoringEnabled" description="Tests if thread contention monitoring is enabled."/>
+		<attribute name="ThreadContentionMonitoringSupported" description="Tests if the Java virtual machine supports thread contention monitoring."/>
+		<attribute name="ThreadCount" description="The current number of live threads including both daemon and non-daemon threads."/>
+		<attribute name="ThreadCpuTimeEnabled" description="Tests if thread CPU time measurement is enabled."/>
+		<attribute name="ThreadCpuTimeSupported" description="Tests if the Java virtual machine implementation supports CPU time measurement for any thread."/>
+		<attribute name="TotalStartedThreadCount" description="The total number of threads created and also started since the Java virtual machine started."/>
+		<operation name="resetPeakThreadCount" description="Resets the peak thread count to the current number of live threads."/>
+		<operation name="getThreadInfo" description="Returns a thread info for a thread of the specified id.">
+			<parameter name="Thread Id" type="long" legalValues="${AllThreadIds}" description="The thread ID of the thread. Must be positive."/>
+			<parameter name="Stack Depth" type="int" description="The maximum number of entries in the stack trace to be dumped."/>
+		</operation>
+		<operation name="getThreadInfo" description="Returns the thread info for each thread whose ID is in the input array ids.">
+			<parameter name="Thread Ids" type="[J" description="An array of thread IDs"/>
+			<parameter name="Stack Depth" type="int" description="The maximum number of entries in the stack trace to be dumped."/>
+		</operation>
+		<operation name="getThreadInfo" description="Returns the thread info for a thread of the specified id with no stack trace.">
+			<parameter name="Thread Id" type="long" legalValues="${AllThreadIds}" description="The thread ID of the thread. Must be positive."/>
+		</operation>
+		<operation name="getThreadInfo" description="Returns the thread info for each thread whose ID is in the input array ids with no stack trace.">
+			<parameter name="Thread Ids" type="[J" description="An array of thread IDs"/>
+		</operation>
+		<operation name="findMonitorDeadlockedThreads" description="Finds cycles of threads that are in deadlock waiting to acquire object monitors."/>
+		<operation name="getThreadUserTime" description="The CPU time that a thread of the specified ID has executed in user mode in nanoseconds." units="nanoseconds">
+			<parameter name="Thread Id" type="long" legalValues="${AllThreadIds}" description="The thread ID of the thread. Must be positive."/>
+		</operation>
+		<operation name="getThreadCpuTime" description="The total CPU time for a thread of the specified ID in nanoseconds." units="nanoseconds">
+			<parameter name="Thread Id" type="long" legalValues="${AllThreadIds}" description="The thread ID of the thread. Must be positive."/>
+		</operation>
+	</mbean>
+	<mbean name="java.util.logging:type=Logging" description="The management interface for the logging facility.">
+		<attribute name="LoggerNames" description="Returns the list of currently registered loggers."/>
+	    <operation name="getParentLoggerName" description="Returns the name of the parent for the specified logger. If the specified logger does not exist, null is returned. If the specified logger is the root Logger in the namespace, the result will be an empty string.">
+			<parameter name="Logger Name" 
+					   type="java.lang.String"
+					   legalValues="${LoggerNames}"
+					   description="The name of a Logger."/>
+		</operation>
+	    <operation name="getLoggerLevel" description="Gets the name of the log level associated with the specified logger. If the specified logger does not exist, null is returned. If the Level of the specified logger is null, which means that this logger's effective level is inherited from its parent, an empty string will be returned.">
+			<parameter name="Logger Name" type="java.lang.String" legalValues="${LoggerNames}" description="The name of the Logger to be retrieved."/>
+		</operation>
+	    <operation name="setLoggerLevel" description="Sets the specified logger to the specified new level. If the levelName is not null, the level of the specified logger is set to the parsed Level  matching the levelName. If the levelName is null, the level of the specified logger is set to null and the effective level of the logger is inherited from its nearest ancestor with a specific (non-null) level value.">
+			<parameter name="Logger Name" type="java.lang.String" legalValues="${LoggerNames}" description="The name of the Logger to be set."/>
+			<parameter name="levelName" type="java.lang.String" legalValues="SEVERE,WARNING,INFO,CONFIG,FINE,FINER,FINEST" description="The name of the level to set the specified logger to, or null if to set the level to inherit from its nearest ancestor."/>
+		</operation>
+	</mbean>
+	<mbean name="java.lang:type=Memory" description="The management interface for the memory system of the Java virtual machine.">
+		<attribute name="HeapMemoryUsage" description="The current memory usage of the heap that is used for object allocation."/>
+		<attribute name="NonHeapMemoryUsage" description="The current memory usage of non-heap memory that is used by the Java virtual machine."/>
+		<attribute name="ObjectPendingFinalizationCount" description="The approximate number of objects for which finalization is pending."/>
+		<attribute name="Verbose" description="Enables or disables verbose output for the memory system."/>
+		<operation name="gc" description="Runs the garbage collector."/>
+	</mbean>
+	<mbean name="java.lang:type=OperatingSystem" description="The management interface for the operating system on which the Java virtual machine is running.">
+		<attribute name="Arch" description="The operating system architecture."/>
+		<attribute name="AvailableProcessors" description="The number of processors available to the Java virtual machine."/>
+		<attribute name="CommittedVirtualMemorySize" description="The amount of virtual memory that is guaranteed to be available to the running process in bytes, or -1 if this operation is not supported."/>
+		<attribute name="FreePhysicalMemorySize" description="The amount of free physical memory in bytes." units="bytes"/>
+		<attribute name="FreeSwapSpaceSize" description="The amount of free swap space in bytes." units="bytes"/>
+		<attribute name="Name" description="The operating system name."/>
+		<attribute name="ProcessCpuTime" description="The CPU time used by the process on which the Java virtual machine is running in nanoseconds." units="nanoseconds"/>
+		<attribute name="TotalPhysicalMemorySize" description="The total amount of physical memory in bytes." units="bytes"/>
+		<attribute name="TotalSwapSpaceSize" description="The total amount of swap space in bytes." units="bytes"/>
+		<attribute name="Version" description="The operating system version." units="bytes"/>
+	</mbean>
+	
+	<mbean name="com.appleframework:type=container,id=LogContainer" description="The management interface for the log4j operate.">
+		<operation name="resetConfiguration" description="reloads the log4j configuration from the log4j.properties file in the classpath." />
+		<operation name="printLog4jConfig" description="@return the log4j configuration from the log4j.properties file in the classpath." />
+		<operation name="assignInfoLevel" description="assigns the INFO level to the RootLogger." />
+		<operation name="assignWarnLevel" description="assigns the WARN level to the RootLogger." />
+		<operation name="assignErrorLevel" description="assigns the ERROR level to the RootLogger." />
+		<operation name="assignDebug" description="assigns the DEBUG level to the RootLogger." />
+		<operation name="assignFatalLevel" description="assigns the FATAL level to the RootLogger." />
+		<operation name="assignTraceLevel" description="assigns the TRACE level to the RootLogger." />
+		<operation name="deactivateLogging" description="deactivates the logging of the RootLogger." />
+	</mbean>
+	
+</mbeans>
