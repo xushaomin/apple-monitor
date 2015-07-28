@@ -23,16 +23,7 @@ import com.appleframework.monitor.model.Log4jLevelType;
 @Controller
 @RequestMapping("/jmx_log4j")
 public class JmxLog4jController extends BaseController {
-	
-	/*@Resource
-	private AppInfoService appInfoService;
-	
-	@Resource
-	private AppInfoSearchService appInfoSearchService;
-	
-	@Resource
-	private AppClusterService appClusterService;*/
-	
+		
 	@Resource
 	private MBeanService mbeanService;
 	
@@ -94,50 +85,5 @@ public class JmxLog4jController extends BaseController {
 	public List<Log4jLevelType> getLog4jLevelTypes() {
 		return Arrays.asList(Log4jLevelType.values());
 	}
-	
-	/*
-	@RequestMapping(value = "/save")
-	public String save(Model model, AppInfo appInfo, HttpServletRequest request) {
-		try {
-			appInfoService.insert(appInfo);
-		} catch (ServiceException e) {
-			addErrorMessage(model, e.getMessage());
-			return ERROR_VIEW;
-		}
-		
-		ApplicationConfig appConfig = ApplicationConfigManager.getApplicationConfig(id.toString());
-		ServerConnection connection = ServerConnector.getServerConnection(appConfig);
-
-		Hashtable<String, String> properties = new Hashtable<String, String>();
-
-		properties.put(TYPE_KEY, DEFAULT_TYPE);
-		properties.put(ID_KEY, "LogContainer");
-		
-		ObjectName oname = ObjectName.getInstance("com.appleframework", properties);
-
-		String mbeanName = "com.appleframework" + ".container:type=LogContainer";
-		
-		ServiceContext serviceContext = new ServiceContextImpl(appConfig.getAppId(), mbeanName);
-		
-		connection.getObjectInfo(objectName)
-		
-		AttributeListData[] ad = mbeanService.getAttributes(serviceContext);
-		for (int i = 0; i < ad.length; i++) {
-			System.out.println(ad[i]);
-		}
-		addSuccessMessage(model, "添加应用成功", "list");
-		return SUCCESS_VIEW;
-	}
-	
-	
-	// AJAX唯一验证
-	@RequestMapping(value = "/check_code", method = RequestMethod.GET)
-	public @ResponseBody String checkRoleName(String oldCode, String code) {
-		if (appInfoService.isUniqueByCode(oldCode, code)) {
-			return ajax("true");
-		} else {
-			return ajax("false");
-		}
-	}*/
-		
+			
 }
