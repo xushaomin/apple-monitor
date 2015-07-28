@@ -13,7 +13,7 @@
 	<properties>
 		<apple.version>0.1.0.RELEASE</apple.version>
 		<config.version>0.1.1.RELEASE</config.version>
-		<boot.version>0.1.5.RELEASE</boot.version>
+		<boot.version>0.1.6.RELEASE</boot.version>
 		<orm.version>0.0.5.RELEASE</orm.version>
 		<aspectj.version>1.6.8</aspectj.version>
 	</properties>
