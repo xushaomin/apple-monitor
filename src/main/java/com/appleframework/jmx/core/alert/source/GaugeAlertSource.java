@@ -29,7 +29,7 @@ import java.util.Set;
  * Date: Aug 31, 2005 11:41:59 AM
  * @author Bhavana
  */
-public class GaugeAlertSource extends MBeanAlertSource{
+public class GaugeAlertSource extends MBeanAlertSource {
 
     private static final Logger logger = Loggers.getLogger(GaugeAlertSource.class);
 

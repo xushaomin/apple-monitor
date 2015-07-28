@@ -37,7 +37,7 @@ public class NotificationAlertSource extends MBeanAlertSource {
 		super(sourceConfig);
 	}
 
-	protected void registerInternal() {
+	public void registerInternal() {
 
 		/* start looking for this notification */
 		listener = new ObjectNotificationListener() {

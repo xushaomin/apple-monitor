@@ -73,8 +73,7 @@ public abstract class MBeanAlertSource implements AlertSource {
             /* start monitoring */
             registerInternal();
             logger.info("Registered for alert: " + alertName +
-                    ", application: " +
-                    sourceConfig.getApplicationConfig().getName());
+                    ", application: " + sourceConfig.getApplicationConfig().getName());
         } catch (Exception e) {
             /* something happen while registering for alert. There is no point
                 retrying. Just log the error and continue */
@@ -87,9 +86,7 @@ public abstract class MBeanAlertSource implements AlertSource {
         new ConnectionMonitor().start();
     }
 
-    public void register(AlertHandler handler,
-                         String alertId,
-                         String alertName){
+    public void register(AlertHandler handler, String alertId, String alertName){
         assert this.handler == null;
         assert connection == null;
 
@@ -109,12 +106,10 @@ public abstract class MBeanAlertSource implements AlertSource {
         try {
            connection.close();
         } catch (IOException e) {
-           logger.error("Error while closing connection. error: " +
-                   e.getMessage());
+           logger.error("Error while closing connection. error: " + e.getMessage());
         }
 
-        logger.info("Un-registered for alert: " + alertName +
-                    ", application: " +
+        logger.info("Un-registered for alert: " + alertName + ", application: " +
                     sourceConfig.getApplicationConfig().getName());
 
         connection = null;
@@ -131,8 +126,7 @@ public abstract class MBeanAlertSource implements AlertSource {
             while(!stopThreads){
                 if(!connection.isOpen()){
                     /* connection went down */
-                    logger.warn("Connection lost to application: " +
-                            sourceConfig.getApplicationConfig().getName());
+                    logger.warn("Connection lost to application: " + sourceConfig.getApplicationConfig().getName());
                     MBeanAlertSource.this.connectionClosed();
                     return;
                 }
@@ -150,19 +144,16 @@ public abstract class MBeanAlertSource implements AlertSource {
 
                 try {
                     /* get connection */
-                    connection = ServerConnector.getServerConnection(
-                            sourceConfig.getApplicationConfig());
+                    connection = ServerConnector.getServerConnection(sourceConfig.getApplicationConfig());
                     if(connection.isOpen()){
                         /* connection is now open */
-                        logger.info("Established connection to application: "
-                            + sourceConfig.getApplicationConfig().getName());
+                        logger.info("Established connection to application: " + sourceConfig.getApplicationConfig().getName());
                         MBeanAlertSource.this.connectionOpen();
                         return;
                     }
                 } catch (Exception e) {
                     logger.info("Failed to establish connection to application: "
-                            + sourceConfig.getApplicationConfig().getName()
-                            + ". message=" + e.getMessage());
+                            + sourceConfig.getApplicationConfig().getName() + ". message=" + e.getMessage());
                 }
 
                 try {
