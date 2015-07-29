@@ -54,23 +54,19 @@ public class ObjectNotification {
     private Object source = null;
 
 
-    public ObjectNotification(String type,
-                              Object source,
-                              long sequenceNumber,
-                              long timeStamp,
-                              String message,
-                              Object userData) {
-        this.type = type;
-        this.source = source;
-        this.sequenceNumber = sequenceNumber;
-        this.timeStamp = timeStamp;
-        if(message == null || message.length() == 0){
-            this.message = type;
-        }else{
-            this.message = message;
-        }
+    public ObjectNotification(String type, Object source, long sequenceNumber, long timeStamp, 
+    		String message, Object userData) {
+		this.type = type;
+		this.source = source;
+		this.sequenceNumber = sequenceNumber;
+		this.timeStamp = timeStamp;
+		if (message == null || message.length() == 0) {
+			this.message = type;
+		} else {
+			this.message = message;
+		}
 
-        this.userData = userData;
+		this.userData = userData;
     }
 
     public String getType() {

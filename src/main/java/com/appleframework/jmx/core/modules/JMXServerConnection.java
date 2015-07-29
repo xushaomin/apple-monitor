@@ -36,7 +36,7 @@ import java.io.IOException;
  * @author Shashank Bellary
  * @author Rakesh Kalra
  */
-public abstract class JMXServerConnection implements ServerConnection{
+public abstract class JMXServerConnection implements ServerConnection {
 
     private static final Logger logger = Loggers.getLogger(JMXServerConnection.class);
 
@@ -251,7 +251,8 @@ public abstract class JMXServerConnection implements ServerConnection{
     private Object callMBeanServer(String methodName, Class<?>[] params, Object[] args){
         try {
             Method method = mbeanServerClass.getMethod(methodName, params);
-            return method.invoke(mbeanServer, args);
+            Object object = method.invoke(mbeanServer, args);
+            return object;
         } catch (InvocationTargetException e) {
             if(e.getCause() != null && e.getCause() instanceof RuntimeException){
                 throw (RuntimeException)e.getCause();

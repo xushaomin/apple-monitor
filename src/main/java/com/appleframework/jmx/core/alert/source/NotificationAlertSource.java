@@ -38,7 +38,6 @@ public class NotificationAlertSource extends MBeanAlertSource {
 	}
 
 	public void registerInternal() {
-
 		/* start looking for this notification */
 		listener = new ObjectNotificationListener() {
 			public void handleNotification(ObjectNotification notification, Object handback) {
@@ -51,6 +50,8 @@ public class NotificationAlertSource extends MBeanAlertSource {
 		};
 		filter = new ObjectNotificationFilterSupport();
 		filter.enableType(sourceConfig.getNotificationType());
+		if(null == connection)
+			connection = ServerConnector.getServerConnection(sourceConfig.getApplicationConfig());
 		connection.addNotificationListener(new ObjectName(sourceConfig.getObjectName()), listener, filter, null);
 	}
 

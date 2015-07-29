@@ -30,6 +30,5 @@ public interface ObjectNotificationListener {
      * @param   handback       the handback object given to the broadcaster
      *                         upon listener registration
      */
-    public void handleNotification(ObjectNotification notification,
-                                   Object handback);
+    public void handleNotification(ObjectNotification notification, Object handback);
 }

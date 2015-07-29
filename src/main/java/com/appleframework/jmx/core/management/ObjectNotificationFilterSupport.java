@@ -22,7 +22,7 @@ import java.util.Collection;
  * Date:  Jul 31, 2005
  * @author	Rakesh Kalra
  */
-public class ObjectNotificationFilterSupport implements ObjectNotificationFilter{
+public class ObjectNotificationFilterSupport implements ObjectNotificationFilter {
 
     private Set<String> notificationTypes = new HashSet<String>();
 

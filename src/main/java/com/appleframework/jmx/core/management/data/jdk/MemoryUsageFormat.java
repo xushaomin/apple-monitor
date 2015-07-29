@@ -35,10 +35,8 @@ public class MemoryUsageFormat implements DataFormat {
     public String format(Object data) {
 
         CompositeData compositeData = (CompositeData)data;
-        if(!compositeData.getCompositeType().getTypeName().
-                equals("java.lang.management.MemoryUsage")){
-            throw new RuntimeException("Invalid typeName:" +
-                    compositeData.getCompositeType().getTypeName());
+        if(!compositeData.getCompositeType().getTypeName().equals("java.lang.management.MemoryUsage")){
+            throw new RuntimeException("Invalid typeName:" + compositeData.getCompositeType().getTypeName());
         }
 
         Table table = getTable();

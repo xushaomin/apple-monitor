@@ -17,7 +17,6 @@ import com.appleframework.jmx.core.config.AlertConfig;
 import com.appleframework.jmx.core.util.Loggers;
 
 import java.util.List;
-import java.util.Iterator;
 import org.apache.log4j.Logger;
 
 
@@ -51,15 +50,14 @@ public class Alert implements AlertHandler {
 
     public void handle(AlertInfo alertInfo) {
         alertInfo.setAlertConfig(this.alertConfig);
-        for(Iterator<?> it=deliveries.iterator(); it.hasNext(); ){
-            try {
-                AlertDelivery delivery = (AlertDelivery)it.next();
+        for (AlertDelivery delivery : deliveries) {
+        	try {
                 delivery.deliver(alertInfo);
             } catch (Exception e) {
                 logger.error( "Error while deliverying alert", e);
                 // continue deliverying thru other modes (if any)
             }
-        }
+		}
     }
 
     public int hashCode(){

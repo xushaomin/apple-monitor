@@ -120,7 +120,7 @@ public abstract class MBeanAlertSource implements AlertSource {
 
     protected abstract void unregisterInternal();
 
-    private class ConnectionMonitor extends Thread{
+    private class ConnectionMonitor extends Thread {
 
         public void run(){
             while(!stopThreads){
@@ -137,7 +137,7 @@ public abstract class MBeanAlertSource implements AlertSource {
         }
     }
 
-    private class EstablishConnection extends Thread{
+    private class EstablishConnection extends Thread {
 
         public void run(){
             while(!stopThreads){
