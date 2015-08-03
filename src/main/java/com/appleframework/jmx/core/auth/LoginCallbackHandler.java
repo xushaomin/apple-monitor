@@ -23,6 +23,7 @@ import java.io.IOException;
  * @author Shashank
  */
 public class LoginCallbackHandler implements CallbackHandler {
+	
     private String username;
     private String password;
 
@@ -45,19 +46,16 @@ public class LoginCallbackHandler implements CallbackHandler {
      * @throws IOException
      * @throws UnsupportedCallbackException
      */
-    public void handle(Callback[] callbacks) throws IOException,
-            UnsupportedCallbackException {
-
+    public void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {
         for (int i = 0; i < callbacks.length; i++) {
             if (callbacks[i] instanceof NameCallback) {
                 NameCallback nc = (NameCallback)callbacks[i];
                 nc.setName(username);
-            }else if(callbacks[i] instanceof PasswordCallback){
+            } else if(callbacks[i] instanceof PasswordCallback){
                 PasswordCallback pc = (PasswordCallback)callbacks[i];
                 pc.setPassword(password.toCharArray());
             } else {
-                throw(new UnsupportedCallbackException(callbacks[i],
-                        "Callback handler not supported"));
+                throw(new UnsupportedCallbackException(callbacks[i], "Callback handler not supported"));
             }
         }
     }

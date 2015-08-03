@@ -44,7 +44,6 @@ import com.appleframework.jmx.core.util.Loggers;
  */
 public class Repository implements Serializable {
 
-
 	private static final long serialVersionUID = -8058067999672861635L;
 	
 	private static Logger logger = Loggers.getLogger(Repository.class);

@@ -29,8 +29,7 @@ public class ExternalUserRolesConfig extends Properties{
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger logger =
-            Loggers.getLogger(ExternalUserRolesConfig.class);
+	private static final Logger logger = Loggers.getLogger(ExternalUserRolesConfig.class);
 
     private String EXTERNAL_USER_ROLES_CONFIG_FILE = CoreUtils.getConfigDir() +
             "/external-user-roles.properties";
@@ -38,8 +37,7 @@ public class ExternalUserRolesConfig extends Properties{
     private final String ASTERIX = "*";
 
     /*  The only instance   */
-    private static ExternalUserRolesConfig instance =
-            new ExternalUserRolesConfig();
+    private static ExternalUserRolesConfig instance = new ExternalUserRolesConfig();
 
     /**
      *
@@ -47,8 +45,7 @@ public class ExternalUserRolesConfig extends Properties{
     private ExternalUserRolesConfig(){
       super();
       try{
-        InputStream property =
-                new FileInputStream(EXTERNAL_USER_ROLES_CONFIG_FILE);
+        InputStream property = new FileInputStream(EXTERNAL_USER_ROLES_CONFIG_FILE);
         load(property);
       }catch(Exception e){
           logger.error("Error reading " + EXTERNAL_USER_ROLES_CONFIG_FILE, e);

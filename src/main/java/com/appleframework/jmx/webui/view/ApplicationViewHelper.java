@@ -45,8 +45,7 @@ public class ApplicationViewHelper {
         if (appConfig.isCluster()) {
             for (ApplicationConfig childAppConfig : appConfig.getApplications()) {
                 if (!recorder.isApplicationUp(childAppConfig)) {
-                    // once an application is detected that is down, there is no need to proceed
-                    // further
+                    // once an application is detected that is down, there is no need to proceed further
                     isUp = false;
                     break;
                 }

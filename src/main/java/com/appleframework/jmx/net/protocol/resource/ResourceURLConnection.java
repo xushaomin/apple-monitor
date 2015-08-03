@@ -33,7 +33,6 @@ public class ResourceURLConnection extends URLConnection {
    }
 
     public void connect() throws IOException {
-        throw new RuntimeException("This is a dummy ResourceURLConnection. " +
-                "connect is not supported.");
+        throw new RuntimeException("This is a dummy ResourceURLConnection.connect is not supported.");
     }
 }

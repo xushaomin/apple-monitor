@@ -18,7 +18,7 @@ package com.appleframework.jmx.event;
 import java.util.EventObject;
 
 /**
- * The base event listener for the jmanage event system.
+ * The base event listener for the event system.
  * 
  * @author rkalra
  */
