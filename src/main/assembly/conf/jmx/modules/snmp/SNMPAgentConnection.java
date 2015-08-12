@@ -258,9 +258,7 @@ public class SNMPAgentConnection implements ServerConnection{
         return varBindList;
     }
 
-    private SNMPSequence getValue(String OID)
-            throws IOException, SNMPGetException, SNMPBadValueException {
-
+    private SNMPSequence getValue(String OID) throws IOException, SNMPGetException, SNMPBadValueException {
         SNMPVarBindList varBindList = comInterface.getMIBEntry(OID);
         return (SNMPSequence)varBindList.getSNMPObjectAt(0);
     }

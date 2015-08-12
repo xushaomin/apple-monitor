@@ -60,7 +60,6 @@ public abstract class JMXServerConnection implements ServerConnection{
      * @return Set of ObjectName objects
      */
     public Set<ObjectName> queryNames(ObjectName objectName){
-
         Class<?>[] methodSignature = new Class[]{javax.management.ObjectName.class, javax.management.QueryExp.class};
         Object[] methodArgs = new Object[]{toJMXObjectName(objectName), null};
         Set<ObjectName> mbeans = (Set)callMBeanServer("queryNames", methodSignature, methodArgs);
@@ -148,7 +147,7 @@ public abstract class JMXServerConnection implements ServerConnection{
         return toObjectAttributeList(output);
     }
 
-    // maps for storing jmanage notification objects to jmx notification
+    // maps for storing notification objects to jmx notification
     // object relationships
     protected Map<ObjectNotificationListener, Object> notifications = 
     	new HashMap<ObjectNotificationListener, Object>();
@@ -160,11 +159,9 @@ public abstract class JMXServerConnection implements ServerConnection{
                                         ObjectNotificationFilter filter,
                                         Object handback){
 
-        NotificationListener notifListener =
-                toJMXNotificationListener(listener);
+        NotificationListener notifListener = toJMXNotificationListener(listener);
         notifications.put(listener, notifListener);
-        NotificationFilter notifFilter =
-                toJMXNotificationFilter(filter);
+        NotificationFilter notifFilter = toJMXNotificationFilter(filter);
         notifFilters.put(filter, notifFilter);
 
         Class<?>[] methodSignature = new Class[]{javax.management.ObjectName.class,
@@ -393,9 +390,7 @@ public abstract class JMXServerConnection implements ServerConnection{
     }
 
     protected static ObjectParameterInfo toObjectParameterInfo(MBeanParameterInfo parameter){
-
-        return new ObjectParameterInfo(parameter.getName(),
-                parameter.getDescription(), parameter.getType());
+        return new ObjectParameterInfo(parameter.getName(), parameter.getDescription(), parameter.getType());
     }
 
     protected static List<ObjectAttribute> toObjectAttributeList(AttributeList attrList){
@@ -440,9 +435,7 @@ public abstract class JMXServerConnection implements ServerConnection{
                 n.getMessage(), n.getUserData());
     }
 
-    protected static NotificationListener toJMXNotificationListener(
-            final ObjectNotificationListener listener){
-
+    protected static NotificationListener toJMXNotificationListener(final ObjectNotificationListener listener){
         return new NotificationListener(){
             public void handleNotification(Notification notification, Object handback) {
                 listener.handleNotification(toObjectNotification(notification), handback);

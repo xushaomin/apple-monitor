@@ -148,7 +148,7 @@ public abstract class JMXServerConnection implements ServerConnection{
         return toObjectAttributeList(output);
     }
 
-    // maps for storing jmanage notification objects to jmx notification
+    // maps for storing notification objects to jmx notification
     // object relationships
     protected Map<ObjectNotificationListener, Object> notifications = 
     	new HashMap<ObjectNotificationListener, Object>();
