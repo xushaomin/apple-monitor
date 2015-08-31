@@ -8,7 +8,7 @@ public class Log4jLevelOperation {
 
 	public static String ERROR = "assignErrorLevel";
 
-	public static String DEBUG = "assignDebug";
+	public static String DEBUG = "assignDebugLevel";
 
 	public static String FATAL = "assignFatalLevel";
 
