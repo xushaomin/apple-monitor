@@ -114,7 +114,8 @@ public class ConnectorLoader {
      * @return InputStream for connector.xml or null if the xml file
      *         does not exist.
      */
-    private InputStream getConnectorXmlInputStream(File file) {
+    @SuppressWarnings("resource")
+	private InputStream getConnectorXmlInputStream(File file) {
         try {
             if (isJarFile(file)) {
                 JarFile jar = new JarFile(file);
