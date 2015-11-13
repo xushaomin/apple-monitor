@@ -15,7 +15,7 @@ public class DayStaticsTask {
 
 	@Resource
 	private DayStatService dayStatService;
-		
+		addNotificationListener
 	@SuppressWarnings("deprecation")
 	@Scheduled(cron = "30 0/1 * * * ?")
     public void jobNowDate() {
