@@ -263,4 +263,10 @@ public class SNMPAgentConnection implements ServerConnection {
         SNMPVarBindList varBindList = comInterface.getMIBEntry(OID);
         return (SNMPSequence)varBindList.getSNMPObjectAt(0);
     }
+
+	@Override
+	public Object getServerConnection() {
+		return null;
+	}
+    
 }

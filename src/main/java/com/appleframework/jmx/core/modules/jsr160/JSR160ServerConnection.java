@@ -27,12 +27,11 @@ import java.io.IOException;
  * date:  Aug 12, 2004
  * @author	Rakesh Kalra
  */
-public class JSR160ServerConnection extends JMXServerConnection{
+public class JSR160ServerConnection extends JMXServerConnection {
 
     private final JMXConnector jmxc;
 
-    public JSR160ServerConnection(JMXConnector jmxc,
-                                  MBeanServerConnection mbeanServer)
+    public JSR160ServerConnection(JMXConnector jmxc, MBeanServerConnection mbeanServer)
         throws IOException {
         super(mbeanServer, MBeanServerConnection.class);
         assert jmxc != null;
@@ -45,6 +44,13 @@ public class JSR160ServerConnection extends JMXServerConnection{
     public void close() throws IOException {
         jmxc.close();
     }
+
+	@Override
+	public Object getServerConnection() {
+		return jmxc;
+	}
+    
+    
 }
 
 

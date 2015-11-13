@@ -437,4 +437,10 @@ public abstract class JMXServerConnection implements ServerConnection {
 		}
 		return notificationFilter;
     }
+
+	@Override
+	public Object getServerConnection() {
+		return mbeanServer;
+	}
+    
 }

@@ -27,4 +27,9 @@ public class ConnectorAgentConnection extends JMXServerConnection {
     public ConnectorAgentConnection(MBeanServerConnection mbeanServer) {
         super(mbeanServer, MBeanServerConnection.class);
     }
+
+	@Override
+	public Object getServerConnection() {
+		return super.getServerConnection();
+	}
 }

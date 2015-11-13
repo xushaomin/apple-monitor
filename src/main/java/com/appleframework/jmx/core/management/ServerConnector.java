@@ -73,9 +73,7 @@ public class ServerConnector {
         }
     }
 
-    private static ServerConnectionFactory
-            getServerConnectionFactory(ModuleConfig moduleConfig, ClassLoader classLoader) {
-
+    private static ServerConnectionFactory getServerConnectionFactory(ModuleConfig moduleConfig, ClassLoader classLoader) {
         assert classLoader != null;
         ServerConnectionFactory factory = (ServerConnectionFactory)factories.get(moduleConfig.getConnectionFactory());
         if(factory == null){

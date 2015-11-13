@@ -119,4 +119,8 @@ public interface ServerConnection {
      * Closes the connection to the server
      */
     public void close() throws IOException;
+    
+    //
+    public Object getServerConnection();
+    
 }

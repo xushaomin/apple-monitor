@@ -37,6 +37,11 @@ public class LocalServerConnection extends JMXServerConnection{
      */
     public void close() throws IOException {
     }
+
+	@Override
+	public Object getServerConnection() {
+		return null;
+	}
 }
 
 
