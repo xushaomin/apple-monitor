@@ -34,6 +34,19 @@
 				close: function () {}
 			}, false);
 		});
+		
+		$("#listTable .btn_view").bind("click", function(){
+			var id = $(this).attr("operatId");
+			var title = $(this).attr("title");
+			
+			art.dialog.open('/jmx_view/view_monitor?id=' + id, {
+				id: 'viewFrame',
+				title: title,
+				width: '100%',
+    			height: '100%',
+				close: function () {}
+			}, false);
+		});
 	});
 </script>
 
@@ -92,12 +105,12 @@
         	<th width="5%">序号</th>
         	<th width="10%">应用名称</th>
         	<th width="12%">所在节点</th>
-        	<th width="20%">安装目录</th>
+        	<th width="28%">安装目录</th>
         	<th width="10%" class="sort" orderField="asc" name="totalSumNumber">端口(DUBBO/WEB/JMX/SOCKET)</th>
         	<th width="6%" class="sort" orderField="asc" name="totalSumNumber">状态</th>
         	<th width="8%">最新发布</th>
         	<th width="8%">创建时间</th>
-			<th width="15%">操作</th>
+			<th width="20%">操作</th>
         </tr>
         <#list page.list as info>
         <tr class="even">
@@ -123,13 +136,14 @@
 			</td>
 			<td>${info.createTime?string('yyyy-MM-dd')}</td>
 			<td>
-				<a class="btn_icon btn_edit"   href="javascript:;" operatId="${info.id}" title="编辑"></a>
+				<!--<a class="btn_icon btn_edit"   href="javascript:;" operatId="${info.id}" title="编辑"></a>
                 <a class="btn_icon btn_detail" href="javascript:;" operatId="${info.id}" title="详情"></a>
-                <a class="btn_icon btn_delete" href="javascript:;" operatId="${info.id}" title="删除"></a>
+                <a class="btn_icon btn_delete" href="javascript:;" operatId="${info.id}" title="删除"></a>-->
                 <@appStatus appId = info.id>
 					<#if isUp == true>
 						<a class="btn_icon btn_examine" href="javascript:;" operatId="${info.id}" title="日志信息"></a>
 						<a class="btn_icon btn_effect" href="javascript:;" operatId="${info.id}" title="修改日志级别"></a>
+						<a class="btn_icon btn_view" href="javascript:;" operatId="${info.id}" title="查看监控[${APP_CLUSTER_MAP[info.clusterId?string].clusterName},${NODE_INFO_MAP[info.nodeId?string].host}:${info.jmxPort}]"></a>
 					</#if>
 				</@appStatus>
 			</td>

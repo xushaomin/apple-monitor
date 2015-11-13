@@ -33,6 +33,28 @@
 	</filter-mapping>
 	<!-- end encodingFilter -->
 	
+	
+	<!-- jmx -->
+	<servlet>
+		<servlet-name>jm</servlet-name>
+		<servlet-class>com.appleframework.monitor.jmx.JMDispatcher</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>jm-longpolling</servlet-name>
+		<servlet-class>com.appleframework.monitor.jmx.JMPollingServer</servlet-class>
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>jm-longpolling</servlet-name>
+		<url-pattern>/jmsg</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>jm</servlet-name>
+		<url-pattern>/jm/*</url-pattern>
+	</servlet-mapping>
+	
+	
 	<servlet>
 		<servlet-name>spring-mvc</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

@@ -56,7 +56,7 @@ $().ready(function() {
 
                 	<li class="clearfix">
                 		<label for="code" class="tit">编码：<span class=" red">*</span></label>
-                		<input readonly class="c_input_text required" type="text" style="width:200px;" name="code" value="${info.code}" realValue="请输入编码" maxlength="200" />
+                		<input readonly class="c_input_text required" type="text" style="width:200px;" name="code" value="${(info.code)!}" realValue="请输入编码" maxlength="200" />
                 	</li>
 
                 	
