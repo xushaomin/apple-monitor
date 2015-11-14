@@ -52,7 +52,7 @@ public class NodeInfoServiceImpl implements NodeInfoService {
 	
 	public NodeInfoEntity getByHost(String host) {
 		NodeInfoEntityExample example = new NodeInfoEntityExample();
-		example.createCriteria().andHostEqualTo(host);
+		example.createCriteria().andHostEqualTo(host).andStateEqualTo((short)1);
 		List<NodeInfoEntity> list = nodeInfoEntityMapper.selectByExample(example);
 		if(list.size() > 0) {
 			return list.get(0);
@@ -81,7 +81,6 @@ public class NodeInfoServiceImpl implements NodeInfoService {
 			nodeInfo.setHost(host);
 			nodeInfo.setCreateTime(new Date());
 			nodeInfo.setDisorder(1);
-			nodeInfo.setHost(host);
 			nodeInfo.setIp(ip);
 			nodeInfo.setRemark("");
 			nodeInfo.setState(StateType.START.getIndex());

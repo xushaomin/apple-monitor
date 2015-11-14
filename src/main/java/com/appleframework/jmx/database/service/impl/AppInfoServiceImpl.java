@@ -52,7 +52,9 @@ public class AppInfoServiceImpl implements AppInfoService {
 	
 	public AppInfoEntity getByNodeAndCluster(Integer nodeId, Integer clusterId) {
 		AppInfoEntityExample example = new AppInfoEntityExample();
-		example.createCriteria().andNodeIdEqualTo(nodeId).andClusterIdEqualTo(clusterId);
+		example.createCriteria()
+			.andNodeIdEqualTo(nodeId).andClusterIdEqualTo(clusterId)
+			.andStateEqualTo((short)1);
 		List<AppInfoEntity> list = appInfoEntityMapper.selectByExample(example);
 		if(list.size() > 0) {
 			return list.get(0);
