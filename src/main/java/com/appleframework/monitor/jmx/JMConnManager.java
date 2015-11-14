@@ -7,10 +7,7 @@ import java.lang.management.MemoryMXBean;
 import java.lang.management.RuntimeMXBean;
 import java.lang.management.ThreadMXBean;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.management.MBeanServerConnection;
@@ -18,8 +15,6 @@ import javax.management.Notification;
 import javax.management.NotificationListener;
 import javax.management.remote.JMXConnectionNotification;
 import javax.management.remote.JMXConnector;
-import javax.management.remote.JMXConnectorFactory;
-import javax.management.remote.JMXServiceURL;
 import javax.management.remote.rmi.RMIConnector;
 
 import org.apache.log4j.Logger;
@@ -27,12 +22,8 @@ import org.apache.log4j.Logger;
 import com.alibaba.fastjson.JSONObject;
 import com.appleframework.jmx.core.config.ApplicationConfig;
 import com.appleframework.jmx.core.config.ApplicationConfigManager;
-import com.appleframework.jmx.core.management.ObjectName;
 import com.appleframework.jmx.core.management.ServerConnection;
-import com.appleframework.jmx.core.management.ServerConnectionProxy;
 import com.appleframework.jmx.core.management.ServerConnector;
-import com.appleframework.jmx.core.modules.JMXServerConnection;
-import com.appleframework.jmx.core.modules.jsr160.JSR160ServerConnection;
 import com.appleframework.jmx.core.util.Loggers;
 import com.appleframework.monitor.jmx.event.JMEevntCenter;
 import com.sun.management.HotSpotDiagnosticMXBean;
@@ -42,7 +33,6 @@ import com.sun.management.OperatingSystemMXBean;
  * 
  * @author @author code_czp@126.com-2015年5月12日
  */
-@SuppressWarnings("restriction")
 public class JMConnManager implements NotificationListener {
 
 	private static final Logger logger = Loggers.getLogger(JMConnManager.class);
@@ -63,14 +53,14 @@ public class JMConnManager implements NotificationListener {
     public static final String THREAD_BEAN_NAME = "java.lang:type=Threading";
     public static final String MEMORYNAME = "java.lang:type=Memory";
     
-    private static ConcurrentHashMap<String, JMXConnector> conns = new ConcurrentHashMap<String, JMXConnector>();
+    private static ConcurrentHashMap<String, RMIConnector> conns = new ConcurrentHashMap<String, RMIConnector>();
     private static final NotificationListener INSTANCE = new JMConnManager();
 
     public static void addConnInfo(ApplicationConfig appConfig) {
-    	JMXConnector jmxConnector = null;
+    	RMIConnector rmiConnector = null;
     	try {
-    		jmxConnector = getConnection(appConfig);
-    		conns.putIfAbsent(appConfig.getName(), jmxConnector);
+    		rmiConnector = getConnection(appConfig);
+    		conns.putIfAbsent(appConfig.getName(), rmiConnector);
             JSONObject quit = new JSONObject();
             quit.put("type", "add");
             quit.put("app", appConfig.getName());
@@ -96,37 +86,7 @@ public class JMConnManager implements NotificationListener {
         return getServer(appConfig, THREAD_BEAN_NAME, ThreadMXBean.class);
     }
 
-    public static RuntimeMXBean getRuntimeMBean(ApplicationConfig appConfig) throws IOException {
-    	
-    	ServerConnection connection = null;
-        try {
-            connection = ServerConnector.getServerConnection(appConfig);
-            RMIConnector obj1 = (RMIConnector)connection.getServerConnection();
-            System.out.println(obj1);
-            MBeanServerConnection obj = (MBeanServerConnection)connection.getServerConnection();
-            RuntimeMXBean ser = ManagementFactory.newPlatformMXBeanProxy(obj, RUNTIMNAME, RuntimeMXBean.class);
-            //if(connection instanceof JSR160ServerConnection) {
-            	//ServerConnectionProxy conn = (ServerConnectionProxy)connection;
-            	//conn.getMbeanServerClass()
-            //}
-            System.out.println(ser);
-            /*javax.management.ObjectName runtimeMXBean = (javax.management.ObjectName)connection.buildObjectName(RUNTIMNAME);
-            System.out.println(runtimeMXBean);
-            
-            ObjectName objectName = new ObjectName(RUNTIMNAME);
-            Object sets = connection.getAttribute(objectName, "Name");
-            System.out.println(sets);*/
-        }catch(Exception e){
-            logger.info("Application is down: " + appConfig.getName());
-        } finally {
-            try {
-                if (connection != null)
-                    connection.close();
-            } catch (IOException e) {
-                logger.warn(e.getMessage());
-            }
-        }
-        
+    public static RuntimeMXBean getRuntimeMBean(ApplicationConfig appConfig) throws IOException {        
         return getServer(appConfig, RUNTIMNAME, RuntimeMXBean.class);
     }
 
@@ -143,14 +103,14 @@ public class JMConnManager implements NotificationListener {
     }
 
     public static MBeanServerConnection getConn(ApplicationConfig appConfig) throws IOException {
-    	JMXConnector jmxConnector = conns.get(appConfig.getAppId());
-         if (jmxConnector == null) {
-        	 jmxConnector = getConnection(appConfig);
-        	 conns.putIfAbsent(appConfig.getAppId(), jmxConnector);
-        	 return jmxConnector.getMBeanServerConnection();
+    	RMIConnector rmiConnector = conns.get(appConfig.getAppId());
+         if (rmiConnector == null) {
+        	 rmiConnector = getConnection(appConfig);
+        	 conns.putIfAbsent(appConfig.getAppId(), rmiConnector);
+        	 return rmiConnector.getMBeanServerConnection();
          }
          else {
-        	return jmxConnector.getMBeanServerConnection();
+        	return rmiConnector.getMBeanServerConnection();
          }
     }
 
@@ -159,8 +119,8 @@ public class JMConnManager implements NotificationListener {
     }
 
     public static void close() {
-        Collection<JMXConnector> values = conns.values();
-        for (JMXConnector jmxConnector : values) {
+        Collection<RMIConnector> values = conns.values();
+        for (RMIConnector jmxConnector : values) {
             try {
             	jmxConnector.close();
             } catch (IOException e) {
@@ -169,17 +129,24 @@ public class JMConnManager implements NotificationListener {
         }
     }
 
-    private static JMXConnector getConnection(ApplicationConfig appConfig) {
+    private static RMIConnector getConnection(ApplicationConfig appConfig) {
         try {
         	//ServerConnection connection = ServerConnector.getServerConnection(appConfig);
-            Map<String, String[]> map = new HashMap<String, String[]>();
+            /*Map<String, String[]> map = new HashMap<String, String[]>();
             if (appConfig.getUsername() != null && appConfig.getPassword() != null) {
                 map.put(JMXConnector.CREDENTIALS, new String[] { appConfig.getUsername(), appConfig.getPassword() });
             }
             JMXConnector connector = JMXConnectorFactory.newJMXConnector(new JMXServiceURL(appConfig.getUrl()), map);
             connector.addConnectionNotificationListener(INSTANCE, null, appConfig.getName());
             connector.connect();
-            return connector;
+            return Connector;*/
+        	ServerConnection connection = ServerConnector.getServerConnection(appConfig);;
+        	Object object = connection.getServerConnection();
+        	if(object instanceof RMIConnector) {
+        		return (RMIConnector)object;
+        	} else {
+        		return null;
+        	}
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

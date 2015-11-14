@@ -43,7 +43,6 @@ import com.sun.management.OperatingSystemMXBean;
  * @author coder_czp@126.com
  *
  */
-@SuppressWarnings("restriction")
 @HttpMapping(url = "/jm")
 public class JMServer {
 
