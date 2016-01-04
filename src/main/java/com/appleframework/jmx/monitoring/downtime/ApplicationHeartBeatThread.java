@@ -64,7 +64,7 @@ public class ApplicationHeartBeatThread extends Thread {
         while (!end) {
             checkApplicationStatus();
             try {
-                sleep(30000);
+                sleep(60000);
             } catch (InterruptedException e) {
                 logger.warn("InterruptedException: " + e.getMessage());
             }
