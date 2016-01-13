@@ -6,7 +6,6 @@
 
 <#include "../commons/page_css.ftl" />
 <#include "../commons/page_js.ftl" />
-<script language="javascript" type="text/javascript" src="/js/My97DatePicker/WdatePicker.js"></script>
 
 <script type="text/javascript">
 	function callback() {
