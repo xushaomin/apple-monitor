@@ -11,10 +11,11 @@
 	<url>http://mvnrepo.appleframework.com</url>
 
 	<properties>
-		<apple.version>0.1.0.RELEASE</apple.version>
-		<config.version>0.1.1.RELEASE</config.version>
-		<boot.version>0.1.6.RELEASE</boot.version>
-		<orm.version>0.0.5.RELEASE</orm.version>
+		<spring.version>4.2.0.RELEASE</spring.version>
+		<apple.version>0.1.4.RELEASE</apple.version>
+		<config.version>0.1.5.RELEASE</config.version>
+		<boot.version>0.2.2.RELEASE</boot.version>
+		<orm.version>0.0.9.RELEASE</orm.version>
 		<aspectj.version>1.6.8</aspectj.version>
 	</properties>
 
@@ -128,13 +129,13 @@
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>1.0.0.GA</version>
+			<version>1.1.0.Final</version>
 		</dependency>
 				
 		<dependency>
       		<groupId>org.hibernate</groupId>
       		<artifactId>hibernate-validator</artifactId>
-      		<version>4.3.2.Final</version>
+      		<version>5.2.2.Final</version>
     	</dependency>
     			
 		<dependency>
@@ -168,17 +169,64 @@
         	<artifactId>log4j</artifactId>
         	<version>1.2.16</version>
       	</dependency>
-      	
-      	<dependency>
-	  		<groupId>com.appleframework.boot</groupId>
-	  		<artifactId>apple-boot-core</artifactId>
-	  		<version>0.1.5.RELEASE</version>
-		</dependency>
+      			
 		
+		
+		<!-- spring -->
 		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        
+        <!-- json -->
+        <dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.4</version>
+		</dependency>
+		
+        <dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+		  	<artifactId>jackson-core</artifactId>
+		  	<version>2.6.0</version>
+		</dependency>
+
+		<dependency>
+		  	<groupId>com.fasterxml.jackson.core</groupId>
+		  	<artifactId>jackson-databind</artifactId>
+		  	<version>2.6.0</version>
+		</dependency>
+
+		<dependency>
+		  	<groupId>com.fasterxml.jackson.core</groupId>
+		  	<artifactId>jackson-annotations</artifactId>
+		  	<version>2.6.0</version>
 		</dependency>
 		 
 	</dependencies>
