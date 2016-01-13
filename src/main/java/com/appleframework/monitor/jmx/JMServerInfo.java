@@ -36,6 +36,7 @@ import com.sun.management.OperatingSystemMXBean;
  * @author coder_czp@126.com
  *
  */
+@SuppressWarnings("restriction")
 public class JMServerInfo {
 
     public static JSONObject doDeadlockCheck(ApplicationConfig appConfig) {

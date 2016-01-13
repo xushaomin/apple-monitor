@@ -33,6 +33,7 @@ import com.sun.management.OperatingSystemMXBean;
  * 
  * @author @author code_czp@126.com-2015年5月12日
  */
+@SuppressWarnings("restriction")
 public class JMConnManager implements NotificationListener {
 
 	private static final Logger logger = Loggers.getLogger(JMConnManager.class);
