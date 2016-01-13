@@ -26,6 +26,7 @@ public class AlertConfig {
     private String alertName;
     private String[] alertDelivery;
     private String emailAddress;
+    private String mobiles;
     private AlertSourceConfig alertSourceConfig;
 
     public static String getNextAlertId(){
@@ -36,11 +37,12 @@ public class AlertConfig {
 
     }
     
-    public AlertConfig(String alertId, String alertName, String[] alertDelivery, String emailAddress){
+    public AlertConfig(String alertId, String alertName, String[] alertDelivery, String emailAddress, String mobiles){
         this.alertId = alertId;
         this.alertName = alertName;
         this.alertDelivery = alertDelivery;
         this.emailAddress = emailAddress;
+        this.mobiles = mobiles;
     }
 
     public String getEmailAddress() {
@@ -84,4 +86,13 @@ public class AlertConfig {
     public void setAlertSourceConfig(AlertSourceConfig alertSourceConfig) {
         this.alertSourceConfig = alertSourceConfig;
     }
+
+	public String getMobiles() {
+		return mobiles;
+	}
+
+	public void setMobiles(String mobiles) {
+		this.mobiles = mobiles;
+	}
+    
 }

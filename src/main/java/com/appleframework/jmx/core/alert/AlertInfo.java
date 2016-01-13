@@ -41,6 +41,7 @@ public class AlertInfo {
 	private String alertConfigId;
 	private String alertName;
 	private String emailAddress;
+	private String mobiles;
 
 	private String appId;
 	private String appName;
@@ -66,6 +67,7 @@ public class AlertInfo {
 		this.alertConfigId = alertConfig.getAlertId();
 		this.alertName = alertConfig.getAlertName();
 		this.emailAddress = alertConfig.getEmailAddress();
+		this.mobiles = alertConfig.getMobiles();
 		setObjectName(alertConfig.getAlertSourceConfig().getObjectName());
 		ApplicationConfig appConfig = alertConfig.getAlertSourceConfig().getApplicationConfig();
 		this.setApplicationId(appConfig.getApplicationId());
@@ -171,4 +173,13 @@ public class AlertInfo {
 	public void setApplicationName(String appName) {
 		this.appName = appName;
 	}
+
+	public String getMobiles() {
+		return mobiles;
+	}
+
+	public void setMobiles(String mobiles) {
+		this.mobiles = mobiles;
+	}
+	
 }
