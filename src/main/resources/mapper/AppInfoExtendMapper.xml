@@ -31,7 +31,11 @@
     <include refid="Base_Column_List" />
     from t_app_info where ( state = 0 or state = 1)
     <if test="se.keyword != null" >
-       and ( app_name like '%${se.keyword}%' or install_path like '%${se.keyword}%' )
+       and ( app_name like '%${se.keyword}%' or install_path like '%${se.keyword}%' or
+       		node_id in (
+       			select node.id from t_node_info as node where node.ip like '%${se.keyword}%' 
+       		)
+       )
     </if>
     <if test="so.nodeId != null" >
        and  node_id = ${so.nodeId} 
