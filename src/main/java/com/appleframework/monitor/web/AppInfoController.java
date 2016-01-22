@@ -131,6 +131,19 @@ public class AppInfoController extends BaseController {
 		}
 	}
 	
+	@RequestMapping(value = "/deletes", method = RequestMethod.POST)
+	public @ResponseBody
+	Message deletes(Integer[] ids) {
+		try {
+			for (Integer id : ids) {
+				appInfoService.delete(id);
+			}
+			return SUCCESS_MESSAGE;
+		} catch (Exception e) {
+			return Message.error(e.getMessage());
+		}
+	}
+	
 	/*
 	@RequestMapping(value = "/save")
 	public String save(Model model, AppInfo appInfo, HttpServletRequest request) {

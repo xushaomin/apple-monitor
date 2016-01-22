@@ -17,7 +17,7 @@
     <include refid="Base_Column_List" />
     
     from t_app_info as info, t_app_config as config
-    where ( info.state = 0 or info.state = 1)
+    where ( info.state = 0 or info.state = 1) and info.id = config.id
     <if test="se.keyword != null" >
        and ( info.app_name like '%${se.keyword}%' or info.install_path like '%${se.keyword}%' or
        		info.node_id in (
@@ -34,16 +34,16 @@
     order by 
     
     <choose>
-		<when test="se.orderField != null">
+		<when test="se.orderField != null and se.orderField != ''">
 			${se.orderField}
 		</when>
 		<otherwise>
-			id
+			info.id
 		</otherwise>
 	</choose>
     
     <choose>
-		<when test="se.orderDirection != null">
+		<when test="se.orderDirection != null and se.orderDirection != ''">
 			${se.orderDirection}
 		</when>
 		<otherwise>

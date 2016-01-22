@@ -41,5 +41,30 @@ public class AppAlertController extends BaseController {
 			return Message.error(e.getMessage());
 		}
 	}
+	
+	@RequestMapping(value = "/alert_starts", method = RequestMethod.POST)
+	public @ResponseBody Message starts(Integer[] ids) {
+		try {
+			for (Integer id : ids) {
+				appConfigService.updateIsAlert(id, true);
+			}
+			return SUCCESS_MESSAGE;
+		} catch (Exception e) {
+			return Message.error(e.getMessage());
+		}
+	}
+
+	@RequestMapping(value = "/alert_stops", method = RequestMethod.POST)
+	public @ResponseBody Message stops(Integer[] ids) {
+		try {
+			for (Integer id : ids) {
+				appConfigService.updateIsAlert(id, false);
+			}
+			return SUCCESS_MESSAGE;
+		} catch (Exception e) {
+			logger.error(e);
+			return Message.error(e.getMessage());
+		}
+	}
 
 }
