@@ -57,6 +57,9 @@
 <div class="con_right_main">
 
 	<form id="listForm" action="list" method="post">
+	<input type="hidden" id="orderField" name="orderField" value="${(so.orderField)!}" />
+	<input type="hidden" id="orderDirection" name="orderDirection" value="${(so.orderDirection)!}" />
+	
 	
     <!-- start of con_search -->
 	<div class="con_search">
@@ -105,15 +108,16 @@
         	<th width="15%">应用名称</th>
         	<th width="12%">所在节点</th>
         	<th width="20%">安装目录</th>
-        	<th width="10%" class="sort" orderField="asc" name="totalSumNumber">端口(DUBBO/WEB/JMX/SOCKET)</th>
-        	<th width="6%" class="sort" orderField="asc" name="totalSumNumber">状态</th>
+        	<th width="10%">端口(DUBBO/WEB/JMX/SOCKET)</th>
+        	<th width="6%">状态</th>
+        	<th width="6%" class="sort" orderField="desc" name="isAlert">监控</th>
         	<th width="8%">最新发布</th>
         	<th width="8%">创建时间</th>
 			<th width="20%">操作</th>
         </tr>
         <#list page.list as info>
         <tr class="even">
-        	<td><!--<input type="checkbox" name="ids" value="${info.id}" />-->${info.id}</td>
+        	<td><input type="checkbox" name="ids" value="${info.id}" />${info.id}</td>
         	<td style="text-align:left;">${APP_CLUSTER_MAP[info.clusterId?string].clusterName}</td>
 			<td>${NODE_INFO_MAP[info.nodeId?string].host}</td>
 			<td style="text-align:left;">${(info.installPath)!}</td>
@@ -128,6 +132,7 @@
 					</#if>
 				</@appStatus>
 			</td>
+			<td>${info.isAlert?string('启动','关闭')}</td>
 			<td>
 				<#if info.updateTime?exists>
 				${info.updateTime?string('yyyy-MM-dd')}
@@ -156,11 +161,11 @@
     
     	<!-- start of table_bottom -->
 	    <div class="table_bottom clearfix">
-	    	<!--
 	    	<div class="table_bottom_checkbox left">
-	    		<input id="selectAll" name="" type="checkbox" value=""><a id="deleteAll" class="btn" href="javascript:void(0);">删除选中</a>
+	    		<input id="selectAll" name="" type="checkbox" value="">
+	    		<a id="startAlertAll" class="btn" href="javascript:void(0);">启动报警</a>
+	    		<a id="stopAlertAll" class="btn" href="javascript:void(0);">关闭报警</a>
 	    	</div>
-	    	-->
 	        
 	         <!-- start of 分页 -->
 	   		<@paging pageNumber = page.pageNo totalPages = page.totalPage>
