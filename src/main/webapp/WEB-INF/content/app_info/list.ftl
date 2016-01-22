@@ -46,6 +46,58 @@
 				close: function () {}
 			}, false);
 		});
+		
+		$("#startAlertAll").bind("click", function(){
+			pop_warning("操作提示", "是否启动报警？", true, function() {
+						 $.ajax({
+							type : "post",
+							url : "/app_alert/alert_starts",
+							dataType: "json",
+							cache : false,
+							data: $("#listForm").serialize(),
+							success: function(data){
+								console.log("return data of delete: %s", data.type);
+								if(data.type == 'success') {
+									pop_succeed("操作成功", "启动成功。", function() {
+										callback();
+									}, false);
+								}
+								else {
+									pop_error("操作失败", data.content,function() {
+									} ,false);
+								}
+							}					
+						});
+						
+			});
+		});
+		
+		$("#stopAlertAll").bind("click", function(){
+			pop_warning("操作提示", "是否关闭报警？", true, function() {
+						 $.ajax({
+							type : "post",
+							url : "/app_alert/alert_stops",
+							dataType: "json",
+							cache : false,
+							data: $("#listForm").serialize(),
+							success: function(data){
+								console.log("return data of delete: %s", data.type);
+								if(data.type == 'success') {
+									pop_succeed("操作成功", "关闭成功。", function() {
+										callback();
+									}, false);
+								}
+								else {
+									pop_error("操作失败", data.content,function() {
+									} ,false);
+								}
+							}					
+						});
+						
+			});
+		});
+	
+		
 	});
 </script>
 
@@ -57,8 +109,8 @@
 <div class="con_right_main">
 
 	<form id="listForm" action="list" method="post">
-	<input type="hidden" id="orderField" name="orderField" value="${(so.orderField)!}" />
-	<input type="hidden" id="orderDirection" name="orderDirection" value="${(so.orderDirection)!}" />
+	<input type="hidden" id="orderField" name="orderField" value="${(so.orderField)!'info.id'}" />
+	<input type="hidden" id="orderDirection" name="orderDirection" value="${(so.orderDirection)!'desc'}" />
 	
 	
     <!-- start of con_search -->
@@ -110,7 +162,7 @@
         	<th width="20%">安装目录</th>
         	<th width="10%">端口(DUBBO/WEB/JMX/SOCKET)</th>
         	<th width="6%">状态</th>
-        	<th width="6%" class="sort" orderField="desc" name="isAlert">监控</th>
+        	<th width="6%" class="sort" orderField="desc" name="config.is_alert">监控</th>
         	<th width="8%">最新发布</th>
         	<th width="8%">创建时间</th>
 			<th width="20%">操作</th>
@@ -163,6 +215,7 @@
 	    <div class="table_bottom clearfix">
 	    	<div class="table_bottom_checkbox left">
 	    		<input id="selectAll" name="" type="checkbox" value="">
+	    		<a id="deleteAll" class="btn" href="javascript:void(0);">删除选中</a>
 	    		<a id="startAlertAll" class="btn" href="javascript:void(0);">启动报警</a>
 	    		<a id="stopAlertAll" class="btn" href="javascript:void(0);">关闭报警</a>
 	    	</div>
