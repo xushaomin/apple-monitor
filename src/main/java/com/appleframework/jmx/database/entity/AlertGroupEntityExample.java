@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class AppConfigEntityExample {
-	
+public class AlertGroupEntityExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public AppConfigEntityExample() {
+    public AlertGroupEntityExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -166,243 +165,73 @@ public class AppConfigEntityExample {
             return (Criteria) this;
         }
 
-        public Criteria andClusterIdIsNull() {
-            addCriterion("cluster_id is null");
+        public Criteria andNameIsNull() {
+            addCriterion("name is null");
             return (Criteria) this;
         }
 
-        public Criteria andClusterIdIsNotNull() {
-            addCriterion("cluster_id is not null");
+        public Criteria andNameIsNotNull() {
+            addCriterion("name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andClusterIdEqualTo(Integer value) {
-            addCriterion("cluster_id =", value, "clusterId");
+        public Criteria andNameEqualTo(String value) {
+            addCriterion("name =", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andClusterIdNotEqualTo(Integer value) {
-            addCriterion("cluster_id <>", value, "clusterId");
+        public Criteria andNameNotEqualTo(String value) {
+            addCriterion("name <>", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andClusterIdGreaterThan(Integer value) {
-            addCriterion("cluster_id >", value, "clusterId");
+        public Criteria andNameGreaterThan(String value) {
+            addCriterion("name >", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andClusterIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("cluster_id >=", value, "clusterId");
+        public Criteria andNameGreaterThanOrEqualTo(String value) {
+            addCriterion("name >=", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andClusterIdLessThan(Integer value) {
-            addCriterion("cluster_id <", value, "clusterId");
+        public Criteria andNameLessThan(String value) {
+            addCriterion("name <", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andClusterIdLessThanOrEqualTo(Integer value) {
-            addCriterion("cluster_id <=", value, "clusterId");
+        public Criteria andNameLessThanOrEqualTo(String value) {
+            addCriterion("name <=", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andClusterIdIn(List<Integer> values) {
-            addCriterion("cluster_id in", values, "clusterId");
+        public Criteria andNameLike(String value) {
+            addCriterion("name like", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andClusterIdNotIn(List<Integer> values) {
-            addCriterion("cluster_id not in", values, "clusterId");
+        public Criteria andNameNotLike(String value) {
+            addCriterion("name not like", value, "name");
             return (Criteria) this;
         }
 
-        public Criteria andClusterIdBetween(Integer value1, Integer value2) {
-            addCriterion("cluster_id between", value1, value2, "clusterId");
+        public Criteria andNameIn(List<String> values) {
+            addCriterion("name in", values, "name");
             return (Criteria) this;
         }
 
-        public Criteria andClusterIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("cluster_id not between", value1, value2, "clusterId");
+        public Criteria andNameNotIn(List<String> values) {
+            addCriterion("name not in", values, "name");
             return (Criteria) this;
         }
 
-        public Criteria andStateIsNull() {
-            addCriterion("state is null");
+        public Criteria andNameBetween(String value1, String value2) {
+            addCriterion("name between", value1, value2, "name");
             return (Criteria) this;
         }
 
-        public Criteria andStateIsNotNull() {
-            addCriterion("state is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andStateEqualTo(Short value) {
-            addCriterion("state =", value, "state");
-            return (Criteria) this;
-        }
-
-        public Criteria andStateNotEqualTo(Short value) {
-            addCriterion("state <>", value, "state");
-            return (Criteria) this;
-        }
-
-        public Criteria andStateGreaterThan(Short value) {
-            addCriterion("state >", value, "state");
-            return (Criteria) this;
-        }
-
-        public Criteria andStateGreaterThanOrEqualTo(Short value) {
-            addCriterion("state >=", value, "state");
-            return (Criteria) this;
-        }
-
-        public Criteria andStateLessThan(Short value) {
-            addCriterion("state <", value, "state");
-            return (Criteria) this;
-        }
-
-        public Criteria andStateLessThanOrEqualTo(Short value) {
-            addCriterion("state <=", value, "state");
-            return (Criteria) this;
-        }
-
-        public Criteria andStateIn(List<Short> values) {
-            addCriterion("state in", values, "state");
-            return (Criteria) this;
-        }
-
-        public Criteria andStateNotIn(List<Short> values) {
-            addCriterion("state not in", values, "state");
-            return (Criteria) this;
-        }
-
-        public Criteria andStateBetween(Short value1, Short value2) {
-            addCriterion("state between", value1, value2, "state");
-            return (Criteria) this;
-        }
-
-        public Criteria andStateNotBetween(Short value1, Short value2) {
-            addCriterion("state not between", value1, value2, "state");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsAlertIsNull() {
-            addCriterion("is_alert is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsAlertIsNotNull() {
-            addCriterion("is_alert is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsAlertEqualTo(Boolean value) {
-            addCriterion("is_alert =", value, "isAlert");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsAlertNotEqualTo(Boolean value) {
-            addCriterion("is_alert <>", value, "isAlert");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsAlertGreaterThan(Boolean value) {
-            addCriterion("is_alert >", value, "isAlert");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsAlertGreaterThanOrEqualTo(Boolean value) {
-            addCriterion("is_alert >=", value, "isAlert");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsAlertLessThan(Boolean value) {
-            addCriterion("is_alert <", value, "isAlert");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsAlertLessThanOrEqualTo(Boolean value) {
-            addCriterion("is_alert <=", value, "isAlert");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsAlertIn(List<Boolean> values) {
-            addCriterion("is_alert in", values, "isAlert");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsAlertNotIn(List<Boolean> values) {
-            addCriterion("is_alert not in", values, "isAlert");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsAlertBetween(Boolean value1, Boolean value2) {
-            addCriterion("is_alert between", value1, value2, "isAlert");
-            return (Criteria) this;
-        }
-
-        public Criteria andIsAlertNotBetween(Boolean value1, Boolean value2) {
-            addCriterion("is_alert not between", value1, value2, "isAlert");
-            return (Criteria) this;
-        }
-
-        public Criteria andAlertGroupIdIsNull() {
-            addCriterion("alert_group_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAlertGroupIdIsNotNull() {
-            addCriterion("alert_group_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andAlertGroupIdEqualTo(Integer value) {
-            addCriterion("alert_group_id =", value, "alertGroupId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAlertGroupIdNotEqualTo(Integer value) {
-            addCriterion("alert_group_id <>", value, "alertGroupId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAlertGroupIdGreaterThan(Integer value) {
-            addCriterion("alert_group_id >", value, "alertGroupId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAlertGroupIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("alert_group_id >=", value, "alertGroupId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAlertGroupIdLessThan(Integer value) {
-            addCriterion("alert_group_id <", value, "alertGroupId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAlertGroupIdLessThanOrEqualTo(Integer value) {
-            addCriterion("alert_group_id <=", value, "alertGroupId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAlertGroupIdIn(List<Integer> values) {
-            addCriterion("alert_group_id in", values, "alertGroupId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAlertGroupIdNotIn(List<Integer> values) {
-            addCriterion("alert_group_id not in", values, "alertGroupId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAlertGroupIdBetween(Integer value1, Integer value2) {
-            addCriterion("alert_group_id between", value1, value2, "alertGroupId");
-            return (Criteria) this;
-        }
-
-        public Criteria andAlertGroupIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("alert_group_id not between", value1, value2, "alertGroupId");
+        public Criteria andNameNotBetween(String value1, String value2) {
+            addCriterion("name not between", value1, value2, "name");
             return (Criteria) this;
         }
 

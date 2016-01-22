@@ -1,17 +1,27 @@
 package com.appleframework.monitor.task;
 
+import java.text.DateFormat;
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;  
 import org.springframework.stereotype.Component;
 
 import com.appleframework.core.utils.ObjectUtility;
 import com.appleframework.jmx.core.config.ApplicationConfig;
 import com.appleframework.jmx.core.config.ApplicationConfigManager;
+import com.appleframework.jmx.core.util.Loggers;
 import com.appleframework.jmx.database.constant.PlusType;
+import com.appleframework.jmx.database.entity.AlertContactEntity;
 import com.appleframework.jmx.database.entity.AppConfigEntity;
+import com.appleframework.jmx.database.service.AlertContactService;
 import com.appleframework.jmx.database.service.AppConfigService;
 import com.appleframework.jmx.webui.view.ApplicationViewHelper;
 import com.appleframework.monitor.plus.ThirdPlus;
@@ -19,6 +29,8 @@ import com.appleframework.monitor.service.PlusService;
 
 @Component("alertTask")
 public class AlertTask {
+	
+	private static final Logger logger = Loggers.getLogger(AlertTask.class);
 	
 	@Resource
 	private AppConfigService appConfigService;
@@ -28,6 +40,21 @@ public class AlertTask {
 	
 	@Resource
 	private PlusService plusService;
+	
+	@Resource
+	private AlertContactService alertContactService;
+	
+	private DateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm");
+	
+	private final static String SMS_TMEP = "九指运维短信报警\r\n"
+			+ "IP: {0}\r\n"
+			+ "应用名: {1}\r\n"
+			+ "告警时间: {2}\r\n"
+			+ "告警内容: {3}\r\n"
+			+ "告警等级: {4}\r\n"
+			+ "【牙牙关注】";
+	
+	public static Map<Integer, Integer> sendCountMap = new HashMap<Integer, Integer>();
 	
 	@Scheduled(cron = "30 */1 * * * ?")
     public void alert() {
@@ -44,9 +71,28 @@ public class AlertTask {
 				isUp = false;
 			}
 			
-			System.out.println(applicationConfig.getName() + ":" + isUp);
-			boolean result = plus.doSend("13760189357", "【牙牙关注】" + applicationConfig.getName() + "发生错误");
-			System.out.println(result);
+			if(!isUp) {
+				String message = MessageFormat.format(SMS_TMEP, 
+						applicationConfig.getHost(), 
+						applicationConfig.getName(), 
+						dateFormat.format(new Date()),
+						"DOWN",
+						"严重");
+				logger.info(message);
+				Integer count = sendCountMap.get(appConfigEntity.getId());
+				if(null == count || count == 0) {
+					List<AlertContactEntity> contactList = alertContactService.findListByGroupId(appConfigEntity.getAlertGroupId());
+					for (AlertContactEntity alertContactEntity : contactList) {
+						plus.doSend(alertContactEntity.getMobile(), message);
+					}
+					count = 1;
+					sendCountMap.put(appConfigEntity.getId(), count);
+				}
+				else {
+					count ++;
+					sendCountMap.put(appConfigEntity.getId(), count);
+				}
+			}
 		}
     }
 	

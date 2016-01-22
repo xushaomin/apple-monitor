@@ -13,6 +13,8 @@ public class AppConfigEntity implements Serializable {
 
     private Boolean isAlert;
 
+    private Integer alertGroupId;
+
     private Date createTime;
 
     private Date updateTime;
@@ -51,6 +53,14 @@ public class AppConfigEntity implements Serializable {
 
     public void setIsAlert(Boolean isAlert) {
         this.isAlert = isAlert;
+    }
+
+    public Integer getAlertGroupId() {
+        return alertGroupId;
+    }
+
+    public void setAlertGroupId(Integer alertGroupId) {
+        this.alertGroupId = alertGroupId;
     }
 
     public Date getCreateTime() {

@@ -29,6 +29,7 @@ import com.appleframework.jmx.database.service.AppClusterService;
 import com.appleframework.jmx.database.service.AppInfoService;
 import com.appleframework.jmx.database.service.NodeInfoService;
 import com.appleframework.jmx.monitoring.downtime.ApplicationDowntimeService;
+import com.appleframework.monitor.task.AlertTask;
 
 @Component
 @Aspect
@@ -172,6 +173,7 @@ public class AppInfoInterceptor {
 				}
 			}
 			appClusterService.calibratedAppNum(appInfo.getClusterId());
+			AlertTask.sendCountMap.remove(id);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
