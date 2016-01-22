@@ -1,12 +1,35 @@
-﻿# Host: 120.25.126.11  (Version: 5.6.24-log)
-# Date: 2015-07-17 11:51:28
-# Generator: MySQL-Front 5.3  (Build 4.214)
+DROP TABLE IF EXISTS `t_alert_contact`;
+CREATE TABLE `t_alert_contact` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) DEFAULT NULL COMMENT '名称',
+  `mobile` varchar(128) DEFAULT NULL COMMENT '手机',
+  `email` varchar(128) DEFAULT NULL COMMENT '邮箱',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
-/*!40101 SET NAMES utf8 */;
 
-#
-# Structure for table "t_app_cluster"
-#
+DROP TABLE IF EXISTS `t_alert_group`;
+CREATE TABLE `t_alert_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) DEFAULT NULL COMMENT '名称',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+
+DROP TABLE IF EXISTS `t_alert_group_contact`;
+CREATE TABLE `t_alert_group_contact` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) DEFAULT NULL COMMENT '分组ID',
+  `contact_id` int(11) DEFAULT NULL COMMENT '联系人ID',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
 
 DROP TABLE IF EXISTS `t_app_cluster`;
 CREATE TABLE `t_app_cluster` (
@@ -21,26 +44,22 @@ CREATE TABLE `t_app_cluster` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6840 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=6895 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
-#
-# Structure for table "t_app_config"
-#
 
 DROP TABLE IF EXISTS `t_app_config`;
 CREATE TABLE `t_app_config` (
   `id` int(11) NOT NULL DEFAULT '0',
   `cluster_id` int(11) DEFAULT NULL COMMENT '应用集群ID',
-  `app_config` text NOT NULL COMMENT 'JMX的XML配置',
+  `app_config` varchar(2550) NOT NULL DEFAULT '' COMMENT 'JMX的XML配置',
   `state` smallint(3) NOT NULL DEFAULT '0' COMMENT '状态',
+  `is_alert` tinyint(1) DEFAULT '0' COMMENT '是否报警 =1是 =0否',
+  `alert_group_id` int(11) DEFAULT NULL COMMENT '报警分组ID',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
-#
-# Structure for table "t_app_downtime"
-#
 
 DROP TABLE IF EXISTS `t_app_downtime`;
 CREATE TABLE `t_app_downtime` (
@@ -52,23 +71,18 @@ CREATE TABLE `t_app_downtime` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Structure for table "t_app_downtime_history"
-#
 
 DROP TABLE IF EXISTS `t_app_downtime_history`;
 CREATE TABLE `t_app_downtime_history` (
-  `id` int(11) NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app_id` int(11) DEFAULT '0' COMMENT '节点ID',
   `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `end_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#
-# Structure for table "t_app_info"
-#
 
 DROP TABLE IF EXISTS `t_app_info`;
 CREATE TABLE `t_app_info` (
@@ -76,6 +90,7 @@ CREATE TABLE `t_app_info` (
   `node_id` int(11) NOT NULL DEFAULT '0' COMMENT '节点ID',
   `cluster_id` int(11) NOT NULL DEFAULT '0' COMMENT '分组ID',
   `app_name` varchar(255) DEFAULT NULL COMMENT '应用名称',
+  `app_version` varchar(255) DEFAULT NULL COMMENT '应用版本',
   `web_port` int(11) DEFAULT NULL COMMENT 'Web端口',
   `web_context` varchar(255) DEFAULT NULL COMMENT 'Web访问路径',
   `jmx_port` int(11) DEFAULT NULL COMMENT 'Jmx端口',
@@ -90,11 +105,8 @@ CREATE TABLE `t_app_info` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6842 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6952 DEFAULT CHARSET=utf8;
 
-#
-# Structure for table "t_node_info"
-#
 
 DROP TABLE IF EXISTS `t_node_info`;
 CREATE TABLE `t_node_info` (
@@ -108,4 +120,19 @@ CREATE TABLE `t_node_info` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `t_third_plus`;
+CREATE TABLE `t_third_plus` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` int(11) DEFAULT NULL COMMENT '类型 =1短信 =2推送 =3邮件 =4微信',
+  `name` varchar(128) DEFAULT NULL COMMENT '名称',
+  `third_key` varchar(128) DEFAULT NULL COMMENT '认证帐号',
+  `third_secret` varchar(128) DEFAULT NULL COMMENT '认证密码',
+  `third_extend` varchar(255) DEFAULT NULL COMMENT '认证扩展',
+  `third_class` varchar(256) DEFAULT NULL COMMENT '第三方扩展执行类',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
