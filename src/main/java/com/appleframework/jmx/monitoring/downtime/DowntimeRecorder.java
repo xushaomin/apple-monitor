@@ -124,7 +124,7 @@ public class DowntimeRecorder implements EventListener {
         try {
             addApplicationToDB(appConfig.getApplicationId(), recordingSince);
 		} catch (Exception e) {
-			// TODO: handle exception
+			logger.error(e);
 		}
         downtimesMap.put(appConfig, new ApplicationDowntimeHistory(recordingSince));
     }
@@ -178,17 +178,27 @@ public class DowntimeRecorder implements EventListener {
     }
     
     private void addApplicationToDB(String applicationId, long recordingSince){
-    	AppDowntimeEntity appDowntime = new AppDowntimeEntity();
-    	appDowntime.setId(Integer.parseInt(applicationId));
-    	appDowntime.setRecordingStart(new Timestamp(recordingSince));
-    	appDowntime.setRecordingEnd(new Timestamp(recordingSince + 630720000000L));
-    	appDowntime.setCreateTime(new Date());
-    	appDowntimeService.insert(appDowntime);
+    	Integer id = Integer.parseInt(applicationId);
+    	AppDowntimeEntity appDowntime = appDowntimeService.get(id);
+    	if(null != appDowntime) {
+	    	appDowntime.setRecordingStart(new Timestamp(recordingSince));
+	    	appDowntime.setRecordingEnd(new Timestamp(recordingSince + 630720000000L));
+	    	appDowntime.setCreateTime(new Date());
+	    	appDowntimeService.update(appDowntime);
+    	}
+    	else {
+    		appDowntime = new AppDowntimeEntity();
+    		appDowntime.setId(id);
+	    	appDowntime.setRecordingStart(new Timestamp(recordingSince));
+	    	appDowntime.setRecordingEnd(new Timestamp(recordingSince + 630720000000L));
+	    	appDowntime.setCreateTime(new Date());
+	    	appDowntimeService.insert(appDowntime);
+    	}
     }
     
     private void recordDowntime(String applicationId, long downtimeBegin, long downtimeEnd){
     	AppDowntimeHistoryEntity history = new AppDowntimeHistoryEntity();
-    	history.setId(Integer.parseInt(applicationId));
+    	history.setAppId(Integer.parseInt(applicationId));
     	history.setStartTime(new Timestamp(downtimeBegin));
     	history.setEndTime(new Timestamp(downtimeEnd));
     	appDowntimeHistoryService.insert(history);
@@ -213,7 +223,7 @@ public class DowntimeRecorder implements EventListener {
 			}
            
         } catch (Exception e) {
-			// TODO: handle exception
+        	logger.error(e);
 		}
     }
 
