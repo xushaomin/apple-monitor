@@ -67,7 +67,7 @@ public class JMConnManager implements NotificationListener {
             quit.put("app", appConfig.getName());
             JMEevntCenter.getInstance().send(quit);
 		} catch (Exception e) {
-			logger.error(appConfig.getName() + ":" + e.getMessage());
+			logger.error(appConfig.getName() + " at " + appConfig.getHost() + ":" + appConfig.getPort() + " is Connection refused!!!");
 		}
     }
     

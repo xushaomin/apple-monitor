@@ -8,11 +8,11 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +35,7 @@ import com.appleframework.jmx.monitoring.downtime.ApplicationDowntimeService;
 @Lazy(false)
 public class AppInfoInterceptor {
 	
-	private static final Log logger = LogFactory.getLog(AppInfoInterceptor.class);
+	private final static Logger logger = LoggerFactory.getLogger(AppInfoInterceptor.class);
 
 	private volatile boolean running = true;
 
@@ -151,34 +151,29 @@ public class AppInfoInterceptor {
 				try {
 					applicationConfigManager.addOrUpdateApplication(appConfig);
 				} catch (Exception e) {
-					e.printStackTrace();
-					logger.error(e);
+					logger.error(e.getMessage());
 				}
 				try {
 					applicationDowntimeService.addOrUpdateApplication(appConfig);
 				} catch (Exception e) {
-					e.printStackTrace();
-					logger.error(e);
+					logger.error(e.getMessage());
 				}
 			}
 			else {
 				try {
 					applicationConfigManager.deleteApplication(id.toString());
 				} catch (Exception e) {
-					e.printStackTrace();
-					logger.error(e);
+					logger.error(e.getMessage());
 				}
 				try {
 					applicationDowntimeService.deleteApplication(id.toString());
 				} catch (Exception e) {
-					e.printStackTrace();
-					logger.error(e);
+					logger.error(e.getMessage());
 				}
 			}
 			appClusterService.calibratedAppNum(appInfo.getClusterId());
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error(e);
+			logger.error(e.getMessage());
 		}
 
 	}

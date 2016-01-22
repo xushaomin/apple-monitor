@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.appleframework.jmx.core.config.ApplicationClusterConfig;
 import com.appleframework.jmx.core.config.ApplicationConfig;
 import com.appleframework.jmx.core.config.ApplicationConfigManager;
-import com.appleframework.jmx.core.config.ConfigReader;
 import com.appleframework.jmx.core.modules.jsr160.JSR160ApplicationConfig;
 import com.appleframework.jmx.core.util.Loggers;
 import com.appleframework.jmx.database.entity.AppClusterEntity;
@@ -40,7 +39,7 @@ public class AppConfigController extends BaseController {
 	/*ApplicationDowntimeService service = new ApplicationDowntimeService();
     List applications = ApplicationConfigManager.getApplications();*/
 
-    private static final Logger logger = Loggers.getLogger(ConfigReader.class);
+    private static final Logger logger = Loggers.getLogger(AppConfigController.class);
 
 	@Resource
 	private AppInfoService appInfoService;
@@ -66,7 +65,7 @@ public class AppConfigController extends BaseController {
 	private String viewModel = "app_config/";
 	
 	@RequestMapping(value = "/reset")
-	public String reset(Model model, String type, HttpServletRequest request) {
+	public String reset(Model model, HttpServletRequest request) {
 		
 		List<NodeInfoEntity> nodeInfoList = nodeInfoService.findAll();
 		List<AppClusterEntity> appClusterList = appClusterService.findAll();
@@ -127,7 +126,7 @@ public class AppConfigController extends BaseController {
 	
 	
 	@RequestMapping(value = "/all")
-	public @ResponseBody List<ApplicationConfig> all(Model model, String type, HttpServletRequest request) {
+	public @ResponseBody List<ApplicationConfig> all(Model model, HttpServletRequest request) {
 		
 		List<ApplicationConfig> list1 = ApplicationConfigManager.getAllApplications();
 			

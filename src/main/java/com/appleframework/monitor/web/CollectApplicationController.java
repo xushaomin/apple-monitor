@@ -34,6 +34,8 @@ public class CollectApplicationController extends BaseController {
 		try {
 
 			String appName = request.getParameter("application.name");
+			String appVersion = request.getParameter("application.version");
+			
 			String nodeIp = request.getParameter("node.ip");
 			String nodeHost = request.getParameter("node.host");
 
@@ -47,7 +49,7 @@ public class CollectApplicationController extends BaseController {
 			String confGroup = request.getParameter("deploy.group");
 			String confDataId = request.getParameter("deploy.dataId");
 			String confEnv = request.getParameter("deploy.env");
-
+			
 			int webPort = 0;
 			int jmxPort = 0;
 			int servicePort = 0;
@@ -67,6 +69,7 @@ public class CollectApplicationController extends BaseController {
 
 			AppInfoEntity appInfo = new AppInfoEntity();
 			appInfo.setAppName(appName);
+			appInfo.setAppVersion(appVersion);
 			appInfo.setClusterId(appCluster.getId());
 			appInfo.setNodeId(nodeInfo.getId());
 			appInfo.setInstallPath(installPath);
