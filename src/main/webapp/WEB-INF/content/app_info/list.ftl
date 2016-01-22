@@ -48,28 +48,16 @@
 		});
 		
 		$("#startAlertAll").bind("click", function(){
-			pop_warning("操作提示", "是否启动报警？", true, function() {
-						 $.ajax({
-							type : "post",
-							url : "/app_alert/alert_starts",
-							dataType: "json",
-							cache : false,
-							data: $("#listForm").serialize(),
-							success: function(data){
-								console.log("return data of delete: %s", data.type);
-								if(data.type == 'success') {
-									pop_succeed("操作成功", "启动成功。", function() {
-										callback();
-									}, false);
-								}
-								else {
-									pop_error("操作失败", data.content,function() {
-									} ,false);
-								}
-							}					
-						});
-						
-			});
+		
+			var chk_value =[]; 
+			$('input[name="ids"]:checked').each(function(){ 
+				chk_value.push($(this).val()); 
+			}); 
+			art.dialog.open('/app_alert/alert_group_select?ids=' + chk_value, {
+				id: 'viewFrame',
+				title: '选择分组',
+				close: function () {}
+			}, false);
 		});
 		
 		$("#stopAlertAll").bind("click", function(){
