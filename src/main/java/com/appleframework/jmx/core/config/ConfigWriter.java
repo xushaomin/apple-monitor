@@ -83,6 +83,7 @@ public class ConfigWriter {
         	entity.setClusterId(clusterId);
         	entity.setState(StateType.START.getIndex());
         	entity.setAppConfig(content);
+        	entity.setIsAlert(false);
         	appConfigService.insert(entity);
 		}
         else {
@@ -301,8 +302,11 @@ public class ConfigWriter {
             for(int i=0;i<alertDelivery.length;i++){
                 Element alertDel = new Element(ConfigConstants.ALERT_DELIVERY);
                 alertDel.setAttribute(ConfigConstants.ALERT_DELIVERY_TYPE, alertDelivery[i]);
-                if(alertDelivery[i].equals(AlertDeliveryConstants.EMAIL_ALERT_DELIVERY_TYPE)){
+                if(alertDelivery[i].equals(AlertDeliveryConstants.ALERT_DELIVERY_TYPE_EMAIL)){
                     alertDel.setAttribute(ConfigConstants.ALERT_EMAIL_ADDRESS, alertConfig.getEmailAddress());
+                }
+                if(alertDelivery[i].equals(AlertDeliveryConstants.ALERT_DELIVERY_TYPE_SMS)){
+                    alertDel.setAttribute(ConfigConstants.ALERT_SMS_MOBILE, alertConfig.getMobiles());
                 }
                 alertElement.addContent(alertDel);
             }

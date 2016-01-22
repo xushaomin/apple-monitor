@@ -50,6 +50,7 @@ public interface ConfigConstants {
     public String ALERT_DELIVERY = "delivery";
     public String ALERT_DELIVERY_TYPE="type";
     public String ALERT_EMAIL_ADDRESS="emailAddress";
+    public String ALERT_SMS_MOBILE="mobile";
     public String ALERT_SOURCE = "source";
     public String ALERT_SOURCE_TYPE = "type";
     public String ALERT_SOURCE_MBEAN = "mbean";

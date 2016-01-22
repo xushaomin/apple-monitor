@@ -9,13 +9,15 @@ public class AppConfigEntity implements Serializable {
 
     private Integer clusterId;
 
-    private String appConfig;
-
     private Short state;
+
+    private Boolean isAlert;
 
     private Date createTime;
 
     private Date updateTime;
+
+    private String appConfig;
 
     private static final long serialVersionUID = 1L;
 
@@ -35,20 +37,20 @@ public class AppConfigEntity implements Serializable {
         this.clusterId = clusterId;
     }
 
-    public String getAppConfig() {
-        return appConfig;
-    }
-
-    public void setAppConfig(String appConfig) {
-        this.appConfig = appConfig == null ? null : appConfig.trim();
-    }
-
     public Short getState() {
         return state;
     }
 
     public void setState(Short state) {
         this.state = state;
+    }
+
+    public Boolean getIsAlert() {
+        return isAlert;
+    }
+
+    public void setIsAlert(Boolean isAlert) {
+        this.isAlert = isAlert;
     }
 
     public Date getCreateTime() {
@@ -65,5 +67,13 @@ public class AppConfigEntity implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getAppConfig() {
+        return appConfig;
+    }
+
+    public void setAppConfig(String appConfig) {
+        this.appConfig = appConfig == null ? null : appConfig.trim();
     }
 }

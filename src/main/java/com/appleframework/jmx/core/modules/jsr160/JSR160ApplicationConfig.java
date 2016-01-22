@@ -29,10 +29,10 @@ public class JSR160ApplicationConfig extends ApplicationConfig {
 	public static String APPLICATION_CONFIG_KEY = "jsr160";
 
     public String getHost() {
-        return null;
+        return super.getHost();
     }
 
     public Integer getPort() {
-        return null;
+        return super.getPort();
     }
 }

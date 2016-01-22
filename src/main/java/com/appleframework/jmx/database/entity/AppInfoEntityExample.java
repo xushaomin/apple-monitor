@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 public class AppInfoEntityExample {
-	
     protected String orderByClause;
 
     protected boolean distinct;
@@ -353,6 +352,76 @@ public class AppInfoEntityExample {
 
         public Criteria andAppNameNotBetween(String value1, String value2) {
             addCriterion("app_name not between", value1, value2, "appName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppVersionIsNull() {
+            addCriterion("app_version is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppVersionIsNotNull() {
+            addCriterion("app_version is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppVersionEqualTo(String value) {
+            addCriterion("app_version =", value, "appVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppVersionNotEqualTo(String value) {
+            addCriterion("app_version <>", value, "appVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppVersionGreaterThan(String value) {
+            addCriterion("app_version >", value, "appVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppVersionGreaterThanOrEqualTo(String value) {
+            addCriterion("app_version >=", value, "appVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppVersionLessThan(String value) {
+            addCriterion("app_version <", value, "appVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppVersionLessThanOrEqualTo(String value) {
+            addCriterion("app_version <=", value, "appVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppVersionLike(String value) {
+            addCriterion("app_version like", value, "appVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppVersionNotLike(String value) {
+            addCriterion("app_version not like", value, "appVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppVersionIn(List<String> values) {
+            addCriterion("app_version in", values, "appVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppVersionNotIn(List<String> values) {
+            addCriterion("app_version not in", values, "appVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppVersionBetween(String value1, String value2) {
+            addCriterion("app_version between", value1, value2, "appVersion");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppVersionNotBetween(String value1, String value2) {
+            addCriterion("app_version not between", value1, value2, "appVersion");
             return (Criteria) this;
         }
 

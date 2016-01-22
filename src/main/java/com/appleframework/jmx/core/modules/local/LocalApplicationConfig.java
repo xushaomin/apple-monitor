@@ -25,11 +25,11 @@ import com.appleframework.jmx.core.config.ApplicationConfig;
 public class LocalApplicationConfig extends ApplicationConfig {
 
     public String getHost() {
-        return null;
+        return super.getHost();
     }
 
     public Integer getPort() {
-        return null;
+        return super.getPort();
     }
     
     public String getURL() {

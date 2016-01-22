@@ -29,11 +29,11 @@ public class ConnectorApplicationConfig extends ApplicationConfig {
 	}
 
 	public String getHost() {
-		return null;
+		return super.getHost();
 	}
 
 	public Integer getPort() {
-		return null;
+		return super.getPort();
 	}
 
 	public String getURL() {

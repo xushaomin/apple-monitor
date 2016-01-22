@@ -7,6 +7,8 @@ public class AppDowntimeHistoryEntity implements Serializable {
 	
     private Integer id;
     
+    private Integer appId;
+    
     private Date startTime;
 
     private Date endTime;
@@ -24,6 +26,14 @@ public class AppDowntimeHistoryEntity implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+	public Integer getAppId() {
+		return appId;
+	}
+
+	public void setAppId(Integer appId) {
+		this.appId = appId;
+	}
 
 	public Date getStartTime() {
         return startTime;

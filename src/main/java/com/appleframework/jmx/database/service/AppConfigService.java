@@ -11,6 +11,8 @@ public interface AppConfigService {
 	
 	public void update(AppConfigEntity appConfig);
 	
+	public void updateIsAlert(Integer id, boolean isAlert);
+	
 	public void insert(AppConfigEntity appConfig);
 		
 	public List<AppConfigEntity> findAll();
@@ -18,5 +20,7 @@ public interface AppConfigService {
 	public List<AppConfigEntity> findListByClusterId(Integer clusterId);
 	
 	public List<AppConfigEntity> findListByClusterIdAndStart(Integer clusterId);
+	
+	public List<AppConfigEntity> findListByIsAlert();
 	
 }

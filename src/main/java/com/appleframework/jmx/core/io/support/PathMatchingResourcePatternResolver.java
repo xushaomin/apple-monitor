@@ -34,8 +34,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.appleframework.jmx.core.io.DefaultResourceLoader;
 import com.appleframework.jmx.core.io.FileSystemResource;
@@ -175,7 +175,7 @@ import com.appleframework.jmx.core.util.StringUtils;
  */
 public class PathMatchingResourcePatternResolver implements ResourcePatternResolver {
 
-	private static final Log logger = LogFactory.getLog(PathMatchingResourcePatternResolver.class);
+	private final static Logger logger = LoggerFactory.getLogger(PathMatchingResourcePatternResolver.class);
 
 	private static Method equinoxResolveMethod;
 

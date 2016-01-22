@@ -260,9 +260,11 @@ public class ConfigReader implements ConfigConstants {
                 for (int i = 0; i < alertDeliveryList.size(); i++) {
                     Element alertDel = (Element) alertDeliveryList.get(i);
                     alertDelivery[i] = alertDel.getAttributeValue(ALERT_DELIVERY_TYPE);
-                    if(alertDelivery[i].equals(AlertDeliveryConstants.EMAIL_ALERT_DELIVERY_TYPE)){
-                        alertConfig.setEmailAddress(alertDel.getAttributeValue(
-                                ConfigConstants.ALERT_EMAIL_ADDRESS));
+                    if(alertDelivery[i].equals(AlertDeliveryConstants.ALERT_DELIVERY_TYPE_EMAIL)){
+                        alertConfig.setEmailAddress(alertDel.getAttributeValue(ConfigConstants.ALERT_EMAIL_ADDRESS));
+                    }
+                    if(alertDelivery[i].equals(AlertDeliveryConstants.ALERT_DELIVERY_TYPE_SMS)){
+                        alertConfig.setEmailAddress(alertDel.getAttributeValue(ConfigConstants.ALERT_SMS_MOBILE));
                     }
                 }
                 alertConfig.setAlertDelivery(alertDelivery);
@@ -272,8 +274,7 @@ public class ConfigReader implements ConfigConstants {
                 String sourceType = source.getAttributeValue(ALERT_SOURCE_TYPE);
                 String mbean = source.getAttributeValue(ALERT_SOURCE_MBEAN);
                 AlertSourceConfig sourceConfig = null;
-                if (sourceType.equals(AlertSourceConfig.SOURCE_TYPE_NOTIFICATION))
-                {
+                if (sourceType.equals(AlertSourceConfig.SOURCE_TYPE_NOTIFICATION)) {
                     String notificationType = source.getAttributeValue(ALERT_SOURCE_NOTIFICATION_TYPE);
                     sourceConfig = new AlertSourceConfig(mbean, notificationType);
                 } else if (sourceType.equals(AlertSourceConfig.SOURCE_TYPE_GAUGE_MONITOR)) {

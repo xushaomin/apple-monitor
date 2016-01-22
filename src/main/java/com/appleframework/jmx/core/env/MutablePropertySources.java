@@ -20,11 +20,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.appleframework.jmx.core.util.StringUtils;
-
 
 /**
  * Default implementation of the {@link PropertySources} interface.
@@ -42,37 +41,19 @@ import com.appleframework.jmx.core.util.StringUtils;
  */
 public class MutablePropertySources implements PropertySources {
 
-	private final Log logger;
+	private final static Logger logger = LoggerFactory.getLogger(MutablePropertySources.class);
 
 	private final List<PropertySource<?>> propertySourceList = new CopyOnWriteArrayList<PropertySource<?>>();
-
-
-	/**
-	 * Create a new {@link MutablePropertySources} object.
-	 */
-	public MutablePropertySources() {
-		this.logger = LogFactory.getLog(getClass());
-	}
 
 	/**
 	 * Create a new {@code MutablePropertySources} from the given propertySources
 	 * object, preserving the original order of contained {@code PropertySource} objects.
 	 */
 	public MutablePropertySources(PropertySources propertySources) {
-		this();
 		for (PropertySource<?> propertySource : propertySources) {
 			addLast(propertySource);
 		}
 	}
-
-	/**
-	 * Create a new {@link MutablePropertySources} object and inherit the given logger,
-	 * usually from an enclosing {@link Environment}.
-	 */
-	MutablePropertySources(Log logger) {
-		this.logger = logger;
-	}
-
 
 	@Override
 	public boolean contains(String name) {

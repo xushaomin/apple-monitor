@@ -13,6 +13,8 @@ public class AppInfoEntity implements Serializable {
 
     private String appName;
 
+    private String appVersion;
+
     private Integer webPort;
 
     private String webContext;
@@ -71,6 +73,14 @@ public class AppInfoEntity implements Serializable {
 
     public void setAppName(String appName) {
         this.appName = appName == null ? null : appName.trim();
+    }
+
+    public String getAppVersion() {
+        return appVersion;
+    }
+
+    public void setAppVersion(String appVersion) {
+        this.appVersion = appVersion == null ? null : appVersion.trim();
     }
 
     public Integer getWebPort() {

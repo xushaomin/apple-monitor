@@ -16,8 +16,8 @@
 
 package com.appleframework.jmx.core.env;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.appleframework.jmx.core.util.Assert;
 import com.appleframework.jmx.core.util.ObjectUtils;
@@ -58,7 +58,7 @@ import com.appleframework.jmx.core.util.ObjectUtils;
  */
 public abstract class PropertySource<T> {
 
-	protected final Log logger = LogFactory.getLog(getClass());
+	private final static Logger logger = LoggerFactory.getLogger(PropertySource.class);
 
 	protected final String name;
 

@@ -22,7 +22,8 @@ package com.appleframework.jmx.core.config;
  */
 public class AlertDeliveryConstants {
 
-	public static final String EMAIL_ALERT_DELIVERY_TYPE = "email";
-	public static final String CONSOLE_ALERT_DELIVERY_TYPE = "console";
+	public static final String ALERT_DELIVERY_TYPE_EMAIL   = "email";
+	public static final String ALERT_DELIVERY_TYPE_CONSOLE = "console";
+	public static final String ALERT_DELIVERY_TYPE_SMS     = "sms";
 
 }

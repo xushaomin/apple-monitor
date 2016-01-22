@@ -19,14 +19,13 @@ package com.appleframework.jmx.core.io.support;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.appleframework.jmx.core.io.Resource;
 import com.appleframework.jmx.core.util.CollectionUtils;
 import com.appleframework.jmx.core.util.DefaultPropertiesPersister;
 import com.appleframework.jmx.core.util.PropertiesPersister;
-
 
 /**
  * Base class for JavaBean-style components that need to load properties
@@ -39,7 +38,7 @@ import com.appleframework.jmx.core.util.PropertiesPersister;
 public abstract class PropertiesLoaderSupport {
 
 	/** Logger available to subclasses */
-	protected final Log logger = LogFactory.getLog(getClass());
+	private final static Logger logger = LoggerFactory.getLogger(PropertiesLoaderSupport.class);
 
 	protected Properties[] localProperties;
 

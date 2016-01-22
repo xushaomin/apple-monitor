@@ -18,6 +18,9 @@ package com.appleframework.jmx.core.env;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.appleframework.jmx.core.util.Assert;
 
 /**
@@ -63,6 +66,7 @@ import com.appleframework.jmx.core.util.Assert;
  */
 public class SystemEnvironmentPropertySource extends MapPropertySource {
 
+	private final static Logger logger = LoggerFactory.getLogger(SystemEnvironmentPropertySource.class);
 	/**
 	 * Create a new {@code SystemEnvironmentPropertySource} with the given name and
 	 * delegating to the given {@code MapPropertySource}.
