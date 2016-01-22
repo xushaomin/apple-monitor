@@ -1,49 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.appleframework.jmx.database.mapper.extend.AppInfoExtendMapper" >
-  <resultMap id="BaseResultMap" type="com.appleframework.jmx.database.entity.AppInfoEntity" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="node_id" property="nodeId" jdbcType="INTEGER" />
-    <result column="cluster_id" property="clusterId" jdbcType="INTEGER" />
-    <result column="app_name" property="appName" jdbcType="VARCHAR" />
-    <result column="web_port" property="webPort" jdbcType="INTEGER" />
-    <result column="web_context" property="webContext" jdbcType="VARCHAR" />
-    <result column="jmx_port" property="jmxPort" jdbcType="INTEGER" />
-    <result column="service_port" property="servicePort" jdbcType="INTEGER" />
-    <result column="install_path" property="installPath" jdbcType="VARCHAR" />
-    <result column="disorder" property="disorder" jdbcType="INTEGER" />
-    <result column="remark" property="remark" jdbcType="VARCHAR" />
-    <result column="state" property="state" jdbcType="SMALLINT" />
-    <result column="conf_dataid" property="confDataid" jdbcType="VARCHAR" />
-    <result column="conf_group" property="confGroup" jdbcType="VARCHAR" />
-    <result column="conf_env" property="confEnv" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-  </resultMap>
 
   <sql id="Base_Column_List" >
-    id, node_id, cluster_id, app_name, web_port, web_context, jmx_port, service_port, install_path, 
-    disorder, remark, state, create_time, update_time
+    info.id as id, info.node_id as nodeId, info.cluster_id as clusterId, 
+    info.app_name as appName, info.app_version as appVersion, 
+    info.web_port as webPort, info.web_context as webContext, 
+    info.jmx_port as jmxPort, info.service_port as servicePort, 
+    info.install_path as installPath, info.disorder as disorder, 
+    info.remark as remark, info.state as state, config.is_alert as isAlert,
+    info.create_time as createTime, info.update_time as updateTime
   </sql>
   
-  <select id="selectByPage" resultMap="BaseResultMap">
+  <select id="selectByPage" resultType="com.appleframework.monitor.model.AppInfoBo">
     select
     <include refid="Base_Column_List" />
-    from t_app_info where ( state = 0 or state = 1)
+    
+    from t_app_info as info, t_app_config as config
+    where ( info.state = 0 or info.state = 1)
     <if test="se.keyword != null" >
-       and ( app_name like '%${se.keyword}%' or install_path like '%${se.keyword}%' or
-       		node_id in (
+       and ( info.app_name like '%${se.keyword}%' or info.install_path like '%${se.keyword}%' or
+       		info.node_id in (
        			select node.id from t_node_info as node where node.ip like '%${se.keyword}%' 
        		)
        )
     </if>
     <if test="so.nodeId != null" >
-       and  node_id = ${so.nodeId} 
+       and  info.node_id = ${so.nodeId} 
     </if>
     <if test="so.clusterId != null" >
-       and  cluster_id = ${so.clusterId} 
+       and  info.cluster_id = ${so.clusterId} 
     </if>
-    order by id asc
+    order by 
+    
+    <choose>
+		<when test="se.orderField != null">
+			${se.orderField}
+		</when>
+		<otherwise>
+			id
+		</otherwise>
+	</choose>
+    
+    <choose>
+		<when test="se.orderDirection != null">
+			${se.orderDirection}
+		</when>
+		<otherwise>
+			desc
+		</otherwise>
+	</choose>
+    
   </select>
 
 </mapper>

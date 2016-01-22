@@ -6,6 +6,7 @@
     <result column="node_id" property="nodeId" jdbcType="INTEGER" />
     <result column="cluster_id" property="clusterId" jdbcType="INTEGER" />
     <result column="app_name" property="appName" jdbcType="VARCHAR" />
+    <result column="app_version" property="appVersion" jdbcType="VARCHAR" />
     <result column="web_port" property="webPort" jdbcType="INTEGER" />
     <result column="web_context" property="webContext" jdbcType="VARCHAR" />
     <result column="jmx_port" property="jmxPort" jdbcType="INTEGER" />
@@ -79,9 +80,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, node_id, cluster_id, app_name, web_port, web_context, jmx_port, service_port, 
-    install_path, disorder, remark, state, conf_dataid, conf_group, conf_env, create_time, 
-    update_time
+    id, node_id, cluster_id, app_name, app_version, web_port, web_context, jmx_port, 
+    service_port, install_path, disorder, remark, state, conf_dataid, conf_group, conf_env, 
+    create_time, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.appleframework.jmx.database.entity.AppInfoEntityExample" >
     select
@@ -118,17 +119,17 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_app_info (node_id, cluster_id, app_name, 
-      web_port, web_context, jmx_port, 
-      service_port, install_path, disorder, 
-      remark, state, conf_dataid, 
-      conf_group, conf_env, create_time, 
-      update_time)
+      app_version, web_port, web_context, 
+      jmx_port, service_port, install_path, 
+      disorder, remark, state, 
+      conf_dataid, conf_group, conf_env, 
+      create_time, update_time)
     values (#{nodeId,jdbcType=INTEGER}, #{clusterId,jdbcType=INTEGER}, #{appName,jdbcType=VARCHAR}, 
-      #{webPort,jdbcType=INTEGER}, #{webContext,jdbcType=VARCHAR}, #{jmxPort,jdbcType=INTEGER}, 
-      #{servicePort,jdbcType=INTEGER}, #{installPath,jdbcType=VARCHAR}, #{disorder,jdbcType=INTEGER}, 
-      #{remark,jdbcType=VARCHAR}, #{state,jdbcType=SMALLINT}, #{confDataid,jdbcType=VARCHAR}, 
-      #{confGroup,jdbcType=VARCHAR}, #{confEnv,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{appVersion,jdbcType=VARCHAR}, #{webPort,jdbcType=INTEGER}, #{webContext,jdbcType=VARCHAR}, 
+      #{jmxPort,jdbcType=INTEGER}, #{servicePort,jdbcType=INTEGER}, #{installPath,jdbcType=VARCHAR}, 
+      #{disorder,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{state,jdbcType=SMALLINT}, 
+      #{confDataid,jdbcType=VARCHAR}, #{confGroup,jdbcType=VARCHAR}, #{confEnv,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.appleframework.jmx.database.entity.AppInfoEntity" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -144,6 +145,9 @@
       </if>
       <if test="appName != null" >
         app_name,
+      </if>
+      <if test="appVersion != null" >
+        app_version,
       </if>
       <if test="webPort != null" >
         web_port,
@@ -194,6 +198,9 @@
       </if>
       <if test="appName != null" >
         #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appVersion != null" >
+        #{appVersion,jdbcType=VARCHAR},
       </if>
       <if test="webPort != null" >
         #{webPort,jdbcType=INTEGER},
@@ -257,6 +264,9 @@
       <if test="record.appName != null" >
         app_name = #{record.appName,jdbcType=VARCHAR},
       </if>
+      <if test="record.appVersion != null" >
+        app_version = #{record.appVersion,jdbcType=VARCHAR},
+      </if>
       <if test="record.webPort != null" >
         web_port = #{record.webPort,jdbcType=INTEGER},
       </if>
@@ -307,6 +317,7 @@
       node_id = #{record.nodeId,jdbcType=INTEGER},
       cluster_id = #{record.clusterId,jdbcType=INTEGER},
       app_name = #{record.appName,jdbcType=VARCHAR},
+      app_version = #{record.appVersion,jdbcType=VARCHAR},
       web_port = #{record.webPort,jdbcType=INTEGER},
       web_context = #{record.webContext,jdbcType=VARCHAR},
       jmx_port = #{record.jmxPort,jdbcType=INTEGER},
@@ -335,6 +346,9 @@
       </if>
       <if test="appName != null" >
         app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appVersion != null" >
+        app_version = #{appVersion,jdbcType=VARCHAR},
       </if>
       <if test="webPort != null" >
         web_port = #{webPort,jdbcType=INTEGER},
@@ -383,6 +397,7 @@
     set node_id = #{nodeId,jdbcType=INTEGER},
       cluster_id = #{clusterId,jdbcType=INTEGER},
       app_name = #{appName,jdbcType=VARCHAR},
+      app_version = #{appVersion,jdbcType=VARCHAR},
       web_port = #{webPort,jdbcType=INTEGER},
       web_context = #{webContext,jdbcType=VARCHAR},
       jmx_port = #{jmxPort,jdbcType=INTEGER},
