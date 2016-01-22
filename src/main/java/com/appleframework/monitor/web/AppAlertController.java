@@ -1,8 +1,6 @@
 package com.appleframework.monitor.web;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -15,12 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.appleframework.jmx.core.util.Loggers;
-import com.appleframework.jmx.database.entity.AppClusterEntity;
-import com.appleframework.jmx.database.entity.NodeInfoEntity;
+import com.appleframework.jmx.database.entity.AlertGroupEntity;
+import com.appleframework.jmx.database.service.AlertGroupService;
 import com.appleframework.jmx.database.service.AppConfigService;
-import com.appleframework.model.Search;
-import com.appleframework.model.page.Pagination;
-import com.appleframework.monitor.model.AppInfoSo;
 import com.appleframework.web.bean.Message;
 
 @Controller
@@ -31,6 +26,11 @@ public class AppAlertController extends BaseController {
 
 	@Resource
 	private AppConfigService appConfigService;
+	
+	@Resource
+	private AlertGroupService alertGroupService;
+	
+	private String viewModel = "app_alert/";
 
 	@RequestMapping(value = "/alert_start", method = RequestMethod.POST)
 	public @ResponseBody Message start(Integer id) {
@@ -79,30 +79,11 @@ public class AppAlertController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/alert_group_select")
-	public String list(Model model, Pagination page, 
-			Search search, AppInfoSo so, HttpServletRequest request) {
-		
-		/*page = appInfoSearchService.findPage(page, search, so);
-		List<NodeInfoEntity> nodeInfoList = nodeInfoService.findAll();
-		List<AppClusterEntity> appGroupList = appClusterService.findAll();
-		
-		Map<String, NodeInfoEntity> nodeInfoMap = new HashMap<String, NodeInfoEntity>();
-		for (NodeInfoEntity nodeInfo : nodeInfoList) {
-			nodeInfoMap.put(nodeInfo.getId() + "", nodeInfo);
-		}
-		Map<String, AppClusterEntity> appGroupMap = new HashMap<String, AppClusterEntity>();
-		for (AppClusterEntity appGroup : appGroupList) {
-			appGroupMap.put(appGroup.getId() + "", appGroup);
-		}
-		model.addAttribute("NODE_INFO_LIST", nodeInfoList);
-		model.addAttribute("APP_CLUSTER_LIST", appGroupList);
-		model.addAttribute("NODE_INFO_MAP", nodeInfoMap);
-		model.addAttribute("APP_CLUSTER_MAP", appGroupMap);
-		model.addAttribute("se", search);
-		model.addAttribute("so", so);
-		model.addAttribute("page", page);
-		return viewModel + "list";*/
-		return null;
+	public String list(Model model, Integer[] ids, HttpServletRequest request) {
+		List<AlertGroupEntity> groupList = alertGroupService.findAll();
+		model.addAttribute("ALERT_GROUP_LIST", groupList);
+		model.addAttribute("IDS", ids);
+		return viewModel + "/alert_group_select";
 	}
 
 }
