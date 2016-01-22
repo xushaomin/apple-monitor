@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.appleframework.jmx.database.mapper.extend.AlertGroupContactExtendMapper">
+
+	<select id="selectAlertContactByAlertGroupId" resultType="com.appleframework.jmx.database.entity.AlertContactEntity" parameterType="java.lang.Integer">
+	
+		select
+		
+			c.id as id,
+			c.name as name,
+			c.mobile as mobile,
+			c.email as email,
+			c.create_time as createTime,
+			c.update_time as updateTime
+		
+		from 
+			t_alert_contact as c, t_alert_group_contact as gc
+			
+		where 
+			gc.group_id = #{alertGroupId,jdbcType=INTEGER} and
+			c.id = gc.contact_id
+		
+		order by c.id asc
+
+	</select>
+
+</mapper>

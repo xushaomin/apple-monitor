@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.appleframework.jmx.database.mapper.AppConfigEntityMapper" >
-  <resultMap id="BaseResultMap" type="com.appleframework.jmx.database.entity.AppConfigEntity" >
+<mapper namespace="com.appleframework.jmx.database.mapper.AlertGroupContactEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.appleframework.jmx.database.entity.AlertGroupContactEntity" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="cluster_id" property="clusterId" jdbcType="INTEGER" />
-    <result column="app_config" property="appConfig" jdbcType="VARCHAR" />
-    <result column="state" property="state" jdbcType="SMALLINT" />
-    <result column="is_alert" property="isAlert" jdbcType="BIT" />
-    <result column="alert_group_id" property="alertGroupId" jdbcType="INTEGER" />
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="contact_id" property="contactId" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -70,15 +67,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, cluster_id, app_config, state, is_alert, alert_group_id, create_time, update_time
+    id, group_id, contact_id, create_time, update_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.appleframework.jmx.database.entity.AppConfigEntityExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.appleframework.jmx.database.entity.AlertGroupContactEntityExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_app_config
+    from t_alert_group_contact
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,48 +86,39 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from t_app_config
+    from t_alert_group_contact
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from t_app_config
+    delete from t_alert_group_contact
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.appleframework.jmx.database.entity.AppConfigEntityExample" >
-    delete from t_app_config
+  <delete id="deleteByExample" parameterType="com.appleframework.jmx.database.entity.AlertGroupContactEntityExample" >
+    delete from t_alert_group_contact
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.appleframework.jmx.database.entity.AppConfigEntity" >
-    insert into t_app_config (id, cluster_id, app_config, state, 
-      is_alert, alert_group_id, create_time, 
-      update_time)
-    values (
-      #{id,jdbcType=INTEGER},#{clusterId,jdbcType=INTEGER}, #{appConfig,jdbcType=VARCHAR}, #{state,jdbcType=SMALLINT}, 
-      #{isAlert,jdbcType=BIT}, #{alertGroupId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.appleframework.jmx.database.entity.AppConfigEntity" >
+  <insert id="insert" parameterType="com.appleframework.jmx.database.entity.AlertGroupContactEntity" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_app_config
+    insert into t_alert_group_contact (group_id, contact_id, create_time, 
+      update_time)
+    values (#{groupId,jdbcType=INTEGER}, #{contactId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.appleframework.jmx.database.entity.AlertGroupContactEntity" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_alert_group_contact
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="clusterId != null" >
-        cluster_id,
+      <if test="groupId != null" >
+        group_id,
       </if>
-      <if test="appConfig != null" >
-        app_config,
-      </if>
-      <if test="state != null" >
-        state,
-      </if>
-      <if test="isAlert != null" >
-        is_alert,
-      </if>
-      <if test="alertGroupId != null" >
-        alert_group_id,
+      <if test="contactId != null" >
+        contact_id,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -140,20 +128,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="clusterId != null" >
-        #{clusterId,jdbcType=INTEGER},
+      <if test="groupId != null" >
+        #{groupId,jdbcType=INTEGER},
       </if>
-      <if test="appConfig != null" >
-        #{appConfig,jdbcType=VARCHAR},
-      </if>
-      <if test="state != null" >
-        #{state,jdbcType=SMALLINT},
-      </if>
-      <if test="isAlert != null" >
-        #{isAlert,jdbcType=BIT},
-      </if>
-      <if test="alertGroupId != null" >
-        #{alertGroupId,jdbcType=INTEGER},
+      <if test="contactId != null" >
+        #{contactId,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -163,32 +142,23 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.appleframework.jmx.database.entity.AppConfigEntityExample" resultType="java.lang.Integer" >
-    select count(*) from t_app_config
+  <select id="countByExample" parameterType="com.appleframework.jmx.database.entity.AlertGroupContactEntityExample" resultType="java.lang.Integer" >
+    select count(*) from t_alert_group_contact
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update t_app_config
+    update t_alert_group_contact
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.clusterId != null" >
-        cluster_id = #{record.clusterId,jdbcType=INTEGER},
+      <if test="record.groupId != null" >
+        group_id = #{record.groupId,jdbcType=INTEGER},
       </if>
-      <if test="record.appConfig != null" >
-        app_config = #{record.appConfig,jdbcType=VARCHAR},
-      </if>
-      <if test="record.state != null" >
-        state = #{record.state,jdbcType=SMALLINT},
-      </if>
-      <if test="record.isAlert != null" >
-        is_alert = #{record.isAlert,jdbcType=BIT},
-      </if>
-      <if test="record.alertGroupId != null" >
-        alert_group_id = #{record.alertGroupId,jdbcType=INTEGER},
+      <if test="record.contactId != null" >
+        contact_id = #{record.contactId,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -202,36 +172,24 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update t_app_config
+    update t_alert_group_contact
     set id = #{record.id,jdbcType=INTEGER},
-      cluster_id = #{record.clusterId,jdbcType=INTEGER},
-      app_config = #{record.appConfig,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=SMALLINT},
-      is_alert = #{record.isAlert,jdbcType=BIT},
-      alert_group_id = #{record.alertGroupId,jdbcType=INTEGER},
+      group_id = #{record.groupId,jdbcType=INTEGER},
+      contact_id = #{record.contactId,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.appleframework.jmx.database.entity.AppConfigEntity" >
-    update t_app_config
+  <update id="updateByPrimaryKeySelective" parameterType="com.appleframework.jmx.database.entity.AlertGroupContactEntity" >
+    update t_alert_group_contact
     <set >
-      <if test="clusterId != null" >
-        cluster_id = #{clusterId,jdbcType=INTEGER},
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=INTEGER},
       </if>
-      <if test="appConfig != null" >
-        app_config = #{appConfig,jdbcType=VARCHAR},
-      </if>
-      <if test="state != null" >
-        state = #{state,jdbcType=SMALLINT},
-      </if>
-      <if test="isAlert != null" >
-        is_alert = #{isAlert,jdbcType=BIT},
-      </if>
-      <if test="alertGroupId != null" >
-        alert_group_id = #{alertGroupId,jdbcType=INTEGER},
+      <if test="contactId != null" >
+        contact_id = #{contactId,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -242,13 +200,10 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.appleframework.jmx.database.entity.AppConfigEntity" >
-    update t_app_config
-    set cluster_id = #{clusterId,jdbcType=INTEGER},
-      app_config = #{appConfig,jdbcType=VARCHAR},
-      state = #{state,jdbcType=SMALLINT},
-      is_alert = #{isAlert,jdbcType=BIT},
-      alert_group_id = #{alertGroupId,jdbcType=INTEGER},
+  <update id="updateByPrimaryKey" parameterType="com.appleframework.jmx.database.entity.AlertGroupContactEntity" >
+    update t_alert_group_contact
+    set group_id = #{groupId,jdbcType=INTEGER},
+      contact_id = #{contactId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
