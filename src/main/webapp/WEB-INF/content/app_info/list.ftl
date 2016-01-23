@@ -53,11 +53,17 @@
 			$('input[name="ids"]:checked').each(function(){ 
 				chk_value.push($(this).val()); 
 			}); 
-			art.dialog.open('/app_alert/alert_group_select?ids=' + chk_value, {
-				id: 'viewFrame',
-				title: '选择分组',
-				close: function () {}
-			}, false);
+			if(chk_value.length > 0) {
+				art.dialog.open('/app_alert/alert_group_select?ids=' + chk_value, {
+					id: 'viewFrame',
+					title: '选择分组',
+					close: function () {}
+				}, false);
+			}
+			else {
+				pop_warning("操作提示", "请选择应用！", false, function() {});
+			}
+			
 		});
 		
 		$("#stopAlertAll").bind("click", function(){
