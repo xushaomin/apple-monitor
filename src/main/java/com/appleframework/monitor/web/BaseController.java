@@ -15,7 +15,7 @@ public class BaseController {
 	
 	protected static final String ERROR_AJAX = "/commons/error_ajax";
 	
-	protected static final String SUCCESS_AJAX = "/commons/success_AJAX";
+	protected static final String SUCCESS_AJAX = "/commons/success_ajax";
 	
 	protected static final Message ERROR_MESSAGE = Message.error("操作错误");
 

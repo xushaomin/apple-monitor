@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.appleframework.jmx.core.util.Loggers;
 import com.appleframework.jmx.database.entity.AlertGroupEntity;
+import com.appleframework.jmx.database.entity.AppConfigEntity;
 import com.appleframework.jmx.database.service.AlertGroupService;
 import com.appleframework.jmx.database.service.AppConfigService;
 import com.appleframework.web.bean.Message;
@@ -79,11 +80,27 @@ public class AppAlertController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/alert_group_select")
-	public String list(Model model, Integer[] ids, HttpServletRequest request) {
+	public String alertGroupSelect(Model model, String ids, HttpServletRequest request) {
 		List<AlertGroupEntity> groupList = alertGroupService.findAll();
 		model.addAttribute("ALERT_GROUP_LIST", groupList);
 		model.addAttribute("IDS", ids);
 		return viewModel + "/alert_group_select";
+	}
+	
+	@RequestMapping(value = "/alert_group_save")
+	public String alertGroupSave(Model model, String ids, Integer groupId) {
+		try {
+			String[] idss = ids.split(",");
+			for (String id : idss) {
+				AppConfigEntity entity = appConfigService.get(Integer.parseInt(id));
+				entity.setIsAlert(true);
+				entity.setAlertGroupId(groupId);
+				appConfigService.update(entity);
+			}
+			return SUCCESS_AJAX;
+		} catch (Exception e) {
+			return ERROR_AJAX;
+		}
 	}
 
 }
