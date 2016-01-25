@@ -151,14 +151,15 @@
     <table id="listTable" class="table_list list">
         <tr>
         	<th width="5%">序号</th>
-        	<th width="15%">应用名称</th>
-        	<th width="12%">所在节点</th>
-        	<th width="20%">安装目录</th>
+        	<th width="12%" class="sort" orderField="asc" name="info.app_name">应用名称</th>
+        	<th width="10%" class="sort" orderField="asc" name="info.node_id">所在节点</th>
+        	<th width="20%" class="sort" orderField="asc" name="info.install_path">安装目录</th>
+        	<th width="6%" class="sort" orderField="asc" name="info.install_path">版本</th>
         	<th width="10%">端口(DUBBO/WEB/JMX/SOCKET)</th>
         	<th width="6%">状态</th>
         	<th width="6%" class="sort" orderField="desc" name="config.is_alert">监控</th>
-        	<th width="8%">最新发布</th>
-        	<th width="8%">创建时间</th>
+        	<th width="8%" class="sort" orderField="asc" name="info.update_time">更新时间</th>
+        	<th width="8%" class="sort" orderField="asc" name="info.create_time">创建时间</th>
 			<th width="20%">操作</th>
         </tr>
         <#list page.list as info>
@@ -167,6 +168,7 @@
         	<td style="text-align:left;">${APP_CLUSTER_MAP[info.clusterId?string].clusterName}</td>
 			<td>${NODE_INFO_MAP[info.nodeId?string].host}</td>
 			<td style="text-align:left;">${(info.installPath)!}</td>
+			<td>${(info.appVersion)!}</td>
 			<td><#if (info.servicePort > 0)>${info.servicePort}/<#else>-/</#if><#if (info.webPort > 0)>${info.webPort}/<#else>-/</#if><#if (info.jmxPort > 0)>${info.jmxPort}/<#else>-/</#if>-
 			</td>
 			<td>
