@@ -1,15 +1,15 @@
 package com.appleframework.monitor.web;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.appleframework.jmx.database.service.AppClusterService;
+import com.appleframework.jmx.database.entity.AlertContactEntity;
 import com.appleframework.jmx.database.service.AlertContactService;
-import com.appleframework.jmx.database.service.NodeInfoService;
 import com.appleframework.model.Search;
 import com.appleframework.model.page.Pagination;
 import com.appleframework.monitor.service.AlertContactSearchService;
@@ -23,23 +23,74 @@ public class AlertContactController extends BaseController {
 	
 	@Resource
 	private AlertContactSearchService alertContactSearchService;
-	
-	@Resource
-	private AppClusterService appClusterService;
-	
-	@Resource
-	private NodeInfoService nodeInfoService;
-	
+		
 	private String viewModel = "alert_contact/";
 	
 	@RequestMapping(value = "/list")
-	public String list(Model model, Pagination page, 
-			Search search, HttpServletRequest request) {
+	public String list(Model model, Pagination page, Search search) {
 		page = alertContactSearchService.findPage(page, search);
 		model.addAttribute("se", search);
 		model.addAttribute("page", page);
 		return viewModel + "list";
 	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public String edit(Model model, Integer id) throws Exception {
+		AlertContactEntity info = alertContactService.get(id);
+		model.addAttribute("info", info);
+		return viewModel + "edit";
+	}
+	
+	@RequestMapping(value = "/view", method = RequestMethod.GET)
+	public String view(Model model, Integer id) throws Exception {
+		AlertContactEntity info = alertContactService.get(id);
+        model.addAttribute("info", info);
+		return viewModel +  "view";
+	}
+	
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String add(Model model) throws Exception {
+		return viewModel +  "add";
+	}
+	
+	@RequestMapping(value = "/update")
+	public String update(Model model, AlertContactEntity alertContact) {
+		try {
+			AlertContactEntity old = alertContactService.get(alertContact.getId());
+			old.setName(alertContact.getName());
+			old.setMobile(alertContact.getMobile());
+			old.setEmail(alertContact.getEmail());
+			alertContactService.update(old);
+		} catch (Exception e) {
+			addErrorMessage(model, e.getMessage());
+			return ERROR_AJAX;
+		}
+		addSuccessMessage(model, "修改成功");
+		return SUCCESS_AJAX;
+	}
+	
+	@RequestMapping(value = "/save")
+	public String save(Model model, AlertContactEntity alertContact) {
+		try {
+			alertContactService.insert(alertContact);
+		} catch (Exception e) {
+			addErrorMessage(model, e.getMessage());
+			return ERROR_AJAX;
+		}
+		addSuccessMessage(model, "添加成功");
+		return SUCCESS_AJAX;
+	}
+	
+	// AJAX唯一验证
+	@RequestMapping(value = "/check_name", method = RequestMethod.GET)
+	public @ResponseBody String checkRoleName(String oldName, String name) {
+		if (alertContactService.isUniqueByName(oldName, name)) {
+			return ajax("true");
+		} else {
+			return ajax("false");
+		}
+	}
+	
 	
 	/*@RequestMapping(value = "/list_for_cluster")
 	public String listForCluster(Model model, Integer clusterId, HttpServletRequest request) {
@@ -72,25 +123,6 @@ public class AlertContactController extends BaseController {
 		return info;
 	}
 	
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String edit(Model model, Integer id, HttpServletResponse response) throws Exception {
-		AlertContactEntity info = alertContactService.get(id);
-		model.addAttribute("info", info);
-		return "app_info/edit";
-	}
-	
-	@RequestMapping(value = "/view", method = RequestMethod.GET)
-	public String view(Model model, Integer id, HttpServletResponse response) throws Exception {
-		AlertContactEntity info = alertContactService.get(id);
-        model.addAttribute("info", info);
-		return "app_info/view";
-	}
-	
-	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String add(Model model, HttpServletResponse response) throws Exception {
-		return "app_info/add";
-	}
-	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public @ResponseBody
 	Message delete(Integer id) {
@@ -116,45 +148,11 @@ public class AlertContactController extends BaseController {
 	}*/
 	
 	/*
-	@RequestMapping(value = "/save")
-	public String save(Model model, AlertContact alertContact, HttpServletRequest request) {
-		try {
-			alertContactService.insert(alertContact);
-		} catch (ServiceException e) {
-			addErrorMessage(model, e.getMessage());
-			return ERROR_VIEW;
-		}
-		addSuccessMessage(model, "添加应用成功", "list");
-		return SUCCESS_VIEW;
-	}
 	
 	
 	
-	@RequestMapping(value = "/update")
-	public String update(Model model, AlertContact alertContact, HttpServletResponse response) {
-		try {
-			AlertContact old = alertContactService.get(alertContact.getId());
-			old.setCode(alertContact.getCode());
-			old.setName(alertContact.getName());
-			old.setRemark(alertContact.getRemark());
-			old.setUpdateTime(new Date());
-			alertContactService.update(old);
-		} catch (ServiceException e) {
-			addErrorMessage(model, e.getMessage());
-			return "/commons/error_ajax";
-		}
-		addSuccessMessage(model, "修改应用成功", "list");
-		return "/commons/success_ajax";
-	}
 	
-	// AJAX唯一验证
-	@RequestMapping(value = "/check_code", method = RequestMethod.GET)
-	public @ResponseBody String checkRoleName(String oldCode, String code) {
-		if (alertContactService.isUniqueByCode(oldCode, code)) {
-			return ajax("true");
-		} else {
-			return ajax("false");
-		}
-	}*/
+	
+	*/
 		
 }
