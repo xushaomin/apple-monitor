@@ -51,6 +51,9 @@
             		<span class="group"><a id="searchButton" href="javascript:;" class="btn_search">搜索</a></span>
                 </p>
             </div>
+            <div class="con_search_btn right">
+                <a class="btnA" href="javascript:;" onclick="openAddFrame('添加联系人');">添加联系人</a>
+            </div>
         </div>
         <!-- end of con_search_top -->
         
@@ -65,35 +68,23 @@
     <table id="listTable" class="table_list list">
         <tr>
         	<th width="5%">序号</th>
-        	<th width="10%">集群名称</th>
-        	<th width="12%">集群描述</th>
-        	<th width="8%">应用个数</th>
-        	<th width="12%">集群状态</th>
-        	<th width="8%">最新发布时间</th>
-        	<th width="8%">创建时间</th>
+        	<th width="10%">名称</th>
+        	<th width="10%">手机</th>
+        	<th width="10%">邮件</th>
+        	<th width="10%">创建时间</th>
 			<th width="10%">操作</th>
         </tr>
         <#list page.list as info>
         <tr class="even">
-        	<td><!--<input type="checkbox" name="ids" value="${info.id}" />-->${info.id}</td>
-        	<td style="text-align:left;">${(info.clusterName)!}</td>
-			<td>${(info.clusterDesc)!}</td>
-			<td>${(info.appNum)!}</td>
+        	<td><input type="checkbox" name="ids" value="${info.id}" />${info.id}</td>
+        	<td>${(info.name)!}</td>
+			<td>${(info.mobile)!}</td>
+			<td>${(info.email)!}</td>
 			<td>
-				<@clusterStatus clusterId = info.id>
-					<#if isUp == true>
-						<img src="/images/green.gif"/>
-					<#else>
-						<img src="/images/red.gif"/>
-					</#if>
-				</@clusterStatus>
-			</td>
-			<td>
-				<#if info.updateTime?exists>
-				${info.updateTime?string('yyyy-MM-dd')}
+				<#if info.createTime?exists>
+				${info.createTime?string('yyyy-MM-dd')}
 				<#else>-</#if>
 			</td>
-			<td>${info.createTime?string('yyyy-MM-dd')}</td>
 			<td>
 				<a class="btn_icon btn_edit"   href="javascript:;" operatId="${info.id}" title="编辑"></a>
                 <a class="btn_icon btn_detail" href="javascript:;" operatId="${info.id}" title="详情"></a>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8">
-<title>编辑联系人</title>
+<title>添加联系人</title>
 <#include "../commons/page_css.ftl" />
 <#include "../commons/page_js.ftl" />
 
@@ -16,7 +16,7 @@ $().ready(function() {
 		rules: {
 			"name": {
 				required: true,
-				remote: "check_name?oldName=${(info.name)!}"
+				remote: "check_name"
 			}
 		},
 		messages: {
@@ -41,8 +41,7 @@ $().ready(function() {
 </head>
 
 <body>
-<form id="inputForm" method="post" action="update">
-	<input type="hidden" name="id" value="${info.id}" />
+<form id="inputForm" method="post" action="save">
 	
     <div id="auditTab" class="pop_main" style="width:600px;border: 0px solid;">
 
