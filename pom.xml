@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.appleframework.monitor</groupId>
 	<artifactId>apple-monitor</artifactId>
-	<version>0.0.5.RELEASE</version>
+	<version>0.0.6.RELEASE</version>
 	<packaging>jar</packaging>
 	<name>apple-monitor</name>
 	<url>http://mvnrepo.appleframework.com</url>
