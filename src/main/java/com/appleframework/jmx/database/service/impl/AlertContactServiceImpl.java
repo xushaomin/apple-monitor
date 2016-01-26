@@ -1,6 +1,7 @@
 package com.appleframework.jmx.database.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -78,5 +79,11 @@ public class AlertContactServiceImpl implements AlertContactService {
 		else {
 			alertContactEntityMapper.deleteByPrimaryKey(id);
 		}
+	}
+	
+	public List<AlertContactEntity> findAll() {
+		AlertContactEntityExample example = new AlertContactEntityExample();
+		example.createCriteria();
+		return alertContactEntityMapper.selectByExample(example);
 	}
 }

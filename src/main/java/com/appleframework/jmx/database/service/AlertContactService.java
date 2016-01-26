@@ -1,9 +1,13 @@
 package com.appleframework.jmx.database.service;
 
+import java.util.List;
+
 import com.appleframework.exception.AppleException;
 import com.appleframework.jmx.database.entity.AlertContactEntity;
 
 public interface AlertContactService {
+	
+	public List<AlertContactEntity> findAll();
 		
 	public AlertContactEntity get(Integer id);
 	

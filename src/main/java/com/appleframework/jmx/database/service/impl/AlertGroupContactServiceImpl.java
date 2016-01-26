@@ -27,6 +27,12 @@ public class AlertGroupContactServiceImpl implements AlertGroupContactService {
 		return alertGroupContactExtendMapper.selectAlertContactByAlertGroupId(alertGroupId);
 	}
 	
+	public List<AlertGroupContactEntity> findListByGroupId(Integer groupId) {
+		AlertGroupContactEntityExample example = new AlertGroupContactEntityExample();
+		example.createCriteria().andGroupIdEqualTo(groupId);
+		return alertGroupContactEntityMapper.selectByExample(example);
+	}
+	
 	public AlertGroupContactEntity get(Integer id) {
 		return alertGroupContactEntityMapper.selectByPrimaryKey(id);
 	}
@@ -34,6 +40,10 @@ public class AlertGroupContactServiceImpl implements AlertGroupContactService {
 	public void update(AlertGroupContactEntity entity) {
 		entity.setUpdateTime(new Date());
 		alertGroupContactEntityMapper.updateByPrimaryKey(entity);
+	}
+	
+	public void delete(Integer id) {
+		alertGroupContactEntityMapper.deleteByPrimaryKey(id);
 	}
 	
 	public void insert(AlertGroupContactEntity entity) {

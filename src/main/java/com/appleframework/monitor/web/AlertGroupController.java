@@ -8,28 +8,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.appleframework.jmx.database.entity.AlertContactEntity;
-import com.appleframework.jmx.database.service.AlertContactService;
+import com.appleframework.jmx.database.entity.AlertGroupEntity;
+import com.appleframework.jmx.database.service.AlertGroupService;
 import com.appleframework.model.Search;
 import com.appleframework.model.page.Pagination;
-import com.appleframework.monitor.service.AlertContactSearchService;
+import com.appleframework.monitor.service.AlertGroupSearchService;
 import com.appleframework.web.bean.Message;
 
 @Controller
-@RequestMapping("/alert_contact")
-public class AlertContactController extends BaseController {
+@RequestMapping("/alert_group")
+public class AlertGroupController extends BaseController {
 	
 	@Resource
-	private AlertContactService alertContactService;
+	private AlertGroupService alertGroupService;
 	
 	@Resource
-	private AlertContactSearchService alertContactSearchService;
+	private AlertGroupSearchService alertGroupSearchService;
 		
-	private String viewModel = "alert_contact/";
+	private String viewModel = "alert_group/";
 	
 	@RequestMapping(value = "/list")
 	public String list(Model model, Pagination page, Search search) {
-		page = alertContactSearchService.findPage(page, search);
+		page = alertGroupSearchService.findPage(page, search);
 		model.addAttribute("se", search);
 		model.addAttribute("page", page);
 		return viewModel + "list";
@@ -37,14 +37,14 @@ public class AlertContactController extends BaseController {
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String edit(Model model, Integer id) throws Exception {
-		AlertContactEntity info = alertContactService.get(id);
+		AlertGroupEntity info = alertGroupService.get(id);
 		model.addAttribute("info", info);
 		return viewModel + "edit";
 	}
 	
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public String view(Model model, Integer id) throws Exception {
-		AlertContactEntity info = alertContactService.get(id);
+		AlertGroupEntity info = alertGroupService.get(id);
         model.addAttribute("info", info);
 		return viewModel +  "view";
 	}
@@ -55,13 +55,11 @@ public class AlertContactController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/update")
-	public String update(Model model, AlertContactEntity alertContact) {
+	public String update(Model model, AlertGroupEntity alertContact) {
 		try {
-			AlertContactEntity old = alertContactService.get(alertContact.getId());
+			AlertGroupEntity old = alertGroupService.get(alertContact.getId());
 			old.setName(alertContact.getName());
-			old.setMobile(alertContact.getMobile());
-			old.setEmail(alertContact.getEmail());
-			alertContactService.update(old);
+			alertGroupService.update(old);
 		} catch (Exception e) {
 			addErrorMessage(model, e.getMessage());
 			return ERROR_AJAX;
@@ -71,9 +69,9 @@ public class AlertContactController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/save")
-	public String save(Model model, AlertContactEntity alertContact) {
+	public String save(Model model, AlertGroupEntity alertContact) {
 		try {
-			alertContactService.insert(alertContact);
+			alertGroupService.insert(alertContact);
 		} catch (Exception e) {
 			addErrorMessage(model, e.getMessage());
 			return ERROR_AJAX;
@@ -85,7 +83,7 @@ public class AlertContactController extends BaseController {
 	// AJAX唯一验证
 	@RequestMapping(value = "/check_name", method = RequestMethod.GET)
 	public @ResponseBody String checkRoleName(String oldName, String name) {
-		if (alertContactService.isUniqueByName(oldName, name)) {
+		if (alertGroupService.isUniqueByName(oldName, name)) {
 			return ajax("true");
 		} else {
 			return ajax("false");
@@ -95,7 +93,7 @@ public class AlertContactController extends BaseController {
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public @ResponseBody Message delete(Integer id) {
 		try {
-			alertContactService.delete(id);
+			alertGroupService.delete(id);
 			return SUCCESS_MESSAGE;
 		} catch (Exception e) {
 			return Message.error(e.getMessage());

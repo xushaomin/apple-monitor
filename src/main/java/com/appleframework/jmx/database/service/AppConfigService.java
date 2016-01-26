@@ -23,4 +23,8 @@ public interface AppConfigService {
 	
 	public List<AppConfigEntity> findListByIsAlert();
 	
+	public boolean isExistByAlertGroupId(Integer alertGroupId);
+	
+	public int countByAlertGroupId(Integer alertGroupId);
+	
 }

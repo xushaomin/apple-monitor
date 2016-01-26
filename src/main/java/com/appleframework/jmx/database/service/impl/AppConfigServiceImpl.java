@@ -85,5 +85,21 @@ public class AppConfigServiceImpl implements AppConfigService {
 		example.createCriteria().andIsAlertEqualTo(true).andStateEqualTo(StateType.START.getIndex());
 		return appConfigEntityMapper.selectByExample(example);
 	}
+	
+	
+	public boolean isExistByAlertGroupId(Integer alertGroupId) {
+		if(countByAlertGroupId(alertGroupId) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public int countByAlertGroupId(Integer alertGroupId) {
+		AppConfigEntityExample example = new AppConfigEntityExample();
+		example.createCriteria().andAlertGroupIdEqualTo(alertGroupId);
+		return appConfigEntityMapper.countByExample(example);
+	}
 
 }

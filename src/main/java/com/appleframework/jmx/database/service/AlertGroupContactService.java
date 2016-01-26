@@ -11,6 +11,8 @@ public interface AlertGroupContactService {
 	
 	public AlertGroupContactEntity get(Integer id);
 	
+	public void delete(Integer id);
+	
 	public void update(AlertGroupContactEntity entity);
 	
 	public void insert(AlertGroupContactEntity entity);
@@ -18,5 +20,7 @@ public interface AlertGroupContactService {
 	public boolean isExistByContactId(Integer contactId);
 	
 	public int countByContactId(Integer contactId);
+	
+	public List<AlertGroupContactEntity> findListByGroupId(Integer groupId);
 	
 }
