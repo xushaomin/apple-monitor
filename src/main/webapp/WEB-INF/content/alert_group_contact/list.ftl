@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8">
-<title>添加联系人</title>
+<title>分组管理</title>
 <#include "../commons/page_css.ftl" />
 <#include "../commons/page_js.ftl" />
 
