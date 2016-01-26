@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8">
-<title>编辑联系人</title>
+<title>编辑分组</title>
 <#include "../commons/page_css.ftl" />
 <#include "../commons/page_js.ftl" />
 
