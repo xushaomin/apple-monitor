@@ -77,12 +77,15 @@ public class AppConfigServiceImpl implements AppConfigService {
 	public List<AppConfigEntity> findListByClusterIdAndStart(Integer clusterId) {
 		AppConfigEntityExample example = new AppConfigEntityExample();
 		example.createCriteria().andClusterIdEqualTo(clusterId).andStateEqualTo(StateType.START.getIndex());
+		example.setOrderByClause("id");
+		example.setDistinct(true);
 		return appConfigEntityMapper.selectByExample(example);
 	}
 	
 	public List<AppConfigEntity> findListByIsAlert() {
 		AppConfigEntityExample example = new AppConfigEntityExample();
 		example.createCriteria().andIsAlertEqualTo(true).andStateEqualTo(StateType.START.getIndex());
+		example.setDistinct(true);
 		return appConfigEntityMapper.selectByExample(example);
 	}
 	

@@ -102,12 +102,16 @@ public class AppClusterServiceImpl implements AppClusterService {
 	public List<AppClusterEntity> findAll() {
 		AppClusterEntityExample example = new AppClusterEntityExample();
 		example.createCriteria();
+		example.setOrderByClause("cluster_name");
+		example.setDistinct(true);
 		return appClusterEntityMapper.selectByExample(example);
 	}
 	
 	public List<AppClusterEntity> findListByStart() {
 		AppClusterEntityExample example = new AppClusterEntityExample();
 		example.createCriteria().andStateEqualTo(StateType.START.getIndex());
+		example.setOrderByClause("cluster_name");
+		example.setDistinct(true);
 		return appClusterEntityMapper.selectByExample(example);
 	}
 	
