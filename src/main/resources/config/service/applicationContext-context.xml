@@ -29,9 +29,7 @@
 	
 	<bean id="springUtility" class="com.appleframework.core.utils.SpringUtility" lazy-init="false" />
 	
-	<bean id="appInfoReceiver" 
-		class="com.appleframework.monitor.receiver.AppInfoReceiver"
-		init-method="start">
+	<bean id="appInfoReceiver" class="com.appleframework.monitor.receiver.AppInfoReceiver" init-method="start">
 		<property name="nodeInfoService" ref="nodeInfoService" />
 		<property name="appClusterService" ref="appClusterService" />
 		<property name="appInfoService" ref="appInfoService" />
