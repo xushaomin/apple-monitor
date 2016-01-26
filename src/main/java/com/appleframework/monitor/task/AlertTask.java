@@ -21,7 +21,7 @@ import com.appleframework.jmx.core.util.Loggers;
 import com.appleframework.jmx.database.constant.PlusType;
 import com.appleframework.jmx.database.entity.AlertContactEntity;
 import com.appleframework.jmx.database.entity.AppConfigEntity;
-import com.appleframework.jmx.database.service.AlertContactService;
+import com.appleframework.jmx.database.service.AlertGroupContactService;
 import com.appleframework.jmx.database.service.AppConfigService;
 import com.appleframework.jmx.webui.view.ApplicationViewHelper;
 import com.appleframework.monitor.plus.ThirdPlus;
@@ -42,7 +42,7 @@ public class AlertTask {
 	private PlusService plusService;
 	
 	@Resource
-	private AlertContactService alertContactService;
+	private AlertGroupContactService alertGroupContactService;
 	
 	private DateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm");
 	
@@ -81,7 +81,7 @@ public class AlertTask {
 				logger.info(message);
 				Integer count = sendCountMap.get(appConfigEntity.getId());
 				if(null == count || count == 0) {
-					List<AlertContactEntity> contactList = alertContactService.findListByGroupId(appConfigEntity.getAlertGroupId());
+					List<AlertContactEntity> contactList = alertGroupContactService.findAlertContactListByGroupId(appConfigEntity.getAlertGroupId());
 					for (AlertContactEntity alertContactEntity : contactList) {
 						plus.doSend(alertContactEntity.getMobile(), message);
 					}

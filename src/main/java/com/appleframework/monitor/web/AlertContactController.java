@@ -13,6 +13,7 @@ import com.appleframework.jmx.database.service.AlertContactService;
 import com.appleframework.model.Search;
 import com.appleframework.model.page.Pagination;
 import com.appleframework.monitor.service.AlertContactSearchService;
+import com.appleframework.web.bean.Message;
 
 @Controller
 @RequestMapping("/alert_contact")
@@ -91,6 +92,16 @@ public class AlertContactController extends BaseController {
 		}
 	}
 	
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public @ResponseBody Message delete(Integer id) {
+		try {
+			alertContactService.delete(id);
+			return SUCCESS_MESSAGE;
+		} catch (Exception e) {
+			return Message.error(e.getMessage());
+		}
+	}
+	
 	
 	/*@RequestMapping(value = "/list_for_cluster")
 	public String listForCluster(Model model, Integer clusterId, HttpServletRequest request) {
@@ -123,16 +134,7 @@ public class AlertContactController extends BaseController {
 		return info;
 	}
 	
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public @ResponseBody
-	Message delete(Integer id) {
-		try {
-			alertContactService.delete(id);
-			return SUCCESS_MESSAGE;
-		} catch (Exception e) {
-			return Message.error(e.getMessage());
-		}
-	}
+	
 	
 	@RequestMapping(value = "/deletes", method = RequestMethod.POST)
 	public @ResponseBody
