@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.appleframework.jmx.database.mapper.extend.AlertGroupExtendMapper">
+	<resultMap id="BaseResultMap" type="com.appleframework.jmx.database.entity.AlertGroupEntity">
+		<id column="id" property="id" jdbcType="INTEGER" />
+    	<result column="name" property="name" jdbcType="VARCHAR" />
+    	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    	<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, create_time, update_time
+	</sql>
+	
+	<select id="selectByPage" resultMap="BaseResultMap">
+	    select
+	    	<include refid="Base_Column_List" />
+	    from 
+	    	t_alert_group
+	    where 
+	    	1=1
+		    <if test="se.keyword != null" >
+				and name like '%${se.keyword}%'
+		    </if>
+	    order by 
+	    
+		    <choose>
+				<when test="se.orderField != null and se.orderField != ''">
+					${se.orderField}
+				</when>
+				<otherwise>
+					id
+				</otherwise>
+			</choose>
+		    
+		    <choose>
+				<when test="se.orderDirection != null and se.orderDirection != ''">
+					${se.orderDirection}
+				</when>
+				<otherwise>
+					desc
+				</otherwise>
+			</choose>
+    
+	</select>
+
+</mapper>

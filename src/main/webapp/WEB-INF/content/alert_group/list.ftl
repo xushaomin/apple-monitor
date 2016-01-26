@@ -18,7 +18,7 @@
 			var id = $(this).attr("operatId");
 			var title = $(this).attr("title");
 			
-			art.dialog.open('/app_info/list_for_cluster?clusterId=' + id, {
+			art.dialog.open('/alert_group_contact/list?groupId=' + id, {
 				id: 'viewFrame',
 				title: title,
 				close: function () {}
@@ -69,8 +69,6 @@
         <tr>
         	<th width="5%">序号</th>
         	<th width="10%">名称</th>
-        	<th width="10%">手机</th>
-        	<th width="10%">邮件</th>
         	<th width="10%">创建时间</th>
 			<th width="10%">操作</th>
         </tr>
@@ -78,8 +76,6 @@
         <tr class="even">
         	<td><!--<input type="checkbox" name="ids" value="${info.id}" />-->${info.id}</td>
         	<td>${(info.name)!}</td>
-			<td>${(info.mobile)!}</td>
-			<td>${(info.email)!}</td>
 			<td>
 				<#if info.createTime?exists>
 				${info.createTime?string('yyyy-MM-dd')}
@@ -88,6 +84,7 @@
 			<td>
 				<a class="btn_icon btn_edit"   href="javascript:;" operatId="${info.id}" title="编辑"></a>
            		<a class="btn_icon btn_delete" href="javascript:;" operatId="${info.id}" title="删除"></a>
+           		<a class="btn_icon btn_online" href="javascript:;" operatId="${info.id}" title="联系人"></a>
 			</td>
         </tr>
         </#list>
