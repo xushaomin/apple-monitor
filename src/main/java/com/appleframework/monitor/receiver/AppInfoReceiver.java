@@ -46,6 +46,7 @@ public class AppInfoReceiver extends ReceiverAdapter {
 			Properties prop = (Properties) object;
 			
 			String appName = prop.getProperty("application.name");
+			String appVersion = prop.getProperty("application.version");
 			String nodeIp = prop.getProperty("node.ip");
 			String nodeHost = prop.getProperty("node.host");
 
@@ -79,6 +80,7 @@ public class AppInfoReceiver extends ReceiverAdapter {
 			
 			AppInfoEntity appInfo = new AppInfoEntity();
 			appInfo.setAppName(appName);
+			appInfo.setAppVersion(appVersion);
 			appInfo.setClusterId(appCluster.getId());
 			appInfo.setNodeId(nodeInfo.getId());
 			appInfo.setInstallPath(installPath);
