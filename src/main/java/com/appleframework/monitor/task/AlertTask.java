@@ -86,12 +86,15 @@ public class AlertTask {
 						plus.doSend(alertContactEntity.getMobile(), message);
 					}
 					count = 1;
-					sendCountMap.put(appConfigEntity.getId(), count);
 				}
 				else {
 					count ++;
-					sendCountMap.put(appConfigEntity.getId(), count);
 				}
+				sendCountMap.put(appConfigEntity.getId(), count);
+			}
+			else {
+				//处理恢复后
+				sendCountMap.put(appConfigEntity.getId(), 0);
 			}
 		}
     }
