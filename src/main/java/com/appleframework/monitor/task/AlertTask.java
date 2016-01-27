@@ -94,7 +94,13 @@ public class AlertTask {
 			}
 			else {
 				//处理恢复后
-				sendCountMap.put(appConfigEntity.getId(), 0);
+				Integer count = sendCountMap.get(appConfigEntity.getId());
+				if(null != count && count > 0) {
+					//发送恢复消息
+					//plus.doSend
+					sendCountMap.put(appConfigEntity.getId(), 0);
+				}
+				
 			}
 		}
     }
