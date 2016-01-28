@@ -83,7 +83,7 @@ public class JMDispatcher extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        JMConnManager.init();
+        //JMConnManager.init();
     }
 
     private void writeHtml(HttpServletResponse resp, Object data) throws IOException {

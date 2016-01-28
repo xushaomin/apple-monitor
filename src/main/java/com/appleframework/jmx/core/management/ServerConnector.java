@@ -67,8 +67,7 @@ public class ServerConnector {
             logger.info("Failed to connect. error=" + e.getMessage());
             throw e;
         } finally {
-            /* change the thread context classloader back to the
-                    original classloader*/
+            /* change the thread context classloader back to the original classloader*/
             Thread.currentThread().setContextClassLoader(contextClassLoader);
         }
     }

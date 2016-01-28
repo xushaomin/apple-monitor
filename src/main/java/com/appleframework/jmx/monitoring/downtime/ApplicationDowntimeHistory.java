@@ -80,6 +80,7 @@ public class ApplicationDowntimeHistory {
 
 	public boolean isApplicationUp() {
 		return !this.isDown;
+		//return downtimeBegin == null;
 	}
 
 	public boolean isDown() {
