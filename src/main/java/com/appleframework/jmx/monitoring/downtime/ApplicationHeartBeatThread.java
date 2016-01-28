@@ -60,7 +60,7 @@ public class ApplicationHeartBeatThread extends Thread {
     
     @Override
     public void run() {
-        logger.info("Thread started: " + this.getName());
+        logger.debug("Thread started: " + this.getName());
         while (!end) {
             checkApplicationStatus();
             try {
@@ -69,7 +69,7 @@ public class ApplicationHeartBeatThread extends Thread {
                 logger.warn("InterruptedException: " + e.getMessage());
             }
         }
-        logger.info("Thread finished: " + this.getName());
+        logger.debug("Thread finished: " + this.getName());
     }
 
     protected void end() {
