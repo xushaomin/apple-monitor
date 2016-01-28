@@ -15,7 +15,6 @@
  */
 package com.appleframework.jmx.monitoring.downtime;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.EventObject;
 import java.util.HashMap;
@@ -160,6 +159,8 @@ public class DowntimeRecorder implements EventListener {
         ApplicationEvent appEvent = (ApplicationEvent)event;
         ApplicationDowntimeHistory downtimeHistory = getDowntimeHistory(appEvent.getApplicationConfig());
         assert downtimeHistory != null;
+        
+        //处理UP和DOWN事件
         if(appEvent instanceof ApplicationUpEvent){
             // application must have went down earlier
             assert downtimeHistory.getDowntimeBegin() != null;
@@ -179,29 +180,12 @@ public class DowntimeRecorder implements EventListener {
     
     private void addApplicationToDB(String applicationId, long recordingSince){
     	Integer id = Integer.parseInt(applicationId);
-    	AppDowntimeEntity appDowntime = appDowntimeService.get(id);
-    	if(null != appDowntime) {
-	    	appDowntime.setRecordingStart(new Timestamp(recordingSince));
-	    	appDowntime.setRecordingEnd(new Timestamp(recordingSince + 630720000000L));
-	    	appDowntime.setCreateTime(new Date());
-	    	appDowntimeService.update(appDowntime);
-    	}
-    	else {
-    		appDowntime = new AppDowntimeEntity();
-    		appDowntime.setId(id);
-	    	appDowntime.setRecordingStart(new Timestamp(recordingSince));
-	    	appDowntime.setRecordingEnd(new Timestamp(recordingSince + 630720000000L));
-	    	appDowntime.setCreateTime(new Date());
-	    	appDowntimeService.insert(appDowntime);
-    	}
+    	appDowntimeService.saveOrUpdate(id, recordingSince);
     }
-    
+
     private void recordDowntime(String applicationId, long downtimeBegin, long downtimeEnd){
-    	AppDowntimeHistoryEntity history = new AppDowntimeHistoryEntity();
-    	history.setAppId(Integer.parseInt(applicationId));
-    	history.setStartTime(new Timestamp(downtimeBegin));
-    	history.setEndTime(new Timestamp(downtimeEnd));
-    	appDowntimeHistoryService.insert(history);
+    	Integer id = Integer.parseInt(applicationId);
+    	appDowntimeHistoryService.saveOrUpdate(id, downtimeBegin, downtimeEnd);
     }
 
     private void initDowntimeMapFromDB(){
