@@ -167,7 +167,7 @@ public class DowntimeRecorder implements EventListener {
             // log the downtime to the db
             recordDowntime(appEvent.getApplicationConfig().getApplicationId(), downtimeHistory.getDowntimeBegin(), appEvent.getTime());
         }
-        
+        updateDowntimeMap(appEvent.getApplicationConfig(), downtimeHistory);
     }
 
     public double getUnavailablePercentage(ApplicationConfig appConfig) {
@@ -203,6 +203,14 @@ public class DowntimeRecorder implements EventListener {
                     downtimesMap.put(appConfig, history);
 			}
            
+        } catch (Exception e) {
+        	logger.error(e);
+		}
+    }
+    
+    private void updateDowntimeMap(ApplicationConfig appConfig, ApplicationDowntimeHistory history){
+        try{
+        	downtimesMap.put(appConfig, history);
         } catch (Exception e) {
         	logger.error(e);
 		}
