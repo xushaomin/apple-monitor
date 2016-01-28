@@ -29,4 +29,8 @@ public class ApplicationUpEvent extends ApplicationEvent {
     public ApplicationUpEvent(ApplicationConfig appConfig){
         super(appConfig);
     }
+    
+    public ApplicationUpEvent(ApplicationConfig appConfig, long time) {
+        super(appConfig, time);
+    }
 }

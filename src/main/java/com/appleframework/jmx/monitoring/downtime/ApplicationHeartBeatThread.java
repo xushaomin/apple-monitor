@@ -41,9 +41,6 @@ public class ApplicationHeartBeatThread extends Thread {
 
     private boolean end = false;
     
-    private boolean wasOpen = true;
-
-
     protected ApplicationHeartBeatThread(ApplicationConfig appConfig) {
         super("ApplicationHeartBeatThread:" + appConfig.getName());
         this.appConfig = appConfig;
@@ -52,9 +49,11 @@ public class ApplicationHeartBeatThread extends Thread {
     protected ApplicationHeartBeatThread(ApplicationEvent appEvent) {
         this(appEvent.getApplicationConfig());
         /* check if the application is up */
-        wasOpen = isOpen();
-        if(!wasOpen){
-            EventSystem.getInstance().fireEvent(new ApplicationDownEvent(appConfig, appEvent.getTime()));    
+        if(isOpen()){
+        	EventSystem.getInstance().fireEvent(new ApplicationUpEvent(appConfig, appEvent.getTime()));
+        }
+        else {
+        	EventSystem.getInstance().fireEvent(new ApplicationDownEvent(appConfig, appEvent.getTime()));
         }
     }
     
@@ -78,16 +77,12 @@ public class ApplicationHeartBeatThread extends Thread {
 
     private void checkApplicationStatus() {
         final boolean isOpen = isOpen();
-        if(wasOpen && !isOpen){
+        if(!isOpen){
             // application went down
-            wasOpen = false;
-            // application went down
-            EventSystem.getInstance().fireEvent(new ApplicationDownEvent(appConfig));
-        } else if(!wasOpen && isOpen){
+            EventSystem.getInstance().fireEvent(new ApplicationDownEvent(appConfig, System.currentTimeMillis()));
+        } else {
             // application came pack up
-            wasOpen = true;
-            // application came pack up
-            EventSystem.getInstance().fireEvent(new ApplicationUpEvent(appConfig));
+            EventSystem.getInstance().fireEvent(new ApplicationUpEvent(appConfig, System.currentTimeMillis()));
         }
     }
     
@@ -97,7 +92,7 @@ public class ApplicationHeartBeatThread extends Thread {
             connection = ServerConnector.getServerConnection(appConfig);
             return connection.isOpen();
         }catch(Exception e){
-            logger.info("Application is down: " + appConfig.getName() + " at " + appConfig.getHost() + ":" + appConfig.getPort());
+        	logger.info("Application is down: " + appConfig.getName() + " at " + appConfig.getHost() + ":" + appConfig.getPort());
             return false;
         } finally {
             try {

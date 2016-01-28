@@ -54,8 +54,12 @@ public class ApplicationDowntimeHistory {
 	}
 
 	public void applicationCameUp(long time) {
-		assert downtimeBegin != null;
-		totalDowntime += (time - downtimeBegin);
+		if (downtimeBegin == null) {
+			totalDowntime = 0L;
+		}
+		else {
+			totalDowntime += (time - downtimeBegin);
+		}
 		downtimeBegin = null;
 		this.isDown = false;
 	}
@@ -80,7 +84,6 @@ public class ApplicationDowntimeHistory {
 
 	public boolean isApplicationUp() {
 		return !this.isDown;
-		//return downtimeBegin == null;
 	}
 
 	public boolean isDown() {
@@ -89,6 +92,12 @@ public class ApplicationDowntimeHistory {
 
 	public void setDown(boolean isDown) {
 		this.isDown = isDown;
+	}
+
+	@Override
+	public String toString() {
+		return "ApplicationDowntimeHistory [recordingSince=" + recordingSince + ", totalDowntime=" + totalDowntime
+				+ ", downtimeBegin=" + downtimeBegin + ", isDown=" + isDown + "]";
 	}
 	
 }

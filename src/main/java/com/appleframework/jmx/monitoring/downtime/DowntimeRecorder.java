@@ -25,7 +25,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.jmx.core.config.ApplicationConfig;
@@ -78,9 +77,7 @@ public class DowntimeRecorder implements EventListener {
             if(!downtimesMap.containsKey(appConfig)){
             	try {
             		addApplicationToDB(appConfig.getApplicationId(), recordingSince);
-				} catch (DuplicateKeyException e) {
-					logger.error("ID已经存在: " + appConfig.getApplicationId());
-				}catch (Exception e) {
+				} catch (Exception e) {
 					logger.error(e);
 				}
                 downtimesMap.put(appConfig, new ApplicationDowntimeHistory(recordingSince));    
@@ -158,19 +155,19 @@ public class DowntimeRecorder implements EventListener {
         
         ApplicationEvent appEvent = (ApplicationEvent)event;
         ApplicationDowntimeHistory downtimeHistory = getDowntimeHistory(appEvent.getApplicationConfig());
-        assert downtimeHistory != null;
+        //assert downtimeHistory != null;
         
         //处理UP和DOWN事件
         if(appEvent instanceof ApplicationUpEvent){
             // application must have went down earlier
-            assert downtimeHistory.getDowntimeBegin() != null;
-            // log the downtime to the db
-            recordDowntime(appEvent.getApplicationConfig().getApplicationId(), 
-                    downtimeHistory.getDowntimeBegin(), appEvent.getTime());
+            //assert downtimeHistory.getDowntimeBegin() != null;
             downtimeHistory.applicationCameUp(appEvent.getTime());
-        }else if(event instanceof ApplicationDownEvent){
+        } else if(event instanceof ApplicationDownEvent){
             downtimeHistory.applicationWentDown(appEvent.getTime());
+            // log the downtime to the db
+            recordDowntime(appEvent.getApplicationConfig().getApplicationId(), downtimeHistory.getDowntimeBegin(), appEvent.getTime());
         }
+        
     }
 
     public double getUnavailablePercentage(ApplicationConfig appConfig) {
