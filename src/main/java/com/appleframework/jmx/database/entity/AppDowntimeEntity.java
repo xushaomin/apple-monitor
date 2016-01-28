@@ -7,6 +7,8 @@ public class AppDowntimeEntity implements Serializable {
 	
     private Integer id;
 
+    private Short state;
+
     private Date recordingStart;
 
     private Date recordingEnd;
@@ -23,6 +25,14 @@ public class AppDowntimeEntity implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Short getState() {
+        return state;
+    }
+
+    public void setState(Short state) {
+        this.state = state;
     }
 
     public Date getRecordingStart() {

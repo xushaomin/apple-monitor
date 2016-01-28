@@ -16,4 +16,6 @@ public interface AppDowntimeHistoryService {
 	
 	public void saveOrUpdate(Integer id, long downtimeBegin, long downtimeEnd);
 	
+	public void delete(Integer id);
+	
 }

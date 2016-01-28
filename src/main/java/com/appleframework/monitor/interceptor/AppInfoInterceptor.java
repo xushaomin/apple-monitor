@@ -26,6 +26,8 @@ import com.appleframework.jmx.database.entity.AppClusterEntity;
 import com.appleframework.jmx.database.entity.AppInfoEntity;
 import com.appleframework.jmx.database.entity.NodeInfoEntity;
 import com.appleframework.jmx.database.service.AppClusterService;
+import com.appleframework.jmx.database.service.AppDowntimeHistoryService;
+import com.appleframework.jmx.database.service.AppDowntimeService;
 import com.appleframework.jmx.database.service.AppInfoService;
 import com.appleframework.jmx.database.service.NodeInfoService;
 import com.appleframework.jmx.monitoring.downtime.ApplicationDowntimeService;
@@ -58,6 +60,13 @@ public class AppInfoInterceptor {
 	
 	@Resource
 	private ApplicationDowntimeService applicationDowntimeService;
+	
+	
+	@Resource
+	private AppDowntimeService appDowntimeService;
+	
+	@Resource
+	private AppDowntimeHistoryService appDowntimeHistoryService;
 
 		
 	//应用新增或修改
@@ -171,6 +180,18 @@ public class AppInfoInterceptor {
 				} catch (Exception e) {
 					logger.error(e.getMessage());
 				}
+				
+				try {
+					appDowntimeHistoryService.delete(id);
+				} catch (Exception e) {
+					logger.error(e.getMessage());
+				}
+				try {
+					appDowntimeService.delete(id);
+				} catch (Exception e) {
+					logger.error(e.getMessage());
+				}
+				
 			}
 			appClusterService.calibratedAppNum(appInfo.getClusterId());
 			AlertTask.sendCountMap.remove(id);

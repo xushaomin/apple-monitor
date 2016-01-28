@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.appleframework.jmx.database.constant.StateType;
 import com.appleframework.jmx.database.entity.AppDowntimeEntity;
 import com.appleframework.jmx.database.entity.AppDowntimeEntityExample;
 import com.appleframework.jmx.database.mapper.AppDowntimeEntityMapper;
@@ -32,6 +33,7 @@ public class AppDowntimeServiceImpl implements AppDowntimeService {
 	}
 	
 	public void save(AppDowntimeEntity appDowntime) {
+		appDowntime.setState(StateType.START.getIndex());
 		appDowntime.setCreateTime(new Date());
 		appDowntimeEntityMapper.insert(appDowntime);
 	}
@@ -57,8 +59,18 @@ public class AppDowntimeServiceImpl implements AppDowntimeService {
 	
 	public List<AppDowntimeEntity> findAll() {
 		AppDowntimeEntityExample example = new AppDowntimeEntityExample();
-		example.createCriteria();
+		example.createCriteria().andStateEqualTo(StateType.START.getIndex());
 		return appDowntimeEntityMapper.selectByExample(example);
 	}
+
+	@Override
+	public void delete(Integer id) {
+		AppDowntimeEntity appDowntime = this.get(id);
+		appDowntime.setState(StateType.DELETE.getIndex());
+		this.update(appDowntime);
+		
+	}
+	
+	
 
 }

@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.appleframework.jmx.database.constant.StateType;
 import com.appleframework.jmx.database.entity.AppDowntimeHistoryEntity;
 import com.appleframework.jmx.database.entity.AppDowntimeHistoryEntityExample;
 import com.appleframework.jmx.database.mapper.AppDowntimeHistoryEntityMapper;
@@ -29,6 +30,7 @@ public class AppDowntimeHistoryServiceImpl implements AppDowntimeHistoryService 
 	}
 	
 	public void save(AppDowntimeHistoryEntity historyEntity) {
+		historyEntity.setState(StateType.START.getIndex());
 		historyEntity.setCreateTime(new Date());
 		appDowntimeHistoryEntityMapper.insert(historyEntity);
 	}
@@ -53,6 +55,12 @@ public class AppDowntimeHistoryServiceImpl implements AppDowntimeHistoryService 
 		AppDowntimeHistoryEntityExample example = new AppDowntimeHistoryEntityExample();
 		example.createCriteria();
 		return appDowntimeHistoryEntityMapper.selectByExample(example);
+	}
+	
+	public void delete(Integer id) {
+		AppDowntimeHistoryEntity history = this.get(id);
+		history.setState(StateType.DELETE.getIndex());
+		this.update(history);
 	}
 
 }
