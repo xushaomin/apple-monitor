@@ -10,10 +10,10 @@ public interface AppDowntimeService {
 	
 	public void update(AppDowntimeEntity appDowntime);
 	
-	public void insert(AppDowntimeEntity appDowntime);
+	public void save(AppDowntimeEntity appDowntime);
 		
 	public List<AppDowntimeEntity> findAll();
 	
-	//public AppDowntime saveOrUpdate(AppDowntime appConfig);
+	public void saveOrUpdate(Integer id, long recordingSince);
 	
 }

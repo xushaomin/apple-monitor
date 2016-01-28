@@ -10,10 +10,10 @@ public interface AppDowntimeHistoryService {
 	
 	public void update(AppDowntimeHistoryEntity history);
 	
-	public void insert(AppDowntimeHistoryEntity history);
+	public void save(AppDowntimeHistoryEntity history);
 		
 	public List<AppDowntimeHistoryEntity> findAll();
 	
-	//public AppDowntimeHistory saveOrUpdate(AppDowntimeHistory appConfig);
+	public void saveOrUpdate(Integer id, long downtimeBegin, long downtimeEnd);
 	
 }
