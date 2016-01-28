@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.springframework.scheduling.annotation.Scheduled;  
 import org.springframework.stereotype.Component;
 
+import com.appleframework.config.core.PropertyConfigurer;
 import com.appleframework.core.utils.ObjectUtility;
 import com.appleframework.jmx.core.config.ApplicationConfig;
 import com.appleframework.jmx.core.config.ApplicationConfigManager;
@@ -58,6 +59,9 @@ public class AlertTask {
 	
 	@Scheduled(cron = "30 */1 * * * ?")
     public void alert() {
+		String openFlag = PropertyConfigurer.getString("alert.send.flag", "true");
+		if(Boolean.valueOf(openFlag) == false)
+			return;
 		ThirdPlus plus = plusService.generateByPlusType(PlusType.SMS.getIndex());
 		List<AppConfigEntity> list = appConfigService.findListByIsAlert();
 		for (AppConfigEntity appConfigEntity : list) {
