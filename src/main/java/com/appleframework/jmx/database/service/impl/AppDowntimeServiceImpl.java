@@ -1,5 +1,6 @@
 package com.appleframework.jmx.database.service.impl;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -30,25 +31,29 @@ public class AppDowntimeServiceImpl implements AppDowntimeService {
 		appDowntimeEntityMapper.updateByPrimaryKey(appDowntime);
 	}
 	
-	public void insert(AppDowntimeEntity appDowntime) {
+	public void save(AppDowntimeEntity appDowntime) {
 		appDowntime.setCreateTime(new Date());
 		appDowntimeEntityMapper.insert(appDowntime);
 	}
 	
 	
-	/*public AppDowntime saveOrUpdate(AppDowntime appInfo) {
-		AppDowntime existAppDowntime = this.getByNodeAndGroup(appInfo.getNodeId(), appInfo.getGroupId());
-		if(null == existAppDowntime) {
-			this.insert(appInfo);
-			return appInfo;
-		}
-		else {
-			String[] ignoreProperties = {"id", "createTime", "disorder", "remark", "state"};
-			BeanUtils.copyProperties(appInfo, existAppDowntime, ignoreProperties);
-			this.update(existAppDowntime);
-			return appInfo;
-		}
-	}*/
+	public void saveOrUpdate(Integer id, long recordingSince) {
+		AppDowntimeEntity appDowntime = this.get(id);
+    	if(null != appDowntime) {
+	    	appDowntime.setRecordingStart(new Timestamp(recordingSince));
+	    	appDowntime.setRecordingEnd(new Timestamp(recordingSince + 630720000000L));
+	    	appDowntime.setCreateTime(new Date());
+	    	this.update(appDowntime);
+    	}
+    	else {
+    		appDowntime = new AppDowntimeEntity();
+    		appDowntime.setId(id);
+	    	appDowntime.setRecordingStart(new Timestamp(recordingSince));
+	    	appDowntime.setRecordingEnd(new Timestamp(recordingSince + 630720000000L));
+	    	appDowntime.setCreateTime(new Date());
+	    	this.save(appDowntime);
+    	}
+	}
 	
 	public List<AppDowntimeEntity> findAll() {
 		AppDowntimeEntityExample example = new AppDowntimeEntityExample();

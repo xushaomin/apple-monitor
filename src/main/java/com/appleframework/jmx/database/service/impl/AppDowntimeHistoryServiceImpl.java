@@ -1,5 +1,6 @@
 package com.appleframework.jmx.database.service.impl;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -27,24 +28,26 @@ public class AppDowntimeHistoryServiceImpl implements AppDowntimeHistoryService 
 		appDowntimeHistoryEntityMapper.updateByPrimaryKey(historyEntity);
 	}
 	
-	public void insert(AppDowntimeHistoryEntity historyEntity) {
+	public void save(AppDowntimeHistoryEntity historyEntity) {
 		historyEntity.setCreateTime(new Date());
 		appDowntimeHistoryEntityMapper.insert(historyEntity);
 	}
 	
-	/*public AppDowntimeHistory saveOrUpdate(AppDowntimeHistory appInfo) {
-		AppDowntimeHistory existAppDowntimeHistory = this.getByNodeAndGroup(appInfo.getNodeId(), appInfo.getGroupId());
-		if(null == existAppDowntimeHistory) {
-			this.insert(appInfo);
-			return appInfo;
-		}
-		else {
-			String[] ignoreProperties = {"id", "createTime", "disorder", "remark", "state"};
-			BeanUtils.copyProperties(appInfo, existAppDowntimeHistory, ignoreProperties);
-			this.update(existAppDowntimeHistory);
-			return appInfo;
-		}
-	}*/
+	public void saveOrUpdate(Integer id, long downtimeBegin, long downtimeEnd) {
+		AppDowntimeHistoryEntity history = this.get(id);
+    	if(null != history) {
+        	history.setStartTime(new Timestamp(downtimeBegin));
+        	history.setEndTime(new Timestamp(downtimeEnd));
+        	this.update(history);
+    	}
+    	else {
+    		history = new AppDowntimeHistoryEntity();
+        	history.setId(id);
+        	history.setStartTime(new Timestamp(downtimeBegin));
+        	history.setEndTime(new Timestamp(downtimeEnd));
+        	this.save(history);
+    	}
+	}
 	
 	public List<AppDowntimeHistoryEntity> findAll() {
 		AppDowntimeHistoryEntityExample example = new AppDowntimeHistoryEntityExample();
