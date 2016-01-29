@@ -103,6 +103,8 @@ public class NodeInfoServiceImpl implements NodeInfoService {
 	public List<NodeInfoEntity> findAll() {
 		NodeInfoEntityExample example = new NodeInfoEntityExample();
 		example.createCriteria();
+		example.setOrderByClause("ip");
+		example.setDistinct(true);
 		return nodeInfoEntityMapper.selectByExample(example);
 	}
 
