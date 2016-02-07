@@ -4,7 +4,7 @@
 		        <!-- start of 分页 -->
 				<#if (totalPages > 1)>
 					<div class=" page right">
-						<select id="pageSize" class="c_select" name="pageSize">
+						<select id="pageSizeSelect" class="c_select" name="pageSize">
 							<option value="10" <#if page.pageSize=10>selected</#if>>10</option>
 							<option value="20" <#if page.pageSize=20>selected</#if>>20</option>
 							<option value="50" <#if page.pageSize=50>selected</#if>>50</option>
