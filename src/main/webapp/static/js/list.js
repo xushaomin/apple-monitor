@@ -71,15 +71,23 @@ $().ready( function() {
 	});
 	
 	// 每页记录数选项
-	$pageSizeSelect.mouseover( function() {
+	//$pageSizeSelect.mouseover( function() {
+	//	var $this = $(this);
+	//	var offset = $this.offset();
+	//	var $menuWrap = $this.closest("div.menuWrap");
+	//	var $popupMenu = $menuWrap.children("div.popupMenu");
+	//	$popupMenu.css({left: offset.left, top: offset.top + $this.height() + 2}).show();
+	//	$menuWrap.mouseleave(function() {
+	//		$popupMenu.hide();
+	//	});
+	//});
+	
+	$pageSizeSelect.bind('click change',function(){
 		var $this = $(this);
-		var offset = $this.offset();
-		var $menuWrap = $this.closest("div.menuWrap");
-		var $popupMenu = $menuWrap.children("div.popupMenu");
-		$popupMenu.css({left: offset.left, top: offset.top + $this.height() + 2}).show();
-		$menuWrap.mouseleave(function() {
-			$popupMenu.hide();
-		});
+		$pageSize.val($this.attr("val"));
+		$pageNumber.val("1");
+		$listForm.submit();
+		return false;
 	});
 	
 	// 每页记录数
