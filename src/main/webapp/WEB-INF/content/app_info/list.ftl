@@ -91,6 +91,21 @@
 			});
 		});
 	
+	
+		$("#logLevelAll").bind("click", function(){
+			var ids= "";
+            
+             $("input[name='ids']:checked").each(function () {
+                   ids += $(this).val() + ","
+     		});
+
+			art.dialog.open('/jmx_log4j/level_select?ids=' + ids, {
+				id: 'logFrame',
+				title: '批量修改日志',
+				close: function () {}
+			}, false);
+			
+		});
 		
 	});
 </script>
@@ -220,6 +235,7 @@
 	    		<a id="deleteAll" class="btn" href="javascript:void(0);">删除选中</a>
 	    		<a id="startAlertAll" class="btn" href="javascript:void(0);">启动报警</a>
 	    		<a id="stopAlertAll" class="btn" href="javascript:void(0);">关闭报警</a>
+	    		<a id="logLevelAll" class="btn" href="javascript:void(0);">日志级别</a>
 	    	</div>
 	        
 	         <!-- start of 分页 -->

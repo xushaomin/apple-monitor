@@ -1,14 +1,15 @@
-	        	<select id="pageSize" class="c_select" name="pageSize">
-					<option value="10" <#if page.pageSize=10>selected</#if>>10</option>
-					<option value="20" <#if page.pageSize=20>selected</#if>>20</option>
-					<option value="50" <#if page.pageSize=50>selected</#if>>50</option>
-					<option value="100" <#if page.pageSize=100>selected</#if>>100</option>
-				</select>
+	        	
 					        	
 				<input type="hidden" id="pageNumber" name="pageNo" value="${page.pageNo}" />
 		        <!-- start of 分页 -->
 				<#if (totalPages > 1)>
-					<div class=" page right">		
+					<div class=" page right">
+						<select id="pageSize" class="c_select" name="pageSize">
+							<option value="10" <#if page.pageSize=10>selected</#if>>10</option>
+							<option value="20" <#if page.pageSize=20>selected</#if>>20</option>
+							<option value="50" <#if page.pageSize=50>selected</#if>>50</option>
+							<option value="100" <#if page.pageSize=100>selected</#if>>100</option>
+						</select>
 						<#if isFirst>
 							<a class="firstPage">首页</a>
 						<#else>
