@@ -17,6 +17,8 @@ import com.appleframework.jmx.core.data.OperationResultData;
 import com.appleframework.jmx.core.services.MBeanService;
 import com.appleframework.jmx.core.services.ServiceContext;
 import com.appleframework.jmx.core.services.ServiceContextImpl;
+import com.appleframework.jmx.core.util.StringUtils;
+import com.appleframework.jmx.webui.view.ApplicationViewHelper;
 import com.appleframework.monitor.model.Log4jLevelOperation;
 import com.appleframework.monitor.model.Log4jLevelType;
 
@@ -26,6 +28,9 @@ public class JmxLog4jController extends BaseController {
 		
 	@Resource
 	private MBeanService mbeanService;
+	
+	@Resource
+	private ApplicationViewHelper applicationViewHelper;
 	
 	private String viewModel = "jmx_log4j/";
 	
@@ -85,5 +90,45 @@ public class JmxLog4jController extends BaseController {
 	public List<Log4jLevelType> getLog4jLevelTypes() {
 		return Arrays.asList(Log4jLevelType.values());
 	}
+	
+	
+	@RequestMapping(value = "/level_select")
+	public String levelSelect(Model model, String ids, HttpServletResponse response) throws Exception {
+		model.addAttribute("IDS", ids);
+		model.addAttribute("log4jLevelTypes", getLog4jLevelTypes());
+		return viewModel + "level_select";
+	}
+	
+	@RequestMapping(value = "/batch_update")
+	public String batchUpdate(Model model, String ids, short level, HttpServletResponse response) {
+		try {
+			String operateName = Log4jLevelOperation.toLevelOperation(level);
+			String[] idds = ids.split(",");
+			for (int j = 0; j < idds.length; j++) {
+				String id = idds[j];
+				if(!StringUtils.isEmpty(id)) {
+					ApplicationConfig appConfig = ApplicationConfigManager.getApplicationConfig(id.toString());
+					
+					if(applicationViewHelper.isApplicationUp(appConfig)) {
+						ServiceContext serviceContext = new ServiceContextImpl(appConfig.getAppId(), MBEAN_NAME);
+						String [] dates = {};
+						OperationResultData date[] = mbeanService.invoke(serviceContext, operateName, dates);
+						for (int i = 0; i < date.length; i++) {
+							OperationResultData operationResultData = date[i];
+							if(operationResultData.isError()) {
+								addErrorMessage(model, operationResultData.getErrorString());
+							}
+						}
+					}
+				}
+			}
 			
+		} catch (Exception e) {
+			addErrorMessage(model, e.getMessage());
+			return "/commons/error_ajax";
+		}
+		addSuccessMessage(model, "修改成功");
+		return "/commons/success_ajax";
+	}
+	
 }
