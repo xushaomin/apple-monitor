@@ -204,7 +204,7 @@
 			<td>${info.isAlert?string('启动','关闭')}</td>
 			<td>
 				<#if info.updateTime?exists>
-				${info.updateTime?string('yyyy-MM-dd')}
+				${info.updateTime?string('yyyy-MM-dd HH:mm:ss')}
 				<#else>-</#if>
 			</td>
 			<td>${info.createTime?string('yyyy-MM-dd')}</td>
