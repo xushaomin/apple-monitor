@@ -8,8 +8,9 @@
     info.web_port as webPort, info.web_context as webContext, 
     info.jmx_port as jmxPort, info.service_port as servicePort, 
     info.install_path as installPath, info.disorder as disorder, 
-    info.remark as remark, info.state as state, config.is_alert as isAlert,
-    info.create_time as createTime, info.update_time as updateTime
+    info.remark as remark, info.state as state, 
+    info.create_time as createTime, info.update_time as updateTime,
+    config.is_alert as isAlert, config.conf_env as confEnv
   </sql>
   
   <select id="selectByPage" resultType="com.appleframework.monitor.model.AppInfoBo">
