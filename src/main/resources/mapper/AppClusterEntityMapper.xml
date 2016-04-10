@@ -9,6 +9,7 @@
     <result column="app_num" property="appNum" jdbcType="INTEGER" />
     <result column="disorder" property="disorder" jdbcType="INTEGER" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
     <result column="state" property="state" jdbcType="SMALLINT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -72,8 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, cluster_name, cluster_desc, is_cluster, app_num, disorder, remark, state, create_time, 
-    update_time
+    id, cluster_name, cluster_desc, is_cluster, app_num, disorder, remark, group_id, 
+    state, create_time, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.appleframework.jmx.database.entity.AppClusterEntityExample" >
     select
@@ -111,12 +112,12 @@
     </selectKey>
     insert into t_app_cluster (cluster_name, cluster_desc, is_cluster, 
       app_num, disorder, remark, 
-      state, create_time, update_time
-      )
+      group_id, state, create_time, 
+      update_time)
     values (#{clusterName,jdbcType=VARCHAR}, #{clusterDesc,jdbcType=VARCHAR}, #{isCluster,jdbcType=SMALLINT}, 
       #{appNum,jdbcType=INTEGER}, #{disorder,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
-      #{state,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{groupId,jdbcType=INTEGER}, #{state,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.appleframework.jmx.database.entity.AppClusterEntity" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
@@ -141,6 +142,9 @@
       </if>
       <if test="remark != null" >
         remark,
+      </if>
+      <if test="groupId != null" >
+        group_id,
       </if>
       <if test="state != null" >
         state,
@@ -170,6 +174,9 @@
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=INTEGER},
       </if>
       <if test="state != null" >
         #{state,jdbcType=SMALLINT},
@@ -212,6 +219,9 @@
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
+      <if test="record.groupId != null" >
+        group_id = #{record.groupId,jdbcType=INTEGER},
+      </if>
       <if test="record.state != null" >
         state = #{record.state,jdbcType=SMALLINT},
       </if>
@@ -235,6 +245,7 @@
       app_num = #{record.appNum,jdbcType=INTEGER},
       disorder = #{record.disorder,jdbcType=INTEGER},
       remark = #{record.remark,jdbcType=VARCHAR},
+      group_id = #{record.groupId,jdbcType=INTEGER},
       state = #{record.state,jdbcType=SMALLINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
@@ -263,6 +274,9 @@
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=INTEGER},
+      </if>
       <if test="state != null" >
         state = #{state,jdbcType=SMALLINT},
       </if>
@@ -283,6 +297,7 @@
       app_num = #{appNum,jdbcType=INTEGER},
       disorder = #{disorder,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR},
+      group_id = #{groupId,jdbcType=INTEGER},
       state = #{state,jdbcType=SMALLINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
