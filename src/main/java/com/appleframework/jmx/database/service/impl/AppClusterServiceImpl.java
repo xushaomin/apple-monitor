@@ -107,6 +107,10 @@ public class AppClusterServiceImpl implements AppClusterService {
 			return appCluster;
 		}
 		else {
+			if(null == appCluster.getGroupId()) {
+				appCluster.setGroupId(appGroup.getId());
+				this.update(appCluster);
+			}
 			return appCluster;
 		}
 	}
