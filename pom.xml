@@ -5,17 +5,17 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.appleframework.monitor</groupId>
 	<artifactId>apple-monitor</artifactId>
-	<version>0.0.7.RELEASE</version>
+	<version>0.0.8.RELEASE</version>
 	<packaging>jar</packaging>
 	<name>apple-monitor</name>
 	<url>http://mvnrepo.appleframework.com</url>
 
 	<properties>
-		<spring.version>4.0.5.RELEASE</spring.version>
-		<apple.version>0.1.4.RELEASE</apple.version>
-		<config.version>0.1.5.RELEASE</config.version>
-		<boot.version>0.2.2.RELEASE</boot.version>
-		<orm.version>0.0.9.RELEASE</orm.version>
+		<spring.version>4.2.0.RELEASE</spring.version>
+		<apple.version>[0.1.4,)</apple.version>
+		<config.version>[0.1.5,)</config.version>
+		<boot.version>[0.2.2,)</boot.version>
+		<orm.version>[0.0.9,)</orm.version>
 		<aspectj.version>1.6.8</aspectj.version>
 	</properties>
 
@@ -25,37 +25,23 @@
 			<groupId>com.appleframework</groupId>
 			<artifactId>apple-core</artifactId>
 			<version>${apple.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.validation</groupId>
-    				<artifactId>validation-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-  					<artifactId>commons-logging</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-lang</groupId>
-  					<artifactId>commons-lang</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>com.appleframework</groupId>
 			<artifactId>apple-web</artifactId>
 			<version>${apple.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.validation</groupId>
-					<artifactId>validation-api</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>com.appleframework</groupId>
 			<artifactId>apple-exception</artifactId>
+			<version>${apple.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.appleframework</groupId>
+			<artifactId>apple-model</artifactId>
 			<version>${apple.version}</version>
 		</dependency>
 
@@ -367,7 +353,6 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
-			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
