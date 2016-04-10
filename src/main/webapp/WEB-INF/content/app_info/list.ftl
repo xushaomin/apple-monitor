@@ -168,8 +168,10 @@
         	<th style="line-height:0px; width:5%;" rowspan="2">序号</th>
         	<th style="line-height:0px; width:12%;" rowspan="2" class="sort" orderField="asc" name="info.app_name">应用名称</th>
         	<th style="line-height:0px; width:10%;" rowspan="2" class="sort" orderField="asc" name="info.node_id">所在节点</th>
-        	<th style="line-height:0px; width:20%;" rowspan="2" class="sort" orderField="asc" name="info.install_path">安装目录</th>
+        	<th style="line-height:0px; width:15%;" rowspan="2" class="sort" orderField="asc" name="info.install_path">安装目录</th>
         	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.install_path">版本</th>
+        	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.conf_env">环境</th>
+        	
         	<th style="line-height:0px; width:10%;" colspan="3">端口</th>
         	<th style="line-height:0px; width:6%;" rowspan="2">状态</th>
         	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="desc" name="config.is_alert">监控</th>
@@ -189,6 +191,7 @@
 			<td>${NODE_INFO_MAP[info.nodeId?string].host}</td>
 			<td style="text-align:left;">${(info.installPath)!}</td>
 			<td>${(info.appVersion)!}</td>
+			<td>${(info.confEnv)!}</td>
 			<td><#if (info.servicePort > 0)>${info.servicePort}<#else>-</#if></td>
 			<td><#if (info.webPort > 0)>${info.webPort}<#else>-</#if></td>
 			<td><#if (info.jmxPort > 0)>${info.jmxPort}<#else>-</#if></td>
@@ -214,6 +217,7 @@
                 <a class="btn_icon btn_delete" href="javascript:;" operatId="${info.id}" title="删除"></a>
                 <@appStatus appId = info.id>
 					<#if isUp == true>
+						<br />
 						<a class="btn_icon btn_examine" href="javascript:;" operatId="${info.id}" title="日志信息"></a>
 						<a class="btn_icon btn_effect" href="javascript:;" operatId="${info.id}" title="修改日志级别"></a>
 						<a class="btn_icon btn_view" href="javascript:;" operatId="${info.id}" title="查看监控[${APP_CLUSTER_MAP[info.clusterId?string].clusterName},${NODE_INFO_MAP[info.nodeId?string].host}:${info.jmxPort}]"></a>
