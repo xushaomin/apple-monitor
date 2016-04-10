@@ -20,6 +20,8 @@ public class AppClusterEntity implements Serializable {
     private String remark;
 
     private Short state;
+    
+    private Integer groupId;
 
     private Date createTime;
 
@@ -106,4 +108,13 @@ public class AppClusterEntity implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+	public Integer getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(Integer groupId) {
+		this.groupId = groupId;
+	}
+	
 }

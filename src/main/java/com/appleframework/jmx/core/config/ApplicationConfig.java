@@ -18,7 +18,7 @@ package com.appleframework.jmx.core.config;
 
 import java.util.*;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * ApplicationConfig holds configuration for a single application. 

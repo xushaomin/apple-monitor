@@ -13,8 +13,10 @@ import com.appleframework.jmx.database.constant.IsCluster;
 import com.appleframework.jmx.database.constant.StateType;
 import com.appleframework.jmx.database.entity.AppClusterEntity;
 import com.appleframework.jmx.database.entity.AppClusterEntityExample;
+import com.appleframework.jmx.database.entity.AppGroupEntity;
 import com.appleframework.jmx.database.mapper.AppClusterEntityMapper;
 import com.appleframework.jmx.database.service.AppClusterService;
+import com.appleframework.jmx.database.service.AppGroupService;
 import com.appleframework.jmx.database.service.AppInfoService;
 
 @Service("appClusterService")
@@ -25,6 +27,9 @@ public class AppClusterServiceImpl implements AppClusterService {
 	
 	@Resource
 	private AppInfoService appInfoService;
+	
+	@Resource
+	private AppGroupService appGroupService;
 
 	public AppClusterEntity get(Integer id) {
 		return appClusterEntityMapper.selectByPrimaryKey(id);
@@ -80,6 +85,12 @@ public class AppClusterServiceImpl implements AppClusterService {
 	}
 	
 	public AppClusterEntity saveWithName(String name) {
+		AppGroupEntity appGroup = null;
+		String[] names = name.split("-");
+		if(names.length > 0) {
+			String groupName = names[0].trim();
+			appGroup = appGroupService.saveWithName(groupName);
+		}
 		AppClusterEntity appCluster = this.getByName(name);
 		if(null == appCluster) {
 			appCluster = new AppClusterEntity();
@@ -91,6 +102,7 @@ public class AppClusterServiceImpl implements AppClusterService {
 			appCluster.setState(StateType.START.getIndex());
 			appCluster.setIsCluster(IsCluster.NO.getIndex());
 			appCluster.setAppNum(0);
+			appCluster.setGroupId(appGroup.getId());
 			this.save(appCluster);
 			return appCluster;
 		}
