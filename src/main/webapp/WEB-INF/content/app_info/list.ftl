@@ -131,7 +131,13 @@
         	<div class="con_search_top_L left">
                 <p>
                     <span class="group"><label>关键字：</label>
-                    	<input name="keyword" class="c_input_text" type="text" realValue="关键字" value="${(se.keyword)!''}" />
+                    	<input name="keyword" class="c_input_text" type="text" realValue="关键字" value="${(se.keyword)!''}" style="width:100px;" />
+                    </span>
+                    <span class="group"><label>版本：</label>
+                    	<input name="appVersion" class="c_input_text" type="text" realValue="版本" value="${(so.appVersion)!''}"  style="width:100px;" />
+                    </span>
+                    <span class="group"><label>环境：</label>
+                    	<input name="confEnv" class="c_input_text" type="text" realValue="环境" value="${(so.confEnv)!''}"  style="width:100px;" />
                     </span>
                     <span class="group"><label>节点：</label>
                     	<select class="c_select required" id="nodeId" name="nodeId" style="width:150px;">
@@ -180,7 +186,7 @@
 			<th style="line-height:0px; width:20%;" rowspan="2">操作</th>
         </tr>
         <tr>
-          <th style="line-height:0px;" class="sort" orderField="desc" name="info.service_port">Dubbo</th>
+          <th style="line-height:0px;" class="sort" orderField="desc" name="info.service_port">SERVICE</th>
           <th style="line-height:0px;" class="sort" orderField="desc" name="info.web_port">WEB</th>
           <th style="line-height:0px;" class="sort" orderField="desc" name="info.jmx_port">JMX</th>
         </tr>
