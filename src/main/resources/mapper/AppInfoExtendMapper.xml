@@ -26,17 +26,17 @@
        		)
        )
     </if>
-    <if test="so.nodeId != null" >
+    <if test="so.nodeId != null and so.nodeId !=''" >
        and  info.node_id = ${so.nodeId} 
     </if>
-    <if test="so.clusterId != null" >
+    <if test="so.clusterId != null and so.clusterId !=''" >
        and  info.cluster_id = ${so.clusterId} 
     </if>
     
-    <if test="so.appVersion != null" >
+    <if test="so.appVersion != null and so.appVersion !=''" >
        and  info.app_version like '%${so.appVersion}%'
     </if>
-    <if test="so.confEnv != null" >
+    <if test="so.confEnv != null and so.confEnv !='' " >
        and  info.conf_env like '%${so.confEnv}%'
     </if>
     
