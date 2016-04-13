@@ -22,6 +22,10 @@ public class AppInfoSo implements Serializable {
     private Integer servicePort;
 
     private String installPath;
+    
+    private String appVersion;
+
+    private String confEnv;
 
     private Integer disorder;
 
@@ -123,7 +127,23 @@ public class AppInfoSo implements Serializable {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public Short getState() {
+    public String getAppVersion() {
+		return appVersion;
+	}
+
+	public void setAppVersion(String appVersion) {
+		this.appVersion = appVersion;
+	}
+
+	public String getConfEnv() {
+		return confEnv;
+	}
+
+	public void setConfEnv(String confEnv) {
+		this.confEnv = confEnv;
+	}
+
+	public Short getState() {
         return state;
     }
 
