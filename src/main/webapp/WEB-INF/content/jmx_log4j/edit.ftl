@@ -51,7 +51,9 @@ $().ready(function() {
 					<li class="clearfix">
                 		<label for="platform" class="tit">日志级别：<span class=" red">*</span></label>
                 		<#list log4jLevelTypes as type>
-	                		<input class="required" name="level" type="radio" value="${type.index}" />${type.getName()}
+	                		<input class="required" name="level" type="radio" value="${type.index}" 
+	                			<#if appInfo.logLevel?exists && appInfo.logLevel == type.getName()>checked</#if>
+	                			/>${type.getName()}
 	                    </#list>
                 	</li>
             </ul>

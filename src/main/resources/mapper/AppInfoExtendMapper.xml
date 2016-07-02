@@ -10,7 +10,7 @@
     info.install_path as installPath, info.disorder as disorder, 
     info.remark as remark, info.state as state, info.conf_env as confEnv,
     info.create_time as createTime, info.update_time as updateTime,
-    config.is_alert as isAlert
+    config.is_alert as isAlert, info.log_level as logLevel
   </sql>
   
   <select id="selectByPage" resultType="com.appleframework.monitor.model.AppInfoBo">
@@ -38,6 +38,9 @@
     </if>
     <if test="so.confEnv != null and so.confEnv !='' " >
        and  info.conf_env like '%${so.confEnv}%'
+    </if>
+    <if test="so.logLevel != null and so.logLevel !='' " >
+       and  info.log_level = '${so.logLevel}'
     </if>
     
     order by 

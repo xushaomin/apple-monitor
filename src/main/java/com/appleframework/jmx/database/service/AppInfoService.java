@@ -12,6 +12,8 @@ public interface AppInfoService {
 	
 	public void insert(AppInfoEntity appInfo);
 	
+	public void updateLogLevel(Integer id, String logLevel);
+	
 	public boolean isExistByNodeAndCluster(Integer nodeId, Integer clusterId);
 	
 	public int countByNodeAndCluster(Integer nodeId, Integer clusterId);

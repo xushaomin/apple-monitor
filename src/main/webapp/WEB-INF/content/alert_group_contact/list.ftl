@@ -41,17 +41,32 @@ $().ready(function() {
 <body>
 <form id="inputForm" method="post" action="update">
 	<input id="groupId" name="groupId" type="hidden" value="${GROUP_ID}" />
-    <div id="auditTab" class="pop_main" style="width:600px;border: 0px solid;">
+    <div id="auditTab" class="pop_main" style="width:500px;border: 0px solid;">
 
        <div class="pop_information_mod">
-            <ul class="pop_list merchant_type_add">
-                	<li class="clearfix">
-                		<label for="contactIds require" class="tit">联系人：<span class=" red">*</span></label>
-                		<#list ALL_CONTACT_LIST as all>
-                			<input id="contact_${all.id}" name="contactIds" type="checkbox" value="${all.id}" />${all.name}
-        				</#list>
-               		</li>
-            </ul>
+
+					 	<!-- start of table_list -->
+					    <table id="listTable" class="table_list list">
+					        <tr>
+					        	<th width="5%">序号</th>
+					        	<th width="10%">名称</th>
+								<th width="10%">操作</th>
+					        </tr>
+					        <#list ALL_CONTACT_LIST as all>
+					        <tr class="even">
+					        	<td><input type="checkbox" name="ids" value="${all.id}" />${all.id}</td>
+					        	<td>${(all.name)!}</td>
+								<td>
+									<a class="btn_icon btn_edit"   href="javascript:;" operatId="${all.id}" title="编辑"></a>
+					           		<a class="btn_icon btn_delete" href="javascript:;" operatId="${all.id}" title="删除"></a>
+					           		<a class="btn_icon btn_online" href="javascript:;" operatId="${all.id}" title="联系人"></a>
+								</td>
+					        </tr>
+					        </#list>
+					        
+					    </table>
+					    <!-- end of table_list -->			
+    
 
         </div>
 

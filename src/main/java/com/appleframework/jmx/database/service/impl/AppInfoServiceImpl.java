@@ -29,6 +29,12 @@ public class AppInfoServiceImpl implements AppInfoService {
 		appInfoEntityMapper.updateByPrimaryKey(appInfo);
 	}
 	
+	public void updateLogLevel(Integer id, String logLevel) {
+		AppInfoEntity info = this.get(id);
+		info.setLogLevel(logLevel);
+		this.update(info);
+	}
+	
 	public void insert(AppInfoEntity appInfo) {
 		Date now = new Date();
 		appInfo.setCreateTime(now);

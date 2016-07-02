@@ -1,5 +1,6 @@
 package com.appleframework.monitor.web;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import com.appleframework.jmx.database.service.NodeInfoService;
 import com.appleframework.model.Search;
 import com.appleframework.model.page.Pagination;
 import com.appleframework.monitor.model.AppInfoSo;
+import com.appleframework.monitor.model.Log4jLevelType;
 import com.appleframework.monitor.service.AppInfoSearchService;
 import com.appleframework.web.bean.Message;
 
@@ -64,6 +66,7 @@ public class AppInfoController extends BaseController {
 		model.addAttribute("APP_CLUSTER_LIST", appGroupList);
 		model.addAttribute("NODE_INFO_MAP", nodeInfoMap);
 		model.addAttribute("APP_CLUSTER_MAP", appGroupMap);
+		model.addAttribute("LOG_LEVEL_TYPES", getLog4jLevelTypes());
 		model.addAttribute("se", search);
 		model.addAttribute("so", so);
 		model.addAttribute("page", page);
@@ -90,7 +93,7 @@ public class AppInfoController extends BaseController {
 		model.addAttribute("NODE_INFO_LIST", nodeInfoList);
 		model.addAttribute("APP_CLUSTER_LIST", appGroupList);
 		model.addAttribute("NODE_INFO_MAP", nodeInfoMap);
-		model.addAttribute("APP_CLUSTER_MAP", appGroupMap);
+		model.addAttribute("APP_CLUSTER_MAP", appGroupMap);		
 		model.addAttribute("list", list);
 		return viewModel + "list_for_cluster";
 	}
@@ -142,6 +145,10 @@ public class AppInfoController extends BaseController {
 		} catch (Exception e) {
 			return Message.error(e.getMessage());
 		}
+	}
+	
+	public List<Log4jLevelType> getLog4jLevelTypes() {
+		return Arrays.asList(Log4jLevelType.values());
 	}
 	
 	/*

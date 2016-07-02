@@ -18,6 +18,7 @@ import com.appleframework.jmx.core.services.MBeanService;
 import com.appleframework.jmx.core.services.ServiceContext;
 import com.appleframework.jmx.core.services.ServiceContextImpl;
 import com.appleframework.jmx.core.util.StringUtils;
+import com.appleframework.jmx.database.service.AppInfoService;
 import com.appleframework.jmx.webui.view.ApplicationViewHelper;
 import com.appleframework.monitor.model.Log4jLevelOperation;
 import com.appleframework.monitor.model.Log4jLevelType;
@@ -31,6 +32,9 @@ public class JmxLog4jController extends BaseController {
 	
 	@Resource
 	private ApplicationViewHelper applicationViewHelper;
+	
+	@Resource
+	private AppInfoService appInfoService;
 	
 	private String viewModel = "jmx_log4j/";
 	
@@ -59,6 +63,7 @@ public class JmxLog4jController extends BaseController {
 	public String edit(Model model, Integer id, HttpServletResponse response) throws Exception {
 		ApplicationConfig appConfig = ApplicationConfigManager.getApplicationConfig(id.toString());
 		model.addAttribute("appConfig", appConfig);
+		model.addAttribute("appInfo", appInfoService.get(id));
 		model.addAttribute("log4jLevelTypes", getLog4jLevelTypes());
 		return viewModel + "edit";
 	}
@@ -79,6 +84,7 @@ public class JmxLog4jController extends BaseController {
 				}
 			}            
 			
+			appInfoService.updateLogLevel(id, Log4jLevelType.getName(level));
 		} catch (Exception e) {
 			addErrorMessage(model, e.getMessage());
 			return "/commons/error_ajax";
@@ -103,6 +109,7 @@ public class JmxLog4jController extends BaseController {
 	public String batchUpdate(Model model, String ids, short level, HttpServletResponse response) {
 		try {
 			String operateName = Log4jLevelOperation.toLevelOperation(level);
+			String levelName = Log4jLevelType.getName(level);
 			String[] idds = ids.split(",");
 			for (int j = 0; j < idds.length; j++) {
 				String id = idds[j];
@@ -119,7 +126,9 @@ public class JmxLog4jController extends BaseController {
 								addErrorMessage(model, operationResultData.getErrorString());
 							}
 						}
+						appInfoService.updateLogLevel(Integer.parseInt(id), levelName);
 					}
+
 				}
 			}
 			

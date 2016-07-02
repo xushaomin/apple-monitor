@@ -155,6 +155,14 @@
 	                    	</#list>
 	                 	</select>
                     </span>
+                    <span class="group"><label>日志级别：</label>
+                    	<select class="c_select required" id="logLevel" name="logLevel" style="width:150px;">
+	                    	<option value="">请选择</option>
+	                    	<#list LOG_LEVEL_TYPES as type>
+	                    		<option value="${type.getName()}" <#if so.logLevel?exists && so.logLevel == type.getName()>selected</#if>>${type.getName()}</option>
+							</#list>
+	                 	</select>
+                    </span>
             		<span class="group"><a id="searchButton" href="javascript:;" class="btn_search">搜索</a></span>
                 </p>
             </div>
@@ -172,17 +180,17 @@
     <table id="listTable" class="table_list list">
         <tr>
         	<th style="line-height:0px; width:5%;" rowspan="2">序号</th>
-        	<th style="line-height:0px; width:12%;" rowspan="2" class="sort" orderField="asc" name="info.app_name">应用名称</th>
-        	<th style="line-height:0px; width:10%;" rowspan="2" class="sort" orderField="asc" name="info.node_id">所在节点</th>
+        	<th style="line-height:0px; width:10%;" rowspan="2" class="sort" orderField="asc" name="info.app_name">应用名称</th>
+        	<th style="line-height:0px; width:8%;" rowspan="2" class="sort" orderField="asc" name="info.node_id">所在节点</th>
         	<th style="line-height:0px; width:15%;" rowspan="2" class="sort" orderField="asc" name="info.install_path">安装目录</th>
         	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.install_path">版本</th>
         	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.conf_env">环境</th>
-        	
+        	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.conf_env">日志</th>
         	<th style="line-height:0px; width:10%;" colspan="3">端口</th>
-        	<th style="line-height:0px; width:6%;" rowspan="2">状态</th>
-        	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="desc" name="config.is_alert">监控</th>
-        	<th style="line-height:0px; width:8%;" rowspan="2" class="sort" orderField="asc" name="info.update_time">更新时间</th>
-        	<th style="line-height:0px; width:8%;" rowspan="2" class="sort" orderField="asc" name="info.create_time">创建时间</th>
+        	<th style="line-height:0px; width:4%;" rowspan="2">状态</th>
+        	<th style="line-height:0px; width:4%;" rowspan="2" class="sort" orderField="desc" name="config.is_alert">监控</th>
+        	<th style="line-height:0px; width:10%;" rowspan="2" class="sort" orderField="asc" name="info.update_time">更新时间</th>
+        	<!--<th style="line-height:0px; width:8%;" rowspan="2" class="sort" orderField="asc" name="info.create_time">创建时间</th>-->
 			<th style="line-height:0px; width:20%;" rowspan="2">操作</th>
         </tr>
         <tr>
@@ -198,6 +206,7 @@
 			<td style="text-align:left;">${(info.installPath)!}</td>
 			<td>${(info.appVersion)!}</td>
 			<td>${(info.confEnv)!}</td>
+			<td>${(info.logLevel)!}</td>
 			<td><#if (info.servicePort > 0)>${info.servicePort}<#else>-</#if></td>
 			<td><#if (info.webPort > 0)>${info.webPort}<#else>-</#if></td>
 			<td><#if (info.jmxPort > 0)>${info.jmxPort}<#else>-</#if></td>
@@ -216,7 +225,7 @@
 				${info.updateTime?string('yyyy-MM-dd HH:mm:ss')}
 				<#else>-</#if>
 			</td>
-			<td>${info.createTime?string('yyyy-MM-dd')}</td>
+			<!--<td>${info.createTime?string('yyyy-MM-dd')}</td>-->
 			<td>
 				<!--<a class="btn_icon btn_edit"   href="javascript:;" operatId="${info.id}" title="编辑"></a>
                 <a class="btn_icon btn_detail" href="javascript:;" operatId="${info.id}" title="详情"></a>-->

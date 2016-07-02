@@ -5,6 +5,8 @@ import java.util.Date;
 
 public class AppInfoSo implements Serializable {
 	
+    private static final long serialVersionUID = 1L;
+	
     private Long id;
 
     private Long nodeId;
@@ -23,6 +25,8 @@ public class AppInfoSo implements Serializable {
 
     private String installPath;
     
+    private String logLevel;
+    
     private String appVersion;
 
     private String confEnv;
@@ -37,8 +41,6 @@ public class AppInfoSo implements Serializable {
 
     private Date updateTime;
     
-    private static final long serialVersionUID = 1L;
-
     public Long getId() {
         return id;
     }
@@ -166,6 +168,13 @@ public class AppInfoSo implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-    
+
+	public String getLogLevel() {
+		return logLevel;
+	}
+
+	public void setLogLevel(String logLevel) {
+		this.logLevel = logLevel;
+	} 
     
 }

@@ -24,6 +24,8 @@ public class AppInfoEntity implements Serializable {
     private Integer servicePort;
 
     private String installPath;
+    
+    private String logLevel;
 
     private Integer disorder;
 
@@ -186,4 +188,13 @@ public class AppInfoEntity implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+	public String getLogLevel() {
+		return logLevel;
+	}
+
+	public void setLogLevel(String logLevel) {
+		this.logLevel = logLevel;
+	}
+    
 }
