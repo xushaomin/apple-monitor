@@ -183,9 +183,9 @@
         	<th style="line-height:0px; width:10%;" rowspan="2" class="sort" orderField="asc" name="info.app_name">应用名称</th>
         	<th style="line-height:0px; width:8%;" rowspan="2" class="sort" orderField="asc" name="info.node_id">所在节点</th>
         	<th style="line-height:0px; width:15%;" rowspan="2" class="sort" orderField="asc" name="info.install_path">安装目录</th>
-        	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.install_path">版本</th>
+        	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.app_version">版本</th>
         	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.conf_env">环境</th>
-        	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.conf_env">日志</th>
+        	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.log_level">日志</th>
         	<th style="line-height:0px; width:10%;" colspan="3">端口</th>
         	<th style="line-height:0px; width:4%;" rowspan="2">状态</th>
         	<th style="line-height:0px; width:4%;" rowspan="2" class="sort" orderField="desc" name="config.is_alert">监控</th>
