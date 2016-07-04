@@ -120,6 +120,27 @@
 			}, false);
 		});
 		
+		$("#restartCommandAll").bind("click", function(){
+		
+			var chk_value =[]; 
+			$('input[name="ids"]:checked').each(function(){ 
+				chk_value.push($(this).val()); 
+			}); 
+			if(chk_value.length > 0) {
+				art.dialog.open('/app_info/batch_command?command=restart&ids=' + chk_value, {
+					id: 'viewFrame',
+					title: '批量重启',
+					width: '100%',
+    				height: '100%',
+					close: function () {}
+				}, false);
+			}
+			else {
+				pop_warning("操作提示", "请选择应用！", false, function() {});
+			}
+			
+		});
+		
 	});
 </script>
 
@@ -295,6 +316,7 @@
 	    		<a id="startAlertAll" class="btn" href="javascript:void(0);">启动报警</a>
 	    		<a id="stopAlertAll" class="btn" href="javascript:void(0);">关闭报警</a>
 	    		<a id="logLevelAll" class="btn" href="javascript:void(0);">日志级别</a>
+	    		<a id="restartCommandAll" class="btn" href="javascript:void(0);">应用重启</a>
 	    	</div>
 	        
 	         <!-- start of 分页 -->
