@@ -37,7 +37,7 @@ public class ShellCommandPlus implements CommandPlus {
 			cmdParam.setPath(param.getInstallPath());
 			cmdParam.setOption(option.toLowerCase());
 
-			String paramJson = JSONUtils.serializeObject(param);
+			String paramJson = JSONUtils.serializeObject(cmdParam);
 			WebSocketServer.sendMessage(param.getId(), ShellUtil.exec(CMD, paramJson));
 			
 		} catch (Exception e) {
