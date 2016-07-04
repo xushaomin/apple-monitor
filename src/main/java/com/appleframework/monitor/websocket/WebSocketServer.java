@@ -63,6 +63,9 @@ public class WebSocketServer extends WebSocketServlet {
 				if(webSocket.taskId.equals(taskId)) {
 					webSocket.connection.sendMessage(message);
 				}
+				if(webSocket.taskId.equals(0)) {
+					webSocket.connection.sendMessage(message);
+				}
 			} catch (Exception e) {
 				webSockets.remove(webSocket);
 			}

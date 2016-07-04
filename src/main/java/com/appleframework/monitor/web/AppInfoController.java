@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.appleframework.config.core.PropertyConfigurer;
+import com.appleframework.jmx.core.util.StringUtils;
 import com.appleframework.jmx.database.entity.AppClusterEntity;
 import com.appleframework.jmx.database.entity.AppInfoEntity;
 import com.appleframework.jmx.database.entity.NodeInfoEntity;
@@ -56,9 +55,7 @@ public class AppInfoController extends BaseController {
 	private String viewModel = "app_info/";
 	
 	@RequestMapping(value = "/list")
-	public String list(Model model, Pagination page, 
-			Search search, AppInfoSo so, HttpServletRequest request) {
-		
+	public String list(Model model, Pagination page, Search search, AppInfoSo so) {
 		page = appInfoSearchService.findPage(page, search, so);
 		List<NodeInfoEntity> nodeInfoList = nodeInfoService.findAll();
 		List<AppClusterEntity> appGroupList = appClusterService.findAll();
@@ -83,7 +80,7 @@ public class AppInfoController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/list_for_cluster")
-	public String listForCluster(Model model, Integer clusterId, HttpServletRequest request) {
+	public String listForCluster(Model model, Integer clusterId) {
 		
 		List<NodeInfoEntity> nodeInfoList = nodeInfoService.findAll();
 		List<AppClusterEntity> appGroupList = appClusterService.findAll();
@@ -108,27 +105,27 @@ public class AppInfoController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/get")
-	public @ResponseBody AppInfoEntity get(Model model, Integer id, HttpServletRequest request) {
+	public @ResponseBody AppInfoEntity get(Model model, Integer id) {
 		AppInfoEntity info = appInfoService.get(id);
 		return info;
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String edit(Model model, Integer id, HttpServletResponse response) throws Exception {
+	public String edit(Model model, Integer id) throws Exception {
 		AppInfoEntity info = appInfoService.get(id);
 		model.addAttribute("info", info);
 		return "app_info/edit";
 	}
 	
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
-	public String view(Model model, Integer id, HttpServletResponse response) throws Exception {
+	public String view(Model model, Integer id) throws Exception {
 		AppInfoEntity info = appInfoService.get(id);
         model.addAttribute("info", info);
 		return "app_info/view";
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public String add(Model model, HttpServletResponse response) throws Exception {
+	public String add(Model model) throws Exception {
 		return "app_info/add";
 	}
 	
@@ -160,35 +157,35 @@ public class AppInfoController extends BaseController {
 		return Arrays.asList(Log4jLevelType.values());
 	}
 	
-	@RequestMapping(value = "/command_start")
-	public String commandStart(Model model, Integer id) {
+	@RequestMapping(value = "/command")
+	public String commandStart(Model model, Integer id, String command) {
 		AppInfoEntity appInfo = appInfoService.get(id);
 		NodeInfoEntity nodeInfo = nodeInfoService.get(appInfo.getNodeId());
-		AppCommandParam param = AppCommandParam.create(id, nodeInfo.getHost(), appInfo.getInstallPath(), appInfo.getConfEnv());
-		commandService.doExe(param, CommandExeType.START);
+		AppCommandParam param = AppCommandParam.create(id, nodeInfo.getHost(), 
+				appInfo.getInstallPath(), appInfo.getConfEnv());
+		commandService.doExe(param, CommandExeType.valueOf(command.toLowerCase()));
 		model.addAttribute("taskId", id);
 		model.addAttribute("websocketUrl", websocketUrl);
 		return viewModel + "command";
 	}
 	
-	@RequestMapping(value = "/command_restart")
-	public String commandRestart(Model model, Integer id) {
-		AppInfoEntity appInfo = appInfoService.get(id);
-		NodeInfoEntity nodeInfo = nodeInfoService.get(appInfo.getNodeId());
-		AppCommandParam param = AppCommandParam.create(id, nodeInfo.getHost(), appInfo.getInstallPath(), appInfo.getConfEnv());
-		commandService.doExe(param, CommandExeType.RESTART);
-		model.addAttribute("taskId", id);
-		model.addAttribute("websocketUrl", websocketUrl);
-		return viewModel + "command";
-	}
-	
-	@RequestMapping(value = "/command_stop")
-	public String commandStop(Model model, Integer id) {
-		AppInfoEntity appInfo = appInfoService.get(id);
-		NodeInfoEntity nodeInfo = nodeInfoService.get(appInfo.getNodeId());
-		AppCommandParam param = AppCommandParam.create(id, nodeInfo.getHost(), appInfo.getInstallPath(), appInfo.getConfEnv());
-		commandService.doExe(param, CommandExeType.STOP);
-		model.addAttribute("taskId", id);
+	@RequestMapping(value = "/batch_command")
+	public String batchCommand(Model model, String ids, String command) {
+
+		String[] idds = ids.split(",");
+		for (int j = 0; j < idds.length; j++) {
+			String id = idds[j];
+			if (!StringUtils.isEmpty(id)) {
+
+				AppInfoEntity appInfo = appInfoService.get(Integer.parseInt(id));
+				NodeInfoEntity nodeInfo = nodeInfoService.get(appInfo.getNodeId());
+				AppCommandParam param = AppCommandParam.create(Integer.parseInt(id), nodeInfo.getHost(),
+						appInfo.getInstallPath(), appInfo.getConfEnv());
+				commandService.doExe(param, CommandExeType.valueOf(command.toUpperCase()));
+
+			}
+		}
+		model.addAttribute("taskId", 0);
 		model.addAttribute("websocketUrl", websocketUrl);
 		return viewModel + "command";
 	}

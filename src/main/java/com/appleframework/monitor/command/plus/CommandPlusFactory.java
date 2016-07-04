@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.appleframework.monitor.command.plus.shell.ShellCommandPlus;
+import com.appleframework.monitor.command.plus.ssh.SshCommandPlus;
 
 public class CommandPlusFactory {
 
@@ -14,6 +15,9 @@ public class CommandPlusFactory {
 		if (null == deployPlus) {
 			if (plus.equals("shell")) {
 				deployPlus = new ShellCommandPlus();
+			}
+			else {
+				deployPlus = new SshCommandPlus();
 			}
 			deployPlusMap.put(plus, deployPlus);
 		}
