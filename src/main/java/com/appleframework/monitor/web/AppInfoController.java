@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.appleframework.config.core.PropertyConfigurer;
 import com.appleframework.jmx.database.entity.AppClusterEntity;
 import com.appleframework.jmx.database.entity.AppInfoEntity;
 import com.appleframework.jmx.database.entity.NodeInfoEntity;
@@ -23,9 +24,12 @@ import com.appleframework.jmx.database.service.AppInfoService;
 import com.appleframework.jmx.database.service.NodeInfoService;
 import com.appleframework.model.Search;
 import com.appleframework.model.page.Pagination;
+import com.appleframework.monitor.model.AppCommandParam;
 import com.appleframework.monitor.model.AppInfoSo;
+import com.appleframework.monitor.model.CommandExeType;
 import com.appleframework.monitor.model.Log4jLevelType;
 import com.appleframework.monitor.service.AppInfoSearchService;
+import com.appleframework.monitor.service.CommandService;
 import com.appleframework.web.bean.Message;
 
 @Controller
@@ -44,6 +48,11 @@ public class AppInfoController extends BaseController {
 	@Resource
 	private NodeInfoService nodeInfoService;
 	
+	@Resource
+	private CommandService commandService;
+	
+	private String websocketUrl = PropertyConfigurer.getString("websocket.url");	
+
 	private String viewModel = "app_info/";
 	
 	@RequestMapping(value = "/list")
@@ -151,46 +160,37 @@ public class AppInfoController extends BaseController {
 		return Arrays.asList(Log4jLevelType.values());
 	}
 	
-	/*
-	@RequestMapping(value = "/save")
-	public String save(Model model, AppInfo appInfo, HttpServletRequest request) {
-		try {
-			appInfoService.insert(appInfo);
-		} catch (ServiceException e) {
-			addErrorMessage(model, e.getMessage());
-			return ERROR_VIEW;
-		}
-		addSuccessMessage(model, "添加应用成功", "list");
-		return SUCCESS_VIEW;
+	@RequestMapping(value = "/command_start")
+	public String commandStart(Model model, Integer id) {
+		AppInfoEntity appInfo = appInfoService.get(id);
+		NodeInfoEntity nodeInfo = nodeInfoService.get(appInfo.getNodeId());
+		AppCommandParam param = AppCommandParam.create(id, nodeInfo.getHost(), appInfo.getInstallPath(), appInfo.getConfEnv());
+		commandService.doExe(param, CommandExeType.START);
+		model.addAttribute("taskId", id);
+		model.addAttribute("websocketUrl", websocketUrl);
+		return viewModel + "command";
 	}
 	
-	
-	
-	@RequestMapping(value = "/update")
-	public String update(Model model, AppInfo appInfo, HttpServletResponse response) {
-		try {
-			AppInfo old = appInfoService.get(appInfo.getId());
-			old.setCode(appInfo.getCode());
-			old.setName(appInfo.getName());
-			old.setRemark(appInfo.getRemark());
-			old.setUpdateTime(new Date());
-			appInfoService.update(old);
-		} catch (ServiceException e) {
-			addErrorMessage(model, e.getMessage());
-			return "/commons/error_ajax";
-		}
-		addSuccessMessage(model, "修改应用成功", "list");
-		return "/commons/success_ajax";
+	@RequestMapping(value = "/command_restart")
+	public String commandRestart(Model model, Integer id) {
+		AppInfoEntity appInfo = appInfoService.get(id);
+		NodeInfoEntity nodeInfo = nodeInfoService.get(appInfo.getNodeId());
+		AppCommandParam param = AppCommandParam.create(id, nodeInfo.getHost(), appInfo.getInstallPath(), appInfo.getConfEnv());
+		commandService.doExe(param, CommandExeType.RESTART);
+		model.addAttribute("taskId", id);
+		model.addAttribute("websocketUrl", websocketUrl);
+		return viewModel + "command";
 	}
 	
-	// AJAX唯一验证
-	@RequestMapping(value = "/check_code", method = RequestMethod.GET)
-	public @ResponseBody String checkRoleName(String oldCode, String code) {
-		if (appInfoService.isUniqueByCode(oldCode, code)) {
-			return ajax("true");
-		} else {
-			return ajax("false");
-		}
-	}*/
-		
+	@RequestMapping(value = "/command_stop")
+	public String commandStop(Model model, Integer id) {
+		AppInfoEntity appInfo = appInfoService.get(id);
+		NodeInfoEntity nodeInfo = nodeInfoService.get(appInfo.getNodeId());
+		AppCommandParam param = AppCommandParam.create(id, nodeInfo.getHost(), appInfo.getInstallPath(), appInfo.getConfEnv());
+		commandService.doExe(param, CommandExeType.STOP);
+		model.addAttribute("taskId", id);
+		model.addAttribute("websocketUrl", websocketUrl);
+		return viewModel + "command";
+	}
+			
 }
