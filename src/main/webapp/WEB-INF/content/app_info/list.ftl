@@ -107,6 +107,19 @@
 			
 		});
 		
+		$("#listTable .btn_down").bind("click", function(){
+			var id = $(this).attr("operatId");
+			var title = $(this).attr("title");
+			
+			art.dialog.open('command_start?id=' + id, {
+				id: 'command_start',
+				title: title,
+				width: '100%',
+    			height: '100%',
+				close: function () {}
+			}, false);
+		});
+		
 	});
 </script>
 
@@ -236,8 +249,35 @@
 						<a class="btn_icon btn_examine" href="javascript:;" operatId="${info.id}" title="日志信息"></a>
 						<a class="btn_icon btn_effect" href="javascript:;" operatId="${info.id}" title="修改日志级别"></a>
 						<a class="btn_icon btn_view" href="javascript:;" operatId="${info.id}" title="查看监控[${APP_CLUSTER_MAP[info.clusterId?string].clusterName},${NODE_INFO_MAP[info.nodeId?string].host}:${info.jmxPort}]"></a>
+						
+						<a class="btn_icon btn_online" href="javascript:;" operatId="${info.id}" title="重启"></a>
+						<a class="btn_icon btn_down" href="javascript:;" operatId="${info.id}" title="停止"></a>
+						
+					<#else>
+						<a class="btn_icon btn_down" href="javascript:;" operatId="${info.id}" title="启动"></a>
 					</#if>
 				</@appStatus>
+
+				<!--
+								
+				.btn_edit{ background-position:0 0;}
+				.btn_detail{ background-position:0 -50px;}
+				.btn_online{ background-position:0 -100px;}
+				.btn_delete{ background-position:0 -150px;}
+				.btn_up{ background-position:0 -200px;}
+				.btn_down{ background-position:0 -250px;}
+				.btn_enable{ background-position:0 -300px;}
+				.btn_disabled{ background-position:0 -350px;}
+				.btn_empty{ background-position:0 -400px;}
+				.btn_pass{ background-position:0 -450px;}
+				.btn_refuse{ background-position:0 -500px;}
+				.btn_add{ background-position:0 -550px;}
+				.btn_view{ background-position:0 -600px;}
+				.btn_offline{ background-position:0 -650px;}
+				.btn_effect{ background-position:0 -700px;}
+				.btn_examine{ background-position:0 -750px;}
+				
+				-->
 			</td>
         </tr>
         </#list>

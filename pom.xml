@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.appleframework.monitor</groupId>
 	<artifactId>apple-monitor</artifactId>
-	<version>0.0.9.RELEASE</version>
+	<version>0.1.0.RELEASE</version>
 	<packaging>jar</packaging>
 	<name>apple-monitor</name>
 	<url>http://mvnrepo.appleframework.com</url>
@@ -17,9 +17,16 @@
 		<boot.version>0.2.9.RELEASE</boot.version>
 		<orm.version>0.1.3.RELEASE</orm.version>
 		<aspectj.version>1.6.8</aspectj.version>
+		<jetty.version>8.1.17.v20150415</jetty.version>
 	</properties>
 
 	<dependencies>
+	
+		<dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-websocket</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
 
 		<dependency>
 			<groupId>com.appleframework</groupId>
@@ -374,13 +381,13 @@
 		<repository>
 			<id>nexus-releases</id>
 			<name>Local Nexus Releases Repository</name>
-			<url>http://mvnrepo.appleframework.com:8081/nexus/content/repositories/releases</url>
+			<url>http://nexus.9zhiad.com:8081/nexus/content/repositories/releases</url>
 		</repository>
 
 		<snapshotRepository>
 			<id>nexus-snapshots</id>
 			<name>Local Nexus Snapshots Repository</name>
-			<url>http://mvnrepo.appleframework.com:8081/nexus/content/repositories/snapshots</url>
+			<url>http://nexus.9zhiad.com:8081/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 

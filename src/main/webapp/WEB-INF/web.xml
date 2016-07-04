@@ -70,5 +70,16 @@
 		<servlet-name>spring-mvc</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>push</servlet-name>
+		<servlet-class>com.appleframework.monitor.websocket.WebSocketServer</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>push</servlet-name>
+		<url-pattern>/push/command</url-pattern>
+	</servlet-mapping>
 
 </web-app>
