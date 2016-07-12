@@ -121,7 +121,7 @@
     </selectKey>
     insert into t_app_info (node_id, cluster_id, app_name, 
       app_version, web_port, web_context, 
-      jmx_port, service_port, install_path, log_level
+      jmx_port, service_port, install_path, log_level,
       disorder, remark, state, 
       conf_dataid, conf_group, conf_env, 
       create_time, update_time)
