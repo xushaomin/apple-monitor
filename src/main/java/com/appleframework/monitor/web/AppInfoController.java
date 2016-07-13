@@ -163,7 +163,7 @@ public class AppInfoController extends BaseController {
 		NodeInfoEntity nodeInfo = nodeInfoService.get(appInfo.getNodeId());
 		AppCommandParam param = AppCommandParam.create(id, nodeInfo.getHost(), 
 				appInfo.getInstallPath(), appInfo.getConfEnv());
-		commandService.doExe(param, CommandExeType.valueOf(command.toLowerCase()));
+		commandService.doExe(param, CommandExeType.valueOf(command.toUpperCase()));
 		model.addAttribute("taskId", id);
 		model.addAttribute("websocketUrl", websocketUrl);
 		return viewModel + "command";
