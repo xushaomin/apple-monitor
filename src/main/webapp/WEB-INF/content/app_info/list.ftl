@@ -107,12 +107,38 @@
 			
 		});
 		
+		$("#listTable .btn_up").bind("click", function(){
+			var id = $(this).attr("operatId");
+			var title = $(this).attr("title");
+			
+			art.dialog.open('command?command=restart&id=' + id, {
+				id: 'restart',
+				title: title,
+				width: '100%',
+    			height: '100%',
+				close: function () {}
+			}, false);
+		});
+		
 		$("#listTable .btn_down").bind("click", function(){
 			var id = $(this).attr("operatId");
 			var title = $(this).attr("title");
 			
-			art.dialog.open('command_start?id=' + id, {
-				id: 'command_start',
+			art.dialog.open('command?command=stop&id=' + id, {
+				id: 'stop',
+				title: title,
+				width: '100%',
+    			height: '100%',
+				close: function () {}
+			}, false);
+		});
+		
+		$("#listTable .btn_online").bind("click", function(){
+			var id = $(this).attr("operatId");
+			var title = $(this).attr("title");
+			
+			art.dialog.open('command?command=restart&id=' + id, {
+				id: 'restart',
 				title: title,
 				width: '100%',
     			height: '100%',
@@ -275,7 +301,7 @@
 						<a class="btn_icon btn_down" href="javascript:;" operatId="${info.id}" title="停止"></a>
 						
 					<#else>
-						<a class="btn_icon btn_down" href="javascript:;" operatId="${info.id}" title="启动"></a>
+						<a class="btn_icon btn_up" href="javascript:;" operatId="${info.id}" title="启动"></a>
 					</#if>
 				</@appStatus>
 
