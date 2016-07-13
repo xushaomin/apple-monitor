@@ -1,5 +1,7 @@
 package com.appleframework.monitor.command.plus.shell;
 
+import org.apache.log4j.Logger;
+
 import com.appleframework.monitor.command.plus.CommandPlus;
 import com.appleframework.monitor.model.AppCommandParam;
 import com.appleframework.monitor.model.CommandExeType;
@@ -11,6 +13,8 @@ import com.taobao.diamond.utils.JSONUtils;
 
 public class ShellCommandPlus implements CommandPlus {
 	
+	private static Logger logger = Logger.getLogger(ShellCommandPlus.class);
+
 	private static String CMD = "/work/shell/deploy.py";
 	
 	@Override
@@ -38,7 +42,12 @@ public class ShellCommandPlus implements CommandPlus {
 			cmdParam.setOption(option.toLowerCase());
 
 			String paramJson = JSONUtils.serializeObject(cmdParam);
-			WebSocketServer.sendMessage(param.getId(), ShellUtil.exec(CMD, paramJson));
+			logger.warn("执行命令：" + CMD);
+			logger.warn("参数：" + paramJson);
+			String result = ShellUtil.exec(CMD, paramJson);
+			logger.warn("执行结果：" + result);
+			
+			WebSocketServer.sendMessage(param.getId(), result);
 			
 		} catch (Exception e) {
 			WebSocketServer.sendMessage(param.getId(), "命令执行出错，" + e.getMessage());
