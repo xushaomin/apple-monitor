@@ -246,6 +246,7 @@
         	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.app_version">版本</th>
         	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.conf_env">环境</th>
         	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.log_level">日志</th>
+            <th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.mem_max">内存</th>
         	<th style="line-height:0px; width:10%;" colspan="3">端口</th>
         	<th style="line-height:0px; width:4%;" rowspan="2">状态</th>
         	<th style="line-height:0px; width:4%;" rowspan="2" class="sort" orderField="desc" name="config.is_alert">监控</th>
@@ -254,7 +255,7 @@
 			<th style="line-height:0px; width:20%;" rowspan="2">操作</th>
         </tr>
         <tr>
-          <th style="line-height:0px;" class="sort" orderField="desc" name="info.service_port">SERVICE</th>
+          <th style="line-height:0px;" class="sort" orderField="desc" name="info.service_port">SERV</th>
           <th style="line-height:0px;" class="sort" orderField="desc" name="info.web_port">WEB</th>
           <th style="line-height:0px;" class="sort" orderField="desc" name="info.jmx_port">JMX</th>
         </tr>
@@ -267,6 +268,7 @@
 			<td>${(info.appVersion)!}</td>
 			<td>${(info.confEnv)!}</td>
 			<td>${(info.logLevel)!}</td>
+			<td>${(info.memMax)!}</td>
 			<td><#if (info.servicePort > 0)>${info.servicePort}<#else>-</#if></td>
 			<td><#if (info.webPort > 0)>${info.webPort}<#else>-</#if></td>
 			<td><#if (info.jmxPort > 0)>${info.jmxPort}<#else>-</#if></td>
@@ -282,7 +284,7 @@
 			<td>${info.isAlert?string('启动','关闭')}</td>
 			<td>
 				<#if info.updateTime?exists>
-				${info.updateTime?string('yyyy-MM-dd HH:mm:ss')}
+				${info.updateTime?string('MM-dd HH:mm')}
 				<#else>-</#if>
 			</td>
 			<!--<td>${info.createTime?string('yyyy-MM-dd')}</td>-->
@@ -292,7 +294,6 @@
                 <a class="btn_icon btn_delete" href="javascript:;" operatId="${info.id}" title="删除"></a>
                 <@appStatus appId = info.id>
 					<#if isUp == true>
-						<br />
 						<a class="btn_icon btn_examine" href="javascript:;" operatId="${info.id}" title="日志信息"></a>
 						<a class="btn_icon btn_effect" href="javascript:;" operatId="${info.id}" title="修改日志级别"></a>
 						<a class="btn_icon btn_view" href="javascript:;" operatId="${info.id}" title="查看监控[${APP_CLUSTER_MAP[info.clusterId?string].clusterName},${NODE_INFO_MAP[info.nodeId?string].host}:${info.jmxPort}]"></a>
