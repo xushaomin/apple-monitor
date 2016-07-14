@@ -13,6 +13,8 @@
     <result column="service_port" property="servicePort" jdbcType="INTEGER" />
     <result column="install_path" property="installPath" jdbcType="VARCHAR" />
     <result column="log_level" property="logLevel" jdbcType="VARCHAR" />
+    <result column="start_param" property="startParam" jdbcType="VARCHAR" />
+    <result column="mem_max" property="memMax" jdbcType="VARCHAR" />
     <result column="disorder" property="disorder" jdbcType="INTEGER" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="SMALLINT" />
@@ -82,7 +84,8 @@
   </sql>
   <sql id="Base_Column_List" >
     id, node_id, cluster_id, app_name, app_version, web_port, web_context, jmx_port, 
-    service_port, install_path, log_level, disorder, remark, state, conf_dataid, conf_group, conf_env, 
+    service_port, install_path, log_level, start_param, mem_max, 
+    disorder, remark, state, conf_dataid, conf_group, conf_env, 
     create_time, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.appleframework.jmx.database.entity.AppInfoEntityExample" >
@@ -127,7 +130,8 @@
       create_time, update_time)
     values (#{nodeId,jdbcType=INTEGER}, #{clusterId,jdbcType=INTEGER}, #{appName,jdbcType=VARCHAR}, 
       #{appVersion,jdbcType=VARCHAR}, #{webPort,jdbcType=INTEGER}, #{webContext,jdbcType=VARCHAR}, 
-      #{jmxPort,jdbcType=INTEGER}, #{servicePort,jdbcType=INTEGER}, #{installPath,jdbcType=VARCHAR}, #{logLevel,jdbcType=VARCHAR}, 
+      #{jmxPort,jdbcType=INTEGER}, #{servicePort,jdbcType=INTEGER}, #{installPath,jdbcType=VARCHAR}, 
+      #{logLevel,jdbcType=VARCHAR}, #{startParam,jdbcType=VARCHAR}, #{memMax,jdbcType=VARCHAR}, 
       #{disorder,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{state,jdbcType=SMALLINT}, 
       #{confDataid,jdbcType=VARCHAR}, #{confGroup,jdbcType=VARCHAR}, #{confEnv,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
@@ -165,8 +169,14 @@
       <if test="installPath != null" >
         install_path,
       </if>
-       <if test="logLevel != null" >
+      <if test="logLevel != null" >
         log_level,
+      </if>
+      <if test="startParam != null" >
+        start_param,
+      </if>
+      <if test="memMax != null" >
+        mem_max,
       </if>
       <if test="disorder != null" >
         disorder,
@@ -223,6 +233,12 @@
       </if>
       <if test="logLevel != null" >
         #{logLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="startParam != null" >
+        #{startParam,jdbcType=VARCHAR},
+      </if>
+      <if test="memMax != null" >
+        #{memMax,jdbcType=VARCHAR},
       </if>
       <if test="disorder != null" >
         #{disorder,jdbcType=INTEGER},
@@ -292,6 +308,12 @@
       <if test="record.logLevel != null" >
         log_level = #{record.logLevel,jdbcType=VARCHAR},
       </if>
+      <if test="record.startParam != null" >
+        start_param = #{record.startParam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memMax != null" >
+        log_level = #{record.memMax,jdbcType=VARCHAR},
+      </if>
       <if test="record.disorder != null" >
         disorder = #{record.disorder,jdbcType=INTEGER},
       </if>
@@ -334,6 +356,8 @@
       service_port = #{record.servicePort,jdbcType=INTEGER},
       install_path = #{record.installPath,jdbcType=VARCHAR},
       log_level = #{record.logLevel,jdbcType=VARCHAR},
+      start_param = #{record.startParam,jdbcType=VARCHAR},
+      mem_max = #{record.memMax,jdbcType=VARCHAR},
       disorder = #{record.disorder,jdbcType=INTEGER},
       remark = #{record.remark,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=SMALLINT},
@@ -376,6 +400,15 @@
       <if test="installPath != null" >
         install_path = #{installPath,jdbcType=VARCHAR},
       </if>
+      <if test="logLevel != null" >
+        log_level = #{logLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="startParam != null" >
+        start_param = #{startParam,jdbcType=VARCHAR},
+      </if>
+      <if test="memMax != null" >
+        mem_max = #{memMax,jdbcType=VARCHAR},
+      </if>
       <if test="disorder != null" >
         disorder = #{disorder,jdbcType=INTEGER},
       </if>
@@ -415,6 +448,8 @@
       service_port = #{servicePort,jdbcType=INTEGER},
       install_path = #{installPath,jdbcType=VARCHAR},
       log_level = #{logLevel,jdbcType=VARCHAR},
+      start_param = #{startParam,jdbcType=VARCHAR},
+      mem_max = #{memMax,jdbcType=VARCHAR},
       disorder = #{disorder,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR},
       state = #{state,jdbcType=SMALLINT},

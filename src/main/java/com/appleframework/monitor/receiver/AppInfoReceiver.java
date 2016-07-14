@@ -60,6 +60,9 @@ public class AppInfoReceiver extends ReceiverAdapter {
 			String confGroup = prop.getProperty("deploy.group");
 			String confDataId = prop.getProperty("deploy.dataId");
 			String confEnv = prop.getProperty("deploy.env");
+			String logLevel = prop.getProperty("log.level");
+			String startParam = prop.getProperty("start.param");
+			String memMax = prop.getProperty("mem.max");
 			
 			int webPort = 0;
 			int jmxPort = 0;
@@ -94,34 +97,12 @@ public class AppInfoReceiver extends ReceiverAdapter {
 			appInfo.setConfGroup(confGroup);
 			appInfo.setConfEnv(confEnv);
 			appInfo.setConfDataid(confDataId);
+			appInfo.setLogLevel(logLevel);
+			appInfo.setStartParam(startParam);
+			appInfo.setMemMax(memMax);
 			
 			appInfo = appInfoService.saveOrUpdate(appInfo);
 						
-			/*ApplicationClusterConfig clusterConfig 
-				= new ApplicationClusterConfig(String.valueOf(appCluster.getId()), appCluster.getClusterName());
-			
-			String url = MessageFormat.format(JSR160ApplicationConfig.URL_FORMAT, nodeInfo.getIp(), String.valueOf(jmxPort));
-			
-			ApplicationConfig appConfig = new JSR160ApplicationConfig();
-			appConfig.setApplicationId(appInfo.getId() + "");
-			appConfig.setHost(nodeInfo.getHost());
-			appConfig.setName(appCluster.getClusterName());
-			appConfig.setType("jsr160");
-			appConfig.setPort(jmxPort);
-			appConfig.setUrl(url);
-			appConfig.setUsername(null);
-			appConfig.setPassword(null);
-			appConfig.setCluster(false);
-			appConfig.setClusterConfig(clusterConfig);
-						
-			try {
-				applicationConfigManager.addOrUpdateApplication(appConfig);
-				
-				applicationDowntimeService.addOrUpdateApplication(appConfig);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}*/
-			
 		} else if (object instanceof String) {
 			logger.warn(object.toString());
 		}

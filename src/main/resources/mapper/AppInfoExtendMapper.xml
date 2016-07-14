@@ -10,7 +10,8 @@
     info.install_path as installPath, info.disorder as disorder, 
     info.remark as remark, info.state as state, info.conf_env as confEnv,
     info.create_time as createTime, info.update_time as updateTime,
-    config.is_alert as isAlert, info.log_level as logLevel
+    config.is_alert as isAlert, info.log_level as logLevel,
+    info.start_param as startParam, info.mem_max as memMax
   </sql>
   
   <select id="selectByPage" resultType="com.appleframework.monitor.model.AppInfoBo">
