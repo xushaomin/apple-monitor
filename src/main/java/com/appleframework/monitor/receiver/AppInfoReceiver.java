@@ -39,6 +39,9 @@ public class AppInfoReceiver extends ReceiverAdapter {
 			// 加入一个群
 			channel.connect("MonitorContainer");
 		}
+		else {
+			logger.warn("The Broadcast Receiver Is Closed!");
+		}
 	}
 
 	// 覆盖父类的方法
