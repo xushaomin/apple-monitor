@@ -8,6 +8,7 @@ import org.jgroups.Message;
 import org.jgroups.ReceiverAdapter;
 import org.jgroups.View;
 
+import com.appleframework.config.core.PropertyConfigurer;
 import com.appleframework.jmx.database.constant.StateType;
 import com.appleframework.jmx.database.entity.AppClusterEntity;
 import com.appleframework.jmx.database.entity.AppInfoEntity;
@@ -29,12 +30,15 @@ public class AppInfoReceiver extends ReceiverAdapter {
 	private JChannel channel;
 
 	public void start() throws Exception {
-		// 创建一个通道
-		channel = new JChannel();
-		// 创建一个接收器
-		channel.setReceiver(this);
-		// 加入一个群
-		channel.connect("MonitorContainer");
+		boolean broadcastReceiveOpen = PropertyConfigurer.getBoolean("broadcast.receive.open", false);
+		if(broadcastReceiveOpen) {
+			// 创建一个通道
+			channel = new JChannel();
+			// 创建一个接收器
+			channel.setReceiver(this);
+			// 加入一个群
+			channel.connect("MonitorContainer");
+		}
 	}
 
 	// 覆盖父类的方法
