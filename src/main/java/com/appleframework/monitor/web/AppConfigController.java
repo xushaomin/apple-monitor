@@ -27,7 +27,7 @@ import com.appleframework.jmx.database.entity.NodeInfoEntity;
 import com.appleframework.jmx.database.service.AppClusterService;
 import com.appleframework.jmx.database.service.AppInfoService;
 import com.appleframework.jmx.database.service.NodeInfoService;
-import com.appleframework.jmx.monitoring.downtime.ApplicationDowntimeHistory;
+import com.appleframework.jmx.monitoring.downtime.ApplicationDowntime;
 import com.appleframework.jmx.monitoring.downtime.ApplicationDowntimeService;
 import com.appleframework.jmx.monitoring.downtime.ApplicationHeartBeatThread;
 import com.appleframework.jmx.monitoring.downtime.DowntimeRecorder;
@@ -143,7 +143,7 @@ public class AppConfigController extends BaseController {
 		System.out.println();
 		
 		DowntimeRecorder downtimeRecorder = applicationDowntimeService.getDowntimeRecorder();
-		Map<ApplicationConfig, ApplicationDowntimeHistory> map = downtimeRecorder.getDowntimesMap();
+		Map<ApplicationConfig, ApplicationDowntime> map = downtimeRecorder.getDowntimesMap();
 		
 		for (ApplicationConfig config : map.keySet()) {
 			System.out.println("applicationDowntimeService--->" + config.getAppId() + "----->>>" +config.getURL());

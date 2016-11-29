@@ -15,19 +15,32 @@
  */
 package com.appleframework.jmx.monitoring.downtime;
 
+import java.io.Serializable;
+
 /**
  * An instance of ApplicationDowntime stores a time-period when the application
  * went down. This information is persisted in the database.
  * 
  * @author Rakesh Kalra
  */
-public class ApplicationDowntime {
+public class ApplicationDowntime implements Serializable {
 
-    private Long startTime;
+	private static final long serialVersionUID = -8126472027285979645L;
+
+	private Long startTime;
 
     private Long endTime;
+    
+	private boolean isDown = false;
 
-    public Long getEndTime() {
+    public ApplicationDowntime(Long startTime) {
+		super();
+		this.startTime = startTime;
+		this.endTime = 0L;
+		this.isDown = false;
+	}
+
+	public Long getEndTime() {
         return endTime;
     }
 
@@ -51,4 +64,28 @@ public class ApplicationDowntime {
         }
         return getEndTime() - getStartTime();
     }
+    
+    public void applicationWentDown(long time) {
+    	endTime = time;
+		this.isDown = true;
+	}
+
+	public void applicationCameUp(long time) {
+		startTime = time;
+		endTime = 0L;
+		this.isDown = false;
+	}
+
+	public boolean isDown() {
+		return isDown;
+	}
+
+	public void setDown(boolean isDown) {
+		this.isDown = isDown;
+	}
+	
+	public boolean isApplicationUp() {
+		return !this.isDown;
+	}
+	
 }
