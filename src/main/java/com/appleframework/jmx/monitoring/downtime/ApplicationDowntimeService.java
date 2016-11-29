@@ -23,6 +23,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.jmx.core.config.ApplicationConfig;
@@ -42,6 +44,8 @@ import com.appleframework.jmx.event.EventSystem;
  * @author Rakesh Kalra
  */
 @Service("applicationDowntimeService")
+@Lazy(false)
+@Order(1)
 public class ApplicationDowntimeService {
 
     private static final Logger logger = Loggers.getLogger(ApplicationDowntimeService.class);

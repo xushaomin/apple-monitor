@@ -19,6 +19,7 @@ import java.util.*;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -40,6 +41,7 @@ import com.appleframework.jmx.event.EventSystem;
  */
 @Service("applicationConfigManager")
 @Lazy(false)
+@Order(0)
 public class ApplicationConfigManager {
 
 	private static final Logger logger = Loggers.getLogger(ApplicationConfigManager.class);
