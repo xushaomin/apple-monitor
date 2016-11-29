@@ -9,40 +9,34 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.exception.AppleException;
+import com.appleframework.jmx.database.dao.AppGroupDao;
 import com.appleframework.jmx.database.entity.AppGroupEntity;
-import com.appleframework.jmx.database.entity.AppGroupEntityExample;
-import com.appleframework.jmx.database.mapper.AppGroupEntityMapper;
-import com.appleframework.jmx.database.service.AppGroupService;
 import com.appleframework.jmx.database.service.AppConfigService;
+import com.appleframework.jmx.database.service.AppGroupService;
 
 @Service("appGroupService")
 public class AppGroupServiceImpl implements AppGroupService {
 
 	@Resource
-	private AppGroupEntityMapper appGroupEntityMapper;
+	private AppGroupDao appGroupDao;
 	
 	@Resource
 	private AppConfigService appConfigService;
 	
 	public List<AppGroupEntity> findAll() {
-		AppGroupEntityExample example = new AppGroupEntityExample();
-		example.createCriteria();
-		return appGroupEntityMapper.selectByExample(example);
+		return appGroupDao.findAll();
 	}
 	
 	public AppGroupEntity get(Integer id) {
-		return appGroupEntityMapper.selectByPrimaryKey(id);
+		return appGroupDao.get(id);
 	}
 	
 	public void update(AppGroupEntity entity) {
-		entity.setUpdateTime(new Date());
-		appGroupEntityMapper.updateByPrimaryKey(entity);
+		appGroupDao.update(entity);
 	}
 	
 	public void save(AppGroupEntity entity) {
-		Date now = new Date();
-		entity.setCreateTime(now);
-		appGroupEntityMapper.insert(entity);
+		appGroupDao.insert(entity);
 	}
 	
 	public boolean isExistByName(String name) {
@@ -55,9 +49,7 @@ public class AppGroupServiceImpl implements AppGroupService {
 	}
 	
 	public int countByName(String name) {
-		AppGroupEntityExample example = new AppGroupEntityExample();
-		example.createCriteria().andNameEqualTo(name);
-		return appGroupEntityMapper.countByExample(example);
+		return appGroupDao.countByName(name);
 	}
 	
 	public boolean isUniqueByName(String oldName, String newName) {
@@ -73,15 +65,7 @@ public class AppGroupServiceImpl implements AppGroupService {
 	}
 	
 	public AppGroupEntity getByName(String name) {
-		AppGroupEntityExample example = new AppGroupEntityExample();
-		example.createCriteria().andNameEqualTo(name);
-		List<AppGroupEntity> list = appGroupEntityMapper.selectByExample(example);
-		if(list.size() > 0) {
-			return list.get(0);
-		}
-		else {
-			return null;
-		}
+		return appGroupDao.getByName(name);
 	}
 	
 	public void delete(Integer id) throws AppleException {
@@ -90,7 +74,7 @@ public class AppGroupServiceImpl implements AppGroupService {
 			throw new ServiceException("ERROR", entity.getName() + "在应用监控中存在，不能删除！");
 		}
 		else {
-			appGroupEntityMapper.deleteByPrimaryKey(id);
+			appGroupDao.deleteByPrimaryKey(id);
 		}*/
 	}
 	

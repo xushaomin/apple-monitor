@@ -6,8 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.appleframework.jmx.database.dao.AppClusterDao;
 import com.appleframework.jmx.database.entity.AppClusterEntity;
-import com.appleframework.jmx.database.mapper.extend.AppClusterExtendMapper;
 import com.appleframework.model.Search;
 import com.appleframework.model.page.Pagination;
 import com.appleframework.monitor.service.AppClusterSearchService;
@@ -16,10 +16,10 @@ import com.appleframework.monitor.service.AppClusterSearchService;
 public class AppClusterSearchServiceImpl implements AppClusterSearchService {
 
 	@Resource
-	private AppClusterExtendMapper appClusterExtendMapper;
+	private AppClusterDao appClusterDao;
 	
 	public Pagination findPage(Pagination page, Search search) {
-		List<AppClusterEntity> list = appClusterExtendMapper.selectByPage(page, search);
+		List<AppClusterEntity> list = appClusterDao.findByPage(page, search);
 		page.setList(list);
 		return page;
 	}

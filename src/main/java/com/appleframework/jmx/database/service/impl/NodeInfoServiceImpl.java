@@ -9,9 +9,8 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.jmx.database.constant.StateType;
+import com.appleframework.jmx.database.dao.NodeInfoDao;
 import com.appleframework.jmx.database.entity.NodeInfoEntity;
-import com.appleframework.jmx.database.entity.NodeInfoEntityExample;
-import com.appleframework.jmx.database.mapper.NodeInfoEntityMapper;
 import com.appleframework.jmx.database.service.NodeInfoService;
 
 
@@ -19,21 +18,18 @@ import com.appleframework.jmx.database.service.NodeInfoService;
 public class NodeInfoServiceImpl implements NodeInfoService {
 
 	@Resource
-	private NodeInfoEntityMapper nodeInfoEntityMapper;
+	private NodeInfoDao nodeInfoDao;
 
 	public NodeInfoEntity get(Integer id) {
-		return nodeInfoEntityMapper.selectByPrimaryKey(id);
+		return nodeInfoDao.get(id);
 	}
 	
 	public void update(NodeInfoEntity nodeInfo) {
-		nodeInfoEntityMapper.updateByPrimaryKey(nodeInfo);
+		nodeInfoDao.update(nodeInfo);
 	}
 	
 	public void save(NodeInfoEntity nodeInfo) {
-		Date now = new Date();
-		nodeInfo.setCreateTime(now);
-		nodeInfo.setUpdateTime(now);
-		nodeInfoEntityMapper.insert(nodeInfo);
+		nodeInfoDao.save(nodeInfo);
 	}
 	
 	public boolean isExistByHost(String host) {
@@ -45,21 +41,11 @@ public class NodeInfoServiceImpl implements NodeInfoService {
 	}
 	
 	public int countByHost(String host) {
-		NodeInfoEntityExample example = new NodeInfoEntityExample();
-		example.createCriteria().andHostEqualTo(host);
-		return nodeInfoEntityMapper.countByExample(example);
+		return nodeInfoDao.countByHost(host);
 	}
 	
 	public NodeInfoEntity getByHost(String host) {
-		NodeInfoEntityExample example = new NodeInfoEntityExample();
-		example.createCriteria().andHostEqualTo(host).andStateEqualTo((short)1);
-		List<NodeInfoEntity> list = nodeInfoEntityMapper.selectByExample(example);
-		if(list.size() > 0) {
-			return list.get(0);
-		}
-		else {
-			return null;
-		}
+		return nodeInfoDao.getByHost(host);
 	}
 	
 	public boolean isUniqueByHost(String oldHost, String newHost) {
@@ -101,11 +87,7 @@ public class NodeInfoServiceImpl implements NodeInfoService {
 	}*/
 	
 	public List<NodeInfoEntity> findAll() {
-		NodeInfoEntityExample example = new NodeInfoEntityExample();
-		example.createCriteria();
-		example.setOrderByClause("ip");
-		example.setDistinct(true);
-		return nodeInfoEntityMapper.selectByExample(example);
+		return nodeInfoDao.findAll();
 	}
 
 }

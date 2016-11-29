@@ -1,6 +1,5 @@
 package com.appleframework.jmx.database.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,106 +8,80 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.jmx.database.constant.StateType;
+import com.appleframework.jmx.database.dao.AppInfoDao;
 import com.appleframework.jmx.database.entity.AppInfoEntity;
-import com.appleframework.jmx.database.entity.AppInfoEntityExample;
-import com.appleframework.jmx.database.mapper.AppInfoEntityMapper;
 import com.appleframework.jmx.database.service.AppInfoService;
 
 @Service("appInfoService")
 public class AppInfoServiceImpl implements AppInfoService {
 
 	@Resource
-	private AppInfoEntityMapper appInfoEntityMapper;
-	
+	private AppInfoDao appInfoDao;
+
 	public AppInfoEntity get(Integer id) {
-		return appInfoEntityMapper.selectByPrimaryKey(id);
+		return appInfoDao.get(id);
 	}
-	
+
 	public void update(AppInfoEntity appInfo) {
-		appInfo.setUpdateTime(new Date());
-		appInfoEntityMapper.updateByPrimaryKey(appInfo);
+		appInfoDao.update(appInfo);
 	}
-	
+
 	public void updateLogLevel(Integer id, String logLevel) {
 		AppInfoEntity info = this.get(id);
 		info.setLogLevel(logLevel);
-		this.update(info);
+		appInfoDao.update(info);
 	}
-	
+
 	public void insert(AppInfoEntity appInfo) {
-		Date now = new Date();
-		appInfo.setCreateTime(now);
-		appInfo.setUpdateTime(now);
-		appInfoEntityMapper.insert(appInfo);
+		appInfoDao.insert(appInfo);
 	}
-	
+
 	public boolean isExistByNodeAndCluster(Integer nodeId, Integer clusterId) {
-	    if(this.countByNodeAndCluster(nodeId, clusterId) > 0) {
-	    	return true;
-	    } else {
+		if (this.countByNodeAndCluster(nodeId, clusterId) > 0) {
+			return true;
+		} else {
 			return false;
 		}
 	}
-	
+
 	public int countByNodeAndCluster(Integer nodeId, Integer clusterId) {
-		AppInfoEntityExample example = new AppInfoEntityExample();
-		example.createCriteria().andNodeIdEqualTo(nodeId).andClusterIdEqualTo(clusterId);
-		return appInfoEntityMapper.countByExample(example);
+		return appInfoDao.countByNodeAndCluster(nodeId, clusterId);
 	}
-	
+
 	public AppInfoEntity getByNodeAndCluster(Integer nodeId, Integer clusterId) {
-		AppInfoEntityExample example = new AppInfoEntityExample();
-		example.createCriteria()
-			.andNodeIdEqualTo(nodeId).andClusterIdEqualTo(clusterId)
-			.andStateEqualTo((short)1);
-		List<AppInfoEntity> list = appInfoEntityMapper.selectByExample(example);
-		if(list.size() > 0) {
-			return list.get(0);
-		}
-		else {
-			return null;
-		}
+		return appInfoDao.getByNodeAndCluster(nodeId, clusterId);
 	}
-	
+
 	public AppInfoEntity saveOrUpdate(AppInfoEntity appInfo) {
-		AppInfoEntity existAppInfo = this.getByNodeAndCluster(appInfo.getNodeId(), appInfo.getClusterId());
-		if(null == existAppInfo) {
-			this.insert(appInfo);
+		AppInfoEntity existAppInfo = appInfoDao.getByNodeAndCluster(appInfo.getNodeId(), appInfo.getClusterId());
+		if (null == existAppInfo) {
+			appInfoDao.insert(appInfo);
 			return appInfo;
-		}
-		else {
-			String[] ignoreProperties = {"id", "createTime", "disorder", "remark", "state"};
+		} else {
+			String[] ignoreProperties = { "id", "createTime", "disorder", "remark", "state" };
 			BeanUtils.copyProperties(appInfo, existAppInfo, ignoreProperties);
-			this.update(existAppInfo);
+			appInfoDao.update(existAppInfo);
 			return existAppInfo;
 		}
 	}
-		
+
 	public List<AppInfoEntity> findAll() {
-		AppInfoEntityExample example = new AppInfoEntityExample();
-		example.createCriteria();
-		return appInfoEntityMapper.selectByExample(example);
+		return appInfoDao.findAll();
 	}
-	
+
 	public List<AppInfoEntity> findListByClusterId(Integer clusterId) {
-		AppInfoEntityExample example = new AppInfoEntityExample();
-		example.createCriteria().andClusterIdEqualTo(clusterId);
-		return appInfoEntityMapper.selectByExample(example);
+		return appInfoDao.findListByClusterId(clusterId);
 	}
-	
+
 	public int countByClusterId(Integer clusterId) {
-		AppInfoEntityExample example = new AppInfoEntityExample();
-		example.createCriteria().andClusterIdEqualTo(clusterId)
-			.andStateBetween(StateType.STOP.getIndex(), StateType.START.getIndex());
-		return appInfoEntityMapper.countByExample(example);
+		return appInfoDao.countByClusterId(clusterId);
 	}
-	
+
 	public Integer delete(Integer id) {
 		AppInfoEntity entity = this.get(id);
 		entity.setState(StateType.DELETE.getIndex());
-		appInfoEntityMapper.updateByPrimaryKey(entity);
+		appInfoDao.update(entity);
 		return id;
 	}
-	
 
 }

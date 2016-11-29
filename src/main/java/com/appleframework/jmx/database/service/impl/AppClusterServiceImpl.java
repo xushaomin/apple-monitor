@@ -11,10 +11,9 @@ import org.springframework.stereotype.Service;
 import com.appleframework.exception.ServiceException;
 import com.appleframework.jmx.database.constant.IsCluster;
 import com.appleframework.jmx.database.constant.StateType;
+import com.appleframework.jmx.database.dao.AppClusterDao;
 import com.appleframework.jmx.database.entity.AppClusterEntity;
-import com.appleframework.jmx.database.entity.AppClusterEntityExample;
 import com.appleframework.jmx.database.entity.AppGroupEntity;
-import com.appleframework.jmx.database.mapper.AppClusterEntityMapper;
 import com.appleframework.jmx.database.service.AppClusterService;
 import com.appleframework.jmx.database.service.AppGroupService;
 import com.appleframework.jmx.database.service.AppInfoService;
@@ -23,7 +22,7 @@ import com.appleframework.jmx.database.service.AppInfoService;
 public class AppClusterServiceImpl implements AppClusterService {
 
 	@Resource
-	private AppClusterEntityMapper appClusterEntityMapper;
+	private AppClusterDao appClusterDao;
 	
 	@Resource
 	private AppInfoService appInfoService;
@@ -32,18 +31,15 @@ public class AppClusterServiceImpl implements AppClusterService {
 	private AppGroupService appGroupService;
 
 	public AppClusterEntity get(Integer id) {
-		return appClusterEntityMapper.selectByPrimaryKey(id);
+		return appClusterDao.get(id);
 	}
 	
 	public void update(AppClusterEntity appCluster) {
-		appClusterEntityMapper.updateByPrimaryKey(appCluster);
+		appClusterDao.update(appCluster);
 	}
 	
 	public void save(AppClusterEntity appCluster) {
-		Date now = new Date();
-		appCluster.setCreateTime(now);
-		appCluster.setUpdateTime(now);
-		appClusterEntityMapper.insert(appCluster);
+		appClusterDao.save(appCluster);
 	}
 	
 	public boolean isExistByName(String name) {
@@ -55,21 +51,11 @@ public class AppClusterServiceImpl implements AppClusterService {
 	}
 	
 	public int countByName(String name) {
-		AppClusterEntityExample example = new AppClusterEntityExample();
-		example.createCriteria().andClusterNameEqualTo(name);
-		return appClusterEntityMapper.countByExample(example);
+		return appClusterDao.countByName(name);
 	}
 	
 	public AppClusterEntity getByName(String name) {
-		AppClusterEntityExample example = new AppClusterEntityExample();
-		example.createCriteria().andClusterNameEqualTo(name);
-		List<AppClusterEntity> list = appClusterEntityMapper.selectByExample(example);
-		if(list.size() > 0) {
-			return list.get(0);
-		}
-		else {
-			return null;
-		}
+		return appClusterDao.getByName(name);
 	}
 	
 	public boolean isUniqueByName(String oldName, String newName) {
@@ -116,19 +102,11 @@ public class AppClusterServiceImpl implements AppClusterService {
 	}
 	
 	public List<AppClusterEntity> findAll() {
-		AppClusterEntityExample example = new AppClusterEntityExample();
-		example.createCriteria();
-		example.setOrderByClause("cluster_name");
-		example.setDistinct(true);
-		return appClusterEntityMapper.selectByExample(example);
+		return appClusterDao.findAll();
 	}
 	
 	public List<AppClusterEntity> findListByStart() {
-		AppClusterEntityExample example = new AppClusterEntityExample();
-		example.createCriteria().andStateEqualTo(StateType.START.getIndex());
-		example.setOrderByClause("cluster_name");
-		example.setDistinct(true);
-		return appClusterEntityMapper.selectByExample(example);
+		return appClusterDao.findListByStart();
 	}
 	
 	//跳转AppNum字段个数
@@ -153,7 +131,7 @@ public class AppClusterServiceImpl implements AppClusterService {
 		
 		AppClusterEntity entity = this.get(id);
 		entity.setState(StateType.DELETE.getIndex());
-		appClusterEntityMapper.updateByPrimaryKey(entity);
+		appClusterDao.update(entity);
 		return id;
 	}
 

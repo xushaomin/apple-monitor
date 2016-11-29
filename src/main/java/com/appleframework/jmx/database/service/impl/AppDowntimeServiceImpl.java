@@ -9,58 +9,47 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.jmx.database.constant.StateType;
+import com.appleframework.jmx.database.dao.AppDowntimeDao;
 import com.appleframework.jmx.database.entity.AppDowntimeEntity;
-import com.appleframework.jmx.database.entity.AppDowntimeEntityExample;
-import com.appleframework.jmx.database.mapper.AppDowntimeEntityMapper;
 import com.appleframework.jmx.database.service.AppDowntimeService;
-
-
 
 @Service("appDowntimeService")
 public class AppDowntimeServiceImpl implements AppDowntimeService {
 
 	@Resource
-	private AppDowntimeEntityMapper appDowntimeEntityMapper;
-	
+	private AppDowntimeDao appDowntimeDao;
 
 	public AppDowntimeEntity get(Integer id) {
-		return appDowntimeEntityMapper.selectByPrimaryKey(id);
+		return appDowntimeDao.get(id);
 	}
-	
+
 	public void update(AppDowntimeEntity appDowntime) {
-		appDowntime.setUpdateTime(new Date());
-		appDowntimeEntityMapper.updateByPrimaryKey(appDowntime);
+		appDowntimeDao.update(appDowntime);
 	}
-	
+
 	public void save(AppDowntimeEntity appDowntime) {
-		appDowntime.setState(StateType.START.getIndex());
-		appDowntime.setCreateTime(new Date());
-		appDowntimeEntityMapper.insert(appDowntime);
+		appDowntimeDao.save(appDowntime);
 	}
-	
-	
+
 	public void saveOrUpdate(Integer id, long recordingSince) {
 		AppDowntimeEntity appDowntime = this.get(id);
-    	if(null != appDowntime) {
-	    	appDowntime.setRecordingStart(new Timestamp(recordingSince));
-	    	appDowntime.setRecordingEnd(new Timestamp(recordingSince + 630720000000L));
-	    	appDowntime.setCreateTime(new Date());
-	    	this.update(appDowntime);
-    	}
-    	else {
-    		appDowntime = new AppDowntimeEntity();
-    		appDowntime.setId(id);
-	    	appDowntime.setRecordingStart(new Timestamp(recordingSince));
-	    	appDowntime.setRecordingEnd(new Timestamp(recordingSince + 630720000000L));
-	    	appDowntime.setCreateTime(new Date());
-	    	this.save(appDowntime);
-    	}
+		if (null != appDowntime) {
+			appDowntime.setRecordingStart(new Timestamp(recordingSince));
+			appDowntime.setRecordingEnd(new Timestamp(recordingSince + 630720000000L));
+			appDowntime.setCreateTime(new Date());
+			this.update(appDowntime);
+		} else {
+			appDowntime = new AppDowntimeEntity();
+			appDowntime.setId(id);
+			appDowntime.setRecordingStart(new Timestamp(recordingSince));
+			appDowntime.setRecordingEnd(new Timestamp(recordingSince + 630720000000L));
+			appDowntime.setCreateTime(new Date());
+			this.save(appDowntime);
+		}
 	}
-	
+
 	public List<AppDowntimeEntity> findAll() {
-		AppDowntimeEntityExample example = new AppDowntimeEntityExample();
-		example.createCriteria().andStateEqualTo(StateType.START.getIndex());
-		return appDowntimeEntityMapper.selectByExample(example);
+		return appDowntimeDao.findAll();
 	}
 
 	@Override
@@ -68,9 +57,7 @@ public class AppDowntimeServiceImpl implements AppDowntimeService {
 		AppDowntimeEntity appDowntime = this.get(id);
 		appDowntime.setState(StateType.DELETE.getIndex());
 		this.update(appDowntime);
-		
+
 	}
-	
-	
 
 }

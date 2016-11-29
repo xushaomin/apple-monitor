@@ -6,8 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.appleframework.jmx.database.dao.AlertGroupDao;
 import com.appleframework.jmx.database.entity.AlertGroupEntity;
-import com.appleframework.jmx.database.mapper.extend.AlertGroupExtendMapper;
 import com.appleframework.model.Search;
 import com.appleframework.model.page.Pagination;
 import com.appleframework.monitor.service.AlertGroupSearchService;
@@ -16,10 +16,10 @@ import com.appleframework.monitor.service.AlertGroupSearchService;
 public class AlertGroupSearchServiceImpl implements AlertGroupSearchService {
 
 	@Resource
-	private AlertGroupExtendMapper alertGroupExtendMapper;
+	private AlertGroupDao alertGroupDao;
 	
 	public Pagination findPage(Pagination page, Search search) {
-		List<AlertGroupEntity> list = alertGroupExtendMapper.selectByPage(page, search);
+		List<AlertGroupEntity> list = alertGroupDao.findByPage(page, search);
 		page.setList(list);
 		return page;
 	}

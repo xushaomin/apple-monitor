@@ -7,64 +7,53 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.appleframework.jmx.database.dao.AlertGroupContactDao;
 import com.appleframework.jmx.database.entity.AlertContactEntity;
 import com.appleframework.jmx.database.entity.AlertGroupContactEntity;
-import com.appleframework.jmx.database.entity.AlertGroupContactEntityExample;
-import com.appleframework.jmx.database.mapper.AlertGroupContactEntityMapper;
-import com.appleframework.jmx.database.mapper.extend.AlertGroupContactExtendMapper;
 import com.appleframework.jmx.database.service.AlertGroupContactService;
 
 @Service("alertGroupContactService")
 public class AlertGroupContactServiceImpl implements AlertGroupContactService {
 
 	@Resource
-	private AlertGroupContactEntityMapper alertGroupContactEntityMapper;
-	
-	@Resource
-	private AlertGroupContactExtendMapper alertGroupContactExtendMapper;
-	
+	private AlertGroupContactDao alertGroupContactDao;
+
 	public List<AlertContactEntity> findAlertContactListByGroupId(Integer alertGroupId) {
-		return alertGroupContactExtendMapper.selectAlertContactByAlertGroupId(alertGroupId);
+		return alertGroupContactDao.findAlertContactListByGroupId(alertGroupId);
 	}
-	
+
 	public List<AlertGroupContactEntity> findListByGroupId(Integer groupId) {
-		AlertGroupContactEntityExample example = new AlertGroupContactEntityExample();
-		example.createCriteria().andGroupIdEqualTo(groupId);
-		return alertGroupContactEntityMapper.selectByExample(example);
+		return alertGroupContactDao.findListByGroupId(groupId);
 	}
-	
+
 	public AlertGroupContactEntity get(Integer id) {
-		return alertGroupContactEntityMapper.selectByPrimaryKey(id);
+		return alertGroupContactDao.get(id);
 	}
-	
+
 	public void update(AlertGroupContactEntity entity) {
-		entity.setUpdateTime(new Date());
-		alertGroupContactEntityMapper.updateByPrimaryKey(entity);
+		alertGroupContactDao.update(entity);
 	}
-	
+
 	public void delete(Integer id) {
-		alertGroupContactEntityMapper.deleteByPrimaryKey(id);
+		alertGroupContactDao.delete(id);
 	}
-	
+
 	public void insert(AlertGroupContactEntity entity) {
 		Date now = new Date();
 		entity.setCreateTime(now);
-		alertGroupContactEntityMapper.insert(entity);
+		alertGroupContactDao.insert(entity);
 	}
-	
+
 	public boolean isExistByContactId(Integer contactId) {
-		if(countByContactId(contactId) > 0) {
+		if (countByContactId(contactId) > 0) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
-	
+
 	public int countByContactId(Integer contactId) {
-		AlertGroupContactEntityExample example = new AlertGroupContactEntityExample();
-		example.createCriteria().andContactIdEqualTo(contactId);
-		return alertGroupContactEntityMapper.countByExample(example);
+		return alertGroupContactDao.countByContactId(contactId);
 	}
-	
+
 }

@@ -1,6 +1,5 @@
 package com.appleframework.jmx.database.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,10 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.appleframework.exception.AppleException;
 import com.appleframework.exception.ServiceException;
+import com.appleframework.jmx.database.dao.AlertContactDao;
 import com.appleframework.jmx.database.entity.AlertContactEntity;
-import com.appleframework.jmx.database.entity.AlertContactEntityExample;
-import com.appleframework.jmx.database.mapper.AlertContactEntityMapper;
-import com.appleframework.jmx.database.mapper.extend.AlertContactExtendMapper;
 import com.appleframework.jmx.database.service.AlertContactService;
 import com.appleframework.jmx.database.service.AlertGroupContactService;
 
@@ -21,28 +18,21 @@ import com.appleframework.jmx.database.service.AlertGroupContactService;
 public class AlertContactServiceImpl implements AlertContactService {
 	
 	@Resource
-	private AlertContactEntityMapper alertContactEntityMapper;
-	
-	@Resource
-	private AlertContactExtendMapper alertContactExtendMapper;
-	
+	private AlertContactDao alertContactDao;
+		
 	@Resource
 	private AlertGroupContactService alertGroupContactService;
 	
 	public AlertContactEntity get(Integer id) {
-		return alertContactEntityMapper.selectByPrimaryKey(id);
+		return alertContactDao.get(id);
 	}
 	
 	public void update(AlertContactEntity entity) {
-		entity.setUpdateTime(new Date());
-		alertContactEntityMapper.updateByPrimaryKey(entity);
+		alertContactDao.update(entity);
 	}
 	
 	public void insert(AlertContactEntity entity) {
-		Date now = new Date();
-		entity.setCreateTime(now);
-		entity.setUpdateTime(now);
-		alertContactEntityMapper.insert(entity);
+		alertContactDao.insert(entity);
 	}
 	
 	public boolean isExistByName(String name) {
@@ -54,9 +44,7 @@ public class AlertContactServiceImpl implements AlertContactService {
 	}
 	
 	public int countByName(String name) {
-		AlertContactEntityExample example = new AlertContactEntityExample();
-		example.createCriteria().andNameEqualTo(name);
-		return alertContactEntityMapper.countByExample(example);
+		return alertContactDao.countByName(name);
 	}
 	
 	public boolean isUniqueByName(String oldName, String newName) {
@@ -77,13 +65,11 @@ public class AlertContactServiceImpl implements AlertContactService {
 			throw new ServiceException("ERROR", entity.getName() + "在分组中存在，不能删除！");
 		}
 		else {
-			alertContactEntityMapper.deleteByPrimaryKey(id);
+			alertContactDao.delete(id);
 		}
 	}
 	
 	public List<AlertContactEntity> findAll() {
-		AlertContactEntityExample example = new AlertContactEntityExample();
-		example.createCriteria();
-		return alertContactEntityMapper.selectByExample(example);
+		return alertContactDao.findAll();
 	}
 }

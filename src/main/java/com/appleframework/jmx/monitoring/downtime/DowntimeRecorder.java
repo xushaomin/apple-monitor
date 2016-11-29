@@ -66,7 +66,7 @@ public class DowntimeRecorder implements EventListener {
     private AppDowntimeHistoryService appDowntimeHistoryService;
     
     @PostConstruct
-    public void init(){
+	public void init() {
         // load applications from DB
         initDowntimeMapFromDB();
         // now add new applications to the DB
@@ -242,6 +242,5 @@ public class DowntimeRecorder implements EventListener {
 	public Map<ApplicationConfig, ApplicationDowntimeHistory> getDowntimesMap() {
 		return downtimesMap;
 	}
-    
     
 }

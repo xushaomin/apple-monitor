@@ -92,7 +92,7 @@ public class ApplicationHeartBeatThread extends Thread {
             connection = ServerConnector.getServerConnection(appConfig);
             return connection.isOpen();
         }catch(Exception e){
-        	logger.info("Application is down: " + appConfig.getName() + " at " + appConfig.getHost() + ":" + appConfig.getPort());
+        	//logger.info("Application is down: " + appConfig.getName() + " at " + appConfig.getHost() + ":" + appConfig.getPort());
             return false;
         } finally {
             try {

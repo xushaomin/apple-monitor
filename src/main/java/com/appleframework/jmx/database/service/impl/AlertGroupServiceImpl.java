@@ -1,6 +1,5 @@
 package com.appleframework.jmx.database.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,9 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.appleframework.exception.AppleException;
 import com.appleframework.exception.ServiceException;
+import com.appleframework.jmx.database.dao.AlertGroupDao;
 import com.appleframework.jmx.database.entity.AlertGroupEntity;
-import com.appleframework.jmx.database.entity.AlertGroupEntityExample;
-import com.appleframework.jmx.database.mapper.AlertGroupEntityMapper;
 import com.appleframework.jmx.database.service.AlertGroupService;
 import com.appleframework.jmx.database.service.AppConfigService;
 
@@ -20,30 +18,25 @@ import com.appleframework.jmx.database.service.AppConfigService;
 public class AlertGroupServiceImpl implements AlertGroupService {
 
 	@Resource
-	private AlertGroupEntityMapper alertGroupEntityMapper;
+	private AlertGroupDao alertGroupDao;
 	
 	@Resource
 	private AppConfigService appConfigService;
 	
 	public List<AlertGroupEntity> findAll() {
-		AlertGroupEntityExample example = new AlertGroupEntityExample();
-		example.createCriteria();
-		return alertGroupEntityMapper.selectByExample(example);
+		return alertGroupDao.findAll();
 	}
 	
 	public AlertGroupEntity get(Integer id) {
-		return alertGroupEntityMapper.selectByPrimaryKey(id);
+		return alertGroupDao.get(id);
 	}
 	
 	public void update(AlertGroupEntity entity) {
-		entity.setUpdateTime(new Date());
-		alertGroupEntityMapper.updateByPrimaryKey(entity);
+		alertGroupDao.update(entity);
 	}
 	
 	public void insert(AlertGroupEntity entity) {
-		Date now = new Date();
-		entity.setCreateTime(now);
-		alertGroupEntityMapper.insert(entity);
+		alertGroupDao.insert(entity);
 	}
 	
 	public boolean isExistByName(String name) {
@@ -56,9 +49,7 @@ public class AlertGroupServiceImpl implements AlertGroupService {
 	}
 	
 	public int countByName(String name) {
-		AlertGroupEntityExample example = new AlertGroupEntityExample();
-		example.createCriteria().andNameEqualTo(name);
-		return alertGroupEntityMapper.countByExample(example);
+		return alertGroupDao.countByName(name);
 	}
 	
 	public boolean isUniqueByName(String oldName, String newName) {
@@ -79,7 +70,7 @@ public class AlertGroupServiceImpl implements AlertGroupService {
 			throw new ServiceException("ERROR", entity.getName() + "在应用监控中存在，不能删除！");
 		}
 		else {
-			alertGroupEntityMapper.deleteByPrimaryKey(id);
+			alertGroupDao.delete(id);
 		}
 	}
 	

@@ -39,27 +39,22 @@ public class EventSystem {
 
     private final List<EventListenerWrapper> eventListenerWrappers = new LinkedList<EventListenerWrapper>();
 
-    private EventSystem() {
-    }
-
     public void addListener(EventListener listener, Class<? extends EventObject> eventObjectType) {
         eventListenerWrappers.add(new EventListenerWrapper(listener, eventObjectType));
     }
 
-    public void fireEvent(EventObject eventObject) {
-        logger.info("Event fired: " + eventObject.toString());
-        for (EventListenerWrapper wrapper : eventListenerWrappers) {
-            if (wrapper.matchesEventObjectType(eventObject.getClass())) {
-                logger.info("Calling listener: " + wrapper.getEventListener().toString());
-                try {
-                    wrapper.getEventListener().handleEvent(eventObject);
-                }
-                catch (Throwable t) {
-                    logger.error( "Error in event listener", t);
-                }
-            }
-        }
-    }
+	public void fireEvent(EventObject eventObject) {
+		logger.info("Event fired: " + eventObject.toString());
+		for (EventListenerWrapper wrapper : eventListenerWrappers) {
+			if (wrapper.matchesEventObjectType(eventObject.getClass())) {
+				try {
+					wrapper.getEventListener().handleEvent(eventObject);
+				} catch (Throwable t) {
+					logger.error("Error in event listener", t);
+				}
+			}
+		}
+	}
 
     private static class EventListenerWrapper {
     	

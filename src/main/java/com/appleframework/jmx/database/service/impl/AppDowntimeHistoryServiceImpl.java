@@ -9,30 +9,28 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.jmx.database.constant.StateType;
+import com.appleframework.jmx.database.dao.AppDowntimeHistoryDao;
 import com.appleframework.jmx.database.entity.AppDowntimeHistoryEntity;
-import com.appleframework.jmx.database.entity.AppDowntimeHistoryEntityExample;
-import com.appleframework.jmx.database.mapper.AppDowntimeHistoryEntityMapper;
 import com.appleframework.jmx.database.service.AppDowntimeHistoryService;
 
 @Service("appDowntimeHistoryService")
 public class AppDowntimeHistoryServiceImpl implements AppDowntimeHistoryService {
 
 	@Resource
-	private AppDowntimeHistoryEntityMapper appDowntimeHistoryEntityMapper;
+	private AppDowntimeHistoryDao appDowntimeHistoryDao;
 
 	public AppDowntimeHistoryEntity get(Integer id) {
-		return appDowntimeHistoryEntityMapper.selectByPrimaryKey(id);
+		return appDowntimeHistoryDao.get(id);
 	}
 	
 	public void update(AppDowntimeHistoryEntity historyEntity) {
-		historyEntity.setUpdateTime(new Date());
-		appDowntimeHistoryEntityMapper.updateByPrimaryKey(historyEntity);
+		appDowntimeHistoryDao.update(historyEntity);
 	}
 	
 	public void save(AppDowntimeHistoryEntity historyEntity) {
 		historyEntity.setState(StateType.START.getIndex());
 		historyEntity.setCreateTime(new Date());
-		appDowntimeHistoryEntityMapper.insert(historyEntity);
+		appDowntimeHistoryDao.save(historyEntity);
 	}
 	
 	public void saveOrUpdate(Integer id, long downtimeBegin, long downtimeEnd) {
@@ -52,9 +50,7 @@ public class AppDowntimeHistoryServiceImpl implements AppDowntimeHistoryService 
 	}
 	
 	public List<AppDowntimeHistoryEntity> findAll() {
-		AppDowntimeHistoryEntityExample example = new AppDowntimeHistoryEntityExample();
-		example.createCriteria();
-		return appDowntimeHistoryEntityMapper.selectByExample(example);
+		return appDowntimeHistoryDao.findAll();
 	}
 	
 	public void delete(Integer id) {
