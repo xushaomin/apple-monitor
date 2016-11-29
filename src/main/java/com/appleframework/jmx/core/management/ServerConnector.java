@@ -75,7 +75,7 @@ public class ServerConnector {
 
     private static ServerConnectionFactory getServerConnectionFactory(ModuleConfig moduleConfig, ClassLoader classLoader) {
         assert classLoader != null;
-        ServerConnectionFactory factory = (ServerConnectionFactory)factories.get(moduleConfig.getConnectionFactory());
+        ServerConnectionFactory factory = factories.get(moduleConfig.getConnectionFactory());
         if(factory == null){
             try {
                 final Class<?> factoryClass = Class.forName(moduleConfig.getConnectionFactory(), true, classLoader);

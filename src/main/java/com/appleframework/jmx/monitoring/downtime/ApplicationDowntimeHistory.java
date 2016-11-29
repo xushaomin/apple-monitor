@@ -48,7 +48,9 @@ public class ApplicationDowntimeHistory {
 			downtimeBegin = time;
 		} else {
 			// this could happen if the application is edited while it is down.
-			logger.info("Downtime event fired again. Ignoring.");
+			if(logger.isDebugEnabled()) {
+				logger.debug("Downtime event fired again. Ignoring.");
+			}
 		}
 		this.isDown = true;
 	}

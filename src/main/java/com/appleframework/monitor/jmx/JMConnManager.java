@@ -110,8 +110,20 @@ public class JMConnManager implements NotificationListener {
         	 return rmiConnector.getMBeanServerConnection();
          }
          else {
-        	return rmiConnector.getMBeanServerConnection();
+        	 MBeanServerConnection conn = null;
+        	 try {
+            	 conn = rmiConnector.getMBeanServerConnection();
+			} catch (Exception e) {
+				conn = initRMIConnector(appConfig).getMBeanServerConnection();
+			}
+        	return conn;
          }
+    }
+    
+    private static RMIConnector initRMIConnector(ApplicationConfig appConfig) {
+    	RMIConnector rmiConnector = getConnection(appConfig);
+   	 	conns.put(appConfig.getAppId(), rmiConnector);
+   	 	return rmiConnector;
     }
 
     public static boolean isLocalHost(String ip) {

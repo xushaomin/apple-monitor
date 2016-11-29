@@ -44,7 +44,9 @@ public class EventSystem {
     }
 
 	public void fireEvent(EventObject eventObject) {
-		logger.info("Event fired: " + eventObject.toString());
+		if(logger.isDebugEnabled()) {
+			logger.debug("Event fired: " + eventObject.toString());
+		}
 		for (EventListenerWrapper wrapper : eventListenerWrappers) {
 			if (wrapper.matchesEventObjectType(eventObject.getClass())) {
 				try {
