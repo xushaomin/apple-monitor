@@ -122,19 +122,22 @@
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into t_app_info (node_id, cluster_id, app_name, 
-      app_version, web_port, web_context, 
-      jmx_port, service_port, install_path, log_level,
-      disorder, remark, state, 
-      conf_dataid, conf_group, conf_env, 
-      create_time, update_time)
-    values (#{nodeId,jdbcType=INTEGER}, #{clusterId,jdbcType=INTEGER}, #{appName,jdbcType=VARCHAR}, 
-      #{appVersion,jdbcType=VARCHAR}, #{webPort,jdbcType=INTEGER}, #{webContext,jdbcType=VARCHAR}, 
-      #{jmxPort,jdbcType=INTEGER}, #{servicePort,jdbcType=INTEGER}, #{installPath,jdbcType=VARCHAR}, 
-      #{logLevel,jdbcType=VARCHAR}, #{startParam,jdbcType=VARCHAR}, #{memMax,jdbcType=VARCHAR}, 
-      #{disorder,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{state,jdbcType=SMALLINT}, 
-      #{confDataid,jdbcType=VARCHAR}, #{confGroup,jdbcType=VARCHAR}, #{confEnv,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    insert into t_app_info (
+    	node_id, cluster_id, app_name, 
+        app_version, web_port, web_context, 
+        jmx_port, service_port, install_path, 
+        log_level, start_param, mem_max,
+        disorder, remark, state, 
+        conf_dataid, conf_group, conf_env, 
+        create_time, update_time)
+    values (
+    	#{nodeId,jdbcType=INTEGER}, #{clusterId,jdbcType=INTEGER}, #{appName,jdbcType=VARCHAR}, 
+        #{appVersion,jdbcType=VARCHAR}, #{webPort,jdbcType=INTEGER}, #{webContext,jdbcType=VARCHAR}, 
+        #{jmxPort,jdbcType=INTEGER}, #{servicePort,jdbcType=INTEGER}, #{installPath,jdbcType=VARCHAR}, 
+        #{logLevel,jdbcType=VARCHAR}, #{startParam,jdbcType=VARCHAR}, #{memMax,jdbcType=VARCHAR}, 
+        #{disorder,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{state,jdbcType=SMALLINT}, 
+        #{confDataid,jdbcType=VARCHAR}, #{confGroup,jdbcType=VARCHAR}, #{confEnv,jdbcType=VARCHAR}, 
+        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.appleframework.jmx.database.entity.AppInfoEntity" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
