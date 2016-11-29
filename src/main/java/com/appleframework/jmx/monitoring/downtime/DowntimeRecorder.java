@@ -65,6 +65,7 @@ public class DowntimeRecorder implements EventListener {
     
     @PostConstruct
 	public void init() {
+    	logger.warn("DowntimeRecorder.init................................................ ");
         // load applications from DB
         initDowntimeMapFromDB();
         // now add new applications to the DB
