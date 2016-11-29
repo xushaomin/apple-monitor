@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Repository;
 
 import com.appleframework.jmx.core.config.ApplicationConfig;
-import com.appleframework.jmx.monitoring.downtime.ApplicationDowntime;
+import com.appleframework.jmx.monitoring.downtime.ApplicationDowntimeHistory;
 import com.appleframework.jmx.monitoring.downtime.ApplicationDowntimeService;
 import com.appleframework.jmx.monitoring.downtime.DowntimeRecorder;
 
@@ -59,7 +59,7 @@ public class ApplicationViewHelper {
     
     public String getRecordingSince(ApplicationConfig appConfig){
         DowntimeRecorder recorder = applicationDowntimeService.getDowntimeRecorder();
-        ApplicationDowntime history = recorder.getDowntime(appConfig);
-        return formatter.format(new Date(history.getStartTime()));
+        ApplicationDowntimeHistory history = recorder.getDowntimeHistory(appConfig);
+        return formatter.format(new Date(history.getRecordingSince()));
     }
 }
