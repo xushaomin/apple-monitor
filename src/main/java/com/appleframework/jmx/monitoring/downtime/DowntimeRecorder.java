@@ -185,6 +185,7 @@ public class DowntimeRecorder implements EventListener {
 
     private void initDowntimeMapFromDB(){
         try{
+        	logger.warn("DowntimeRecorder.initDowntimeMapFromDB................................................ ");
             List<AppDowntimeEntity> list = appDowntimeService.findAll();
             for (AppDowntimeEntity appDowntime : list) {
             	String applicationId = appDowntime.getId().toString();
