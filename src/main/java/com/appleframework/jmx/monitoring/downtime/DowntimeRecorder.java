@@ -20,12 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.jmx.core.config.ApplicationConfig;
@@ -52,8 +49,6 @@ import com.appleframework.jmx.monitoring.downtime.event.ApplicationUpEvent;
  * @author Rakesh Kalra
  */
 @Service("downtimeRecorder")
-@Lazy(false)
-@Order(2)
 public class DowntimeRecorder implements EventListener {
 
     private static final Logger logger = Loggers.getLogger(DowntimeRecorder.class);
@@ -67,7 +62,6 @@ public class DowntimeRecorder implements EventListener {
     @Resource
     private AppDowntimeHistoryService appDowntimeHistoryService;
     
-    @PostConstruct
 	public void init() {
         // load applications from DB
         initDowntimeMapFromDB();
