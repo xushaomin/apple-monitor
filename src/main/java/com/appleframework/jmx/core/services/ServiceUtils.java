@@ -38,31 +38,31 @@ public class ServiceUtils {
 
     // TODO: It will be nice to have a concept of ClusterServerConnection
     //      which will implement all cluster level operations - rk
-    public static ServerConnection getServerConnectionEvenIfCluster(ApplicationConfig appConfig){
-        if(!appConfig.isCluster()){
-            return ServerConnector.getServerConnection(appConfig);
-        } else {
-            if(appConfig.getApplications().size() == 0){
-                throw new ServiceException(ErrorCodes.CLUSTER_NO_APPLICATIONS);
-            }
-            for(ApplicationConfig childAppConfig : appConfig.getApplications()){
-                try {
-                    return ServerConnector.getServerConnection(childAppConfig);
-                } catch (ConnectionFailedException e) {
-                    logger.info("Couldn't connect to childApp= " + childAppConfig);
-                }
-            }
-        }
-        throw new ConnectionFailedException(null);
-    }
+	public static ServerConnection getServerConnectionEvenIfCluster(ApplicationConfig appConfig) {
+		if (!appConfig.isCluster()) {
+			return ServerConnector.getServerConnection(appConfig);
+		} else {
+			if (appConfig.getApplications().size() == 0) {
+				throw new ServiceException(ErrorCodes.CLUSTER_NO_APPLICATIONS);
+			}
+			for (ApplicationConfig childAppConfig : appConfig.getApplications()) {
+				try {
+					return ServerConnector.getServerConnection(childAppConfig);
+				} catch (ConnectionFailedException e) {
+					logger.info("Couldn't connect to childApp= " + childAppConfig);
+				}
+			}
+		}
+		throw new ConnectionFailedException(null);
+	}
 
-    public static ApplicationConfig getApplicationConfigById(String appId) throws ServiceException {
-        ApplicationConfig appConfig = ApplicationConfigManager.getApplicationConfig(appId);
-        if(appConfig == null){
-            throw new ServiceException(ErrorCodes.INVALID_APPLICATION_ID, appId);
-        }
-        return appConfig;
-    }
+	public static ApplicationConfig getApplicationConfigById(String appId) throws ServiceException {
+		ApplicationConfig appConfig = ApplicationConfigManager.getApplicationConfig(appId);
+		if (appConfig == null) {
+			throw new ServiceException(ErrorCodes.INVALID_APPLICATION_ID, appId);
+		}
+		return appConfig;
+	}
 
     public static String resolveMBeanName(ApplicationConfig appConfig, String mbeanName){
         /* check if the mbeanName is the configured mbean name */
@@ -73,13 +73,13 @@ public class ServiceUtils {
         return mbeanName;
     }
 
-    public static void close(ServerConnection connection){
-        if(connection != null){
-            try {
-                connection.close();
-            } catch (IOException e) {
-                logger.info("Error closing connection: " + e.getMessage());
-            }
-        }
-    }
+	public static void close(ServerConnection connection) {
+		if (connection != null) {
+			try {
+				connection.close();
+			} catch (IOException e) {
+				logger.info("Error closing connection: " + e.getMessage());
+			}
+		}
+	}
 }

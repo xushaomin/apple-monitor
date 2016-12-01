@@ -20,38 +20,39 @@ import java.lang.reflect.Method;
 
 /**
  *
- * date:  Feb 24, 2005
- * @author	Rakesh Kalra
+ * date: Feb 24, 2005
+ * 
+ * @author Rakesh Kalra
  */
 public class RemoteInvocation implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String className;
-    private String methodName;
-    private Class<?>[] signature;
-    private Object[] args;
+	private String methodName;
+	private Class<?>[] signature;
+	private Object[] args;
 
-    public RemoteInvocation(Method method, Object[] args){
-        this.className = method.getDeclaringClass().getName();
-        this.methodName = method.getName();
-        this.signature = method.getParameterTypes();
-        this.args =args;
-    }
+	public RemoteInvocation(Method method, Object[] args) {
+		this.className = method.getDeclaringClass().getName();
+		this.methodName = method.getName();
+		this.signature = method.getParameterTypes();
+		this.args = args;
+	}
 
-    public String getClassName() {
-        return className;
-    }
+	public String getClassName() {
+		return className;
+	}
 
-    public String getMethodName() {
-        return methodName;
-    }
+	public String getMethodName() {
+		return methodName;
+	}
 
-    public Class<?>[] getSignature() {
-        return signature;
-    }
+	public Class<?>[] getSignature() {
+		return signature;
+	}
 
-    public Object[] getArgs() {
-        return args;
-    }
+	public Object[] getArgs() {
+		return args;
+	}
 }

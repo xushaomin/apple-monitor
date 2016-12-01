@@ -16,6 +16,8 @@ public interface AppDowntimeService {
 	
 	public void saveOrUpdate(Integer id, long recordingSince);
 	
+	public void saveOrUpdate(Integer id, long recordingSince, boolean isDown);
+	
 	public void delete(Integer id);
 	
 }

@@ -178,8 +178,8 @@
 <div class="con_right_main">
 
 	<form id="listForm" action="list" method="post">
-	<input type="hidden" id="orderField" name="orderField" value="${(so.orderField)!'info.id'}" />
-	<input type="hidden" id="orderDirection" name="orderDirection" value="${(so.orderDirection)!'desc'}" />
+	<input type="hidden" id="orderField" name="orderField" value="${(se.orderField)!'info.id'}" />
+	<input type="hidden" id="orderDirection" name="orderDirection" value="${(se.orderDirection)!'desc'}" />
 	
 	
     <!-- start of con_search -->
@@ -223,6 +223,13 @@
 							</#list>
 	                 	</select>
                     </span>
+                    <span class="group"><label>状态：</label>
+                    	<select class="c_select required" id="isDown" name="isDown" style="width:100px;">
+	                    	<option value="">请选择</option>
+	                    	<option value="true" <#if so.isDown?exists && so.isDown == true>selected</#if>>DOWN</option>
+	                    	<option value="false" <#if so.isDown?exists && so.isDown == false>selected</#if>>UP</option>
+	                    </select>
+                    </span>
             		<span class="group"><a id="searchButton" href="javascript:;" class="btn_search">搜索</a></span>
                 </p>
             </div>
@@ -239,19 +246,18 @@
     <!-- start of table_list -->
     <table id="listTable" class="table_list list">
         <tr>
-        	<th style="line-height:0px; width:5%;" rowspan="2">序号</th>
-        	<th style="line-height:0px; width:10%;" rowspan="2" class="sort" orderField="asc" name="info.app_name">应用名称</th>
-        	<th style="line-height:0px; width:8%;" rowspan="2" class="sort" orderField="asc" name="info.node_id">所在节点</th>
-        	<th style="line-height:0px; width:15%;" rowspan="2" class="sort" orderField="asc" name="info.install_path">安装目录</th>
-        	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.app_version">版本</th>
-        	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.conf_env">环境</th>
-        	<th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.log_level">日志</th>
-            <th style="line-height:0px; width:6%;" rowspan="2" class="sort" orderField="asc" name="info.mem_max">内存</th>
+        	<th style="line-height:0px; width:5%;"  rowspan="2" class="sort" orderField="asc"  name="info.id">序号</th>
+        	<th style="line-height:0px; width:10%;" rowspan="2" class="sort" orderField="asc"  name="info.app_name">应用名称</th>
+        	<th style="line-height:0px; width:8%;"  rowspan="2" class="sort" orderField="asc"  name="info.node_id">所在节点</th>
+        	<th style="line-height:0px; width:15%;" rowspan="2" class="sort" orderField="asc"  name="info.install_path">安装目录</th>
+        	<th style="line-height:0px; width:6%;"  rowspan="2" class="sort" orderField="asc"  name="info.app_version">版本</th>
+        	<th style="line-height:0px; width:6%;"  rowspan="2" class="sort" orderField="asc"  name="info.conf_env">环境</th>
+        	<th style="line-height:0px; width:6%;"  rowspan="2" class="sort" orderField="asc"  name="info.log_level">日志</th>
+            <th style="line-height:0px; width:6%;"  rowspan="2" class="sort" orderField="asc"  name="info.mem_max">内存</th>
         	<th style="line-height:0px; width:10%;" colspan="3">端口</th>
-        	<th style="line-height:0px; width:4%;" rowspan="2">状态</th>
-        	<th style="line-height:0px; width:4%;" rowspan="2" class="sort" orderField="desc" name="config.is_alert">监控</th>
-        	<th style="line-height:0px; width:10%;" rowspan="2" class="sort" orderField="asc" name="info.update_time">更新时间</th>
-        	<!--<th style="line-height:0px; width:8%;" rowspan="2" class="sort" orderField="asc" name="info.create_time">创建时间</th>-->
+        	<th style="line-height:0px; width:4%;"  rowspan="2" class="sort" orderField="asc"  name="downtime.is_down">状态</th>
+        	<th style="line-height:0px; width:4%;"  rowspan="2" class="sort" orderField="desc" name="config.is_alert">监控</th>
+        	<th style="line-height:0px; width:10%;" rowspan="2" class="sort" orderField="asc"  name="info.update_time">更新时间</th>
 			<th style="line-height:0px; width:20%;" rowspan="2">操作</th>
         </tr>
         <tr>
@@ -287,7 +293,6 @@
 				${info.updateTime?string('MM-dd HH:mm')}
 				<#else>-</#if>
 			</td>
-			<!--<td>${info.createTime?string('yyyy-MM-dd')}</td>-->
 			<td>
 				<!--<a class="btn_icon btn_edit"   href="javascript:;" operatId="${info.id}" title="编辑"></a>
                 <a class="btn_icon btn_detail" href="javascript:;" operatId="${info.id}" title="详情"></a>-->
@@ -307,7 +312,6 @@
 				</@appStatus>
 
 				<!--
-								
 				.btn_edit{ background-position:0 0;}
 				.btn_detail{ background-position:0 -50px;}
 				.btn_online{ background-position:0 -100px;}
@@ -324,7 +328,6 @@
 				.btn_offline{ background-position:0 -650px;}
 				.btn_effect{ background-position:0 -700px;}
 				.btn_examine{ background-position:0 -750px;}
-				
 				-->
 			</td>
         </tr>

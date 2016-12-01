@@ -11,8 +11,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
-import org.springframework.scheduling.annotation.Scheduled;  
-import org.springframework.stereotype.Component;
 
 import com.appleframework.config.core.PropertyConfigurer;
 import com.appleframework.core.utils.ObjectUtility;
@@ -28,7 +26,7 @@ import com.appleframework.jmx.webui.view.ApplicationViewHelper;
 import com.appleframework.monitor.plus.ThirdPlus;
 import com.appleframework.monitor.service.PlusService;
 
-@Component("alertTask")
+//@Component("alertTask")
 public class AlertTask {
 	
 	private static final Logger logger = Loggers.getLogger(AlertTask.class);
@@ -57,7 +55,7 @@ public class AlertTask {
 	
 	public static Map<Integer, Integer> sendCountMap = new HashMap<Integer, Integer>();
 	
-	@Scheduled(cron = "30 */1 * * * ?")
+	//@Scheduled(cron = "30 */1 * * * ?")
     public void alert() {
 		String openFlag = PropertyConfigurer.getString("alert.send.flag", "true");
 		if(Boolean.valueOf(openFlag) == false)

@@ -16,7 +16,7 @@ import com.appleframework.jmx.core.config.ApplicationConfigManager;
 import com.appleframework.jmx.core.data.OperationResultData;
 import com.appleframework.jmx.core.services.MBeanService;
 import com.appleframework.jmx.core.services.ServiceContext;
-import com.appleframework.jmx.core.services.ServiceContextImpl;
+import com.appleframework.jmx.core.services.impl.ServiceContextImpl;
 import com.appleframework.jmx.core.util.StringUtils;
 import com.appleframework.jmx.database.service.AppInfoService;
 import com.appleframework.jmx.webui.view.ApplicationViewHelper;

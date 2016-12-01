@@ -14,8 +14,12 @@ public interface AppDowntimeHistoryService {
 		
 	public List<AppDowntimeHistoryEntity> findAll();
 	
-	public void saveOrUpdate(Integer id, long downtimeBegin, long downtimeEnd);
+	public List<AppDowntimeHistoryEntity> findListByAppId(Integer appId);
 	
+	public void saveOrUpdate(Integer appId, long downtimeBegin, long downtimeEnd);
+		
 	public void delete(Integer id);
+	
+	public void deleteByAppId(Integer appId);
 	
 }

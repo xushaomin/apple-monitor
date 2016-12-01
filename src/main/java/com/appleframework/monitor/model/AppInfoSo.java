@@ -36,6 +36,8 @@ public class AppInfoSo implements Serializable {
     private String remark;
 
     private Short state;
+    
+    private Boolean isDown;
 
     private Date createTime;
 
@@ -175,6 +177,23 @@ public class AppInfoSo implements Serializable {
 
 	public void setLogLevel(String logLevel) {
 		this.logLevel = logLevel;
-	} 
-    
+	}
+
+	public Boolean getIsDown() {
+		return isDown;
+	}
+
+	public void setIsDown(Boolean isDown) {
+		this.isDown = isDown;
+	}
+
+	@Override
+	public String toString() {
+		return "AppInfoSo [id=" + id + ", nodeId=" + nodeId + ", clusterId=" + clusterId + ", appCode=" + appCode
+				+ ", webPort=" + webPort + ", webContext=" + webContext + ", jmxPort=" + jmxPort + ", servicePort="
+				+ servicePort + ", installPath=" + installPath + ", logLevel=" + logLevel + ", appVersion=" + appVersion
+				+ ", confEnv=" + confEnv + ", disorder=" + disorder + ", remark=" + remark + ", state=" + state
+				+ ", isDown=" + isDown + ", createTime=" + createTime + ", updateTime=" + updateTime + "]";
+	}
+	
 }

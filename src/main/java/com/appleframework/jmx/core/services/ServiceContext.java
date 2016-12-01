@@ -22,13 +22,16 @@ import java.io.Serializable;
 
 /**
  *
- * date:  Jan 9, 2005
- * @author	Rakesh Kalra
- * @author  Shashank Bellary
+ * date: Jan 9, 2005
+ * 
+ * @author Rakesh Kalra
+ * @author Shashank Bellary
  */
 public interface ServiceContext extends Serializable {
-	
-    public ApplicationConfig getApplicationConfig();
-    public ObjectName getObjectName();
-    public ServerConnection getServerConnection();
+
+	public ApplicationConfig getApplicationConfig();
+
+	public ObjectName getObjectName();
+
+	public ServerConnection getServerConnection();
 }

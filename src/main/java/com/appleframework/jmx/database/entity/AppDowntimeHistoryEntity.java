@@ -5,9 +5,11 @@ import java.util.Date;
 
 public class AppDowntimeHistoryEntity implements Serializable {
 	
+    private static final long serialVersionUID = 1L;
+	
     private Integer id;
-
-    private Short state;
+    
+    private Integer appId;
 
     private Date startTime;
 
@@ -16,23 +18,13 @@ public class AppDowntimeHistoryEntity implements Serializable {
     private Date createTime;
 
     private Date updateTime;
-
-    private static final long serialVersionUID = 1L;
-
+    
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Short getState() {
-        return state;
-    }
-
-    public void setState(Short state) {
-        this.state = state;
     }
 
     public Date getStartTime() {
@@ -66,4 +58,13 @@ public class AppDowntimeHistoryEntity implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+	public Integer getAppId() {
+		return appId;
+	}
+
+	public void setAppId(Integer appId) {
+		this.appId = appId;
+	}
+    
 }

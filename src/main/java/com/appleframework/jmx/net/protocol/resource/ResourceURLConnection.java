@@ -27,8 +27,7 @@ import java.io.IOException;
  */
 public class ResourceURLConnection extends URLConnection {
 
-    public ResourceURLConnection(final URL url)
-            throws MalformedURLException, IOException {
+    public ResourceURLConnection(final URL url) throws MalformedURLException, IOException {
       super(url);
    }
 

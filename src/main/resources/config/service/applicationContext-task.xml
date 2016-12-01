@@ -14,19 +14,14 @@
 	default-lazy-init="false">
 
 	<context:annotation-config />
-	<task:annotation-driven />
 	
-	<!-- 
-	<context:component-scan base-package="com.appleframework.monitor.task" />
-	<task:annotation-driven scheduler="qbScheduler" mode="proxy" />
-	<task:scheduler id="qbScheduler" pool-size="10" />
-	 -->
+	<task:annotation-driven executor="taskExecutor"/>
 	 
 	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">          
 	    <!-- 核心线程数，默认为1 -->          
 	    <property name="corePoolSize" value="10" />          
 	    <!-- 最大线程数，默认为Integer.MAX_VALUE -->          
-	    <property name="maxPoolSize" value="50" />          
+	    <property name="maxPoolSize" value="100" />          
 	    <!-- 队列最大长度，一般需要设置值>=notifyScheduledMainExecutor.maxNum；默认为Integer.MAX_VALUE -->          
 	    <property name="queueCapacity" value="1000" />          
 	    <!-- 线程池维护线程所允许的空闲时间，默认为60s -->          

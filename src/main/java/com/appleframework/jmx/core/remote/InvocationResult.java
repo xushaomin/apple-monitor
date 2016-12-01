@@ -19,31 +19,32 @@ import java.io.Serializable;
 
 /**
  *
- * date:  Feb 24, 2005
- * @author	Rakesh Kalra
+ * date: Feb 24, 2005
+ * 
+ * @author Rakesh Kalra
  */
 public class InvocationResult implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 1L;
+
 	private Object result;
-    private Throwable t;
+	private Throwable t;
 
-    public InvocationResult(Object result){
-        this.result = result;
-    }
+	public InvocationResult(Object result) {
+		this.result = result;
+	}
 
-    public InvocationResult(Throwable t){
-        assert t != null;
-        this.t = t;
-    }
+	public InvocationResult(Throwable t) {
+		assert t != null;
+		this.t = t;
+	}
 
-    public Object get(){
-        if(t != null){
-            return t;
-        }else{
-            return result;
-        }
-    }
+	public Object get() {
+		if (t != null) {
+			return t;
+		} else {
+			return result;
+		}
+	}
 
 }

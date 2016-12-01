@@ -18,9 +18,9 @@ package com.appleframework.jmx.core.remote.server;
 import com.appleframework.jmx.core.auth.UnAuthorizedAccessException;
 import com.appleframework.jmx.core.remote.InvocationResult;
 import com.appleframework.jmx.core.remote.RemoteInvocation;
-import com.appleframework.jmx.core.services.ServiceContextImpl;
 import com.appleframework.jmx.core.services.ServiceException;
 import com.appleframework.jmx.core.services.ServiceFactory;
+import com.appleframework.jmx.core.services.impl.ServiceContextImpl;
 import com.appleframework.jmx.core.util.Loggers;
 import com.appleframework.jmx.core.util.ErrorCodes;
 import com.appleframework.jmx.core.management.ConnectionFailedException;
@@ -46,44 +46,32 @@ import org.apache.log4j.Logger;
  */
 public class ServiceCallHandler {
 
-    private static final Logger logger =
-            Loggers.getLogger(ServiceCallHandler.class);
+    private static final Logger logger = Loggers.getLogger(ServiceCallHandler.class);
 
     public static InvocationResult execute(RemoteInvocation invocation){
-        try {
-            Object result = executeInternal(invocation.getClassName(),
-                    invocation.getMethodName(),
-                    invocation.getSignature(),
-                    invocation.getArgs());
-            return new InvocationResult(result);
-        } catch (InvocationTargetException e) {
-            Throwable t = e.getCause();
-            if(t != null){
-                if(t instanceof ServiceException || t instanceof UnAuthorizedAccessException){
-                    return new InvocationResult(t);
-                }else if(t instanceof ConnectionFailedException){
-                    return new InvocationResult(
-                            new ServiceException(ErrorCodes.CONNECTION_FAILED));
-                }
-            }
-            logger.error( "Error while invoking: " +
-                    invocation.getClassName() +"->"+ invocation.getMethodName(),
-                    e);
-            throw new RuntimeException(e);
-        } catch(Exception e){
-            logger.error( "Error while invoking: " +
-                    invocation.getClassName() +"->"+ invocation.getMethodName(),
-                    e);
-            throw new RuntimeException(e);
-        }
+		try {
+			Object result = executeInternal(invocation.getClassName(), invocation.getMethodName(),
+					invocation.getSignature(), invocation.getArgs());
+			return new InvocationResult(result);
+		} catch (InvocationTargetException e) {
+			Throwable t = e.getCause();
+			if (t != null) {
+				if (t instanceof ServiceException || t instanceof UnAuthorizedAccessException) {
+					return new InvocationResult(t);
+				} else if (t instanceof ConnectionFailedException) {
+					return new InvocationResult(new ServiceException(ErrorCodes.CONNECTION_FAILED));
+				}
+			}
+			logger.error("Error while invoking: " + invocation.getClassName() + "->" + invocation.getMethodName(), e);
+			throw new RuntimeException(e);
+		} catch (Exception e) {
+			logger.error("Error while invoking: " + invocation.getClassName() + "->" + invocation.getMethodName(), e);
+			throw new RuntimeException(e);
+		}
     }
 
-    private static Object executeInternal(String className,
-                                          String methodName,
-                                          Class<?>[] parameterTypes,
-                                          Object[] args)
+    private static Object executeInternal(String className, String methodName, Class<?>[] parameterTypes, Object[] args)
         throws Exception {
-
         /* take the service context */
         ServiceContextImpl serviceContext = (ServiceContextImpl)args[0];
         try {

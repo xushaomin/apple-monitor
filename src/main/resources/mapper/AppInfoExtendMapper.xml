@@ -11,15 +11,18 @@
     info.remark as remark, info.state as state, info.conf_env as confEnv,
     info.create_time as createTime, info.update_time as updateTime,
     config.is_alert as isAlert, info.log_level as logLevel,
-    info.start_param as startParam, info.mem_max as memMax
+    info.start_param as startParam, info.mem_max as memMax,
+    downtime.is_down as isDown 
   </sql>
   
   <select id="selectByPage" resultType="com.appleframework.monitor.model.AppInfoBo">
     select
     <include refid="Base_Column_List" />
+        
+    from t_app_info as info, t_app_config as config, t_app_downtime as downtime
     
-    from t_app_info as info, t_app_config as config
-    where ( info.state = 0 or info.state = 1) and info.id = config.id
+    where ( info.state = 0 or info.state = 1) and info.id = config.id and info.id = downtime.id 
+    
     <if test="se.keyword != null and se.keyword !=''" >
        and ( info.app_name like '%${se.keyword}%' or info.install_path like '%${se.keyword}%' or
        		info.node_id in (
@@ -42,6 +45,10 @@
     </if>
     <if test="so.logLevel != null and so.logLevel !='' " >
        and  info.log_level = '${so.logLevel}'
+    </if>
+    
+    <if test="so.isDown != null" >
+       and  downtime.is_down = ${so.isDown}
     </if>
     
     order by 

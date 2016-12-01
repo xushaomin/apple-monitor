@@ -3,7 +3,7 @@
 <mapper namespace="com.appleframework.jmx.database.mapper.AppDowntimeHistoryEntityMapper" >
   <resultMap id="BaseResultMap" type="com.appleframework.jmx.database.entity.AppDowntimeHistoryEntity" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="state" property="state" jdbcType="SMALLINT" />
+    <result column="app_id" property="appId" jdbcType="INTEGER" />
     <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -68,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, state, start_time, end_time, create_time, update_time
+    id, app_id, start_time, end_time, create_time, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.appleframework.jmx.database.entity.AppDowntimeHistoryEntityExample" >
     select
@@ -101,10 +101,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.appleframework.jmx.database.entity.AppDowntimeHistoryEntity" >
-    insert into t_app_downtime_history (id, state, start_time, end_time, 
-      create_time, update_time)
-    values (#{id,jdbcType=INTEGER},
-      #{state,jdbcType=SMALLINT}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_app_downtime_history (
+    	app_id, 
+    	start_time, end_time, 
+    	create_time, update_time)
+    values (
+      #{appId,jdbcType=INTEGER},
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.appleframework.jmx.database.entity.AppDowntimeHistoryEntity" >
@@ -113,8 +119,8 @@
     </selectKey>
     insert into t_app_downtime_history
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="state != null" >
-        state,
+      <if test="appId != null" >
+        appId,
       </if>
       <if test="startTime != null" >
         start_time,
@@ -130,8 +136,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="state != null" >
-        #{state,jdbcType=SMALLINT},
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
       </if>
       <if test="startTime != null" >
         #{startTime,jdbcType=TIMESTAMP},
@@ -159,8 +165,8 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.state != null" >
-        state = #{record.state,jdbcType=SMALLINT},
+      <if test="record.appId != null" >
+        app_id = #{record.appId,jdbcType=INTEGER},
       </if>
       <if test="record.startTime != null" >
         start_time = #{record.startTime,jdbcType=TIMESTAMP},
@@ -182,7 +188,7 @@
   <update id="updateByExample" parameterType="map" >
     update t_app_downtime_history
     set id = #{record.id,jdbcType=INTEGER},
-      state = #{record.state,jdbcType=SMALLINT},
+      app_id = #{record.appId,jdbcType=INTEGER},
       start_time = #{record.startTime,jdbcType=TIMESTAMP},
       end_time = #{record.endTime,jdbcType=TIMESTAMP},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -194,8 +200,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.appleframework.jmx.database.entity.AppDowntimeHistoryEntity" >
     update t_app_downtime_history
     <set >
-      <if test="state != null" >
-        state = #{state,jdbcType=SMALLINT},
+      <if test="appId != null" >
+        app_id = #{appId,jdbcType=INTEGER},
       </if>
       <if test="startTime != null" >
         start_time = #{startTime,jdbcType=TIMESTAMP},
@@ -214,7 +220,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.appleframework.jmx.database.entity.AppDowntimeHistoryEntity" >
     update t_app_downtime_history
-    set state = #{state,jdbcType=SMALLINT},
+    set app_id = #{appId,jdbcType=INTEGER},
       start_time = #{startTime,jdbcType=TIMESTAMP},
       end_time = #{endTime,jdbcType=TIMESTAMP},
       create_time = #{createTime,jdbcType=TIMESTAMP},

@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Repository;
 
-import com.appleframework.jmx.database.constant.StateType;
 import com.appleframework.jmx.database.entity.AppDowntimeHistoryEntity;
 import com.appleframework.jmx.database.entity.AppDowntimeHistoryEntityExample;
 import com.appleframework.jmx.database.mapper.AppDowntimeHistoryEntityMapper;
@@ -28,7 +27,6 @@ public class AppDowntimeHistoryDao {
 	}
 	
 	public void save(AppDowntimeHistoryEntity historyEntity) {
-		historyEntity.setState(StateType.START.getIndex());
 		historyEntity.setCreateTime(new Date());
 		appDowntimeHistoryEntityMapper.insert(historyEntity);
 	}
@@ -37,6 +35,34 @@ public class AppDowntimeHistoryDao {
 		AppDowntimeHistoryEntityExample example = new AppDowntimeHistoryEntityExample();
 		example.createCriteria();
 		return appDowntimeHistoryEntityMapper.selectByExample(example);
+	}
+	
+	public void delete(Integer id) {
+		appDowntimeHistoryEntityMapper.deleteByPrimaryKey(id);
+	}
+	
+	public void deleteByAppId(Integer appId) {
+		AppDowntimeHistoryEntityExample example = new AppDowntimeHistoryEntityExample();
+		example.createCriteria().andAppIdEqualTo(appId);
+		appDowntimeHistoryEntityMapper.deleteByExample(example);
+	}
+	
+	public List<AppDowntimeHistoryEntity> findListByAppId(Integer appId) {
+		AppDowntimeHistoryEntityExample example = new AppDowntimeHistoryEntityExample();
+		example.createCriteria().andAppIdEqualTo(appId);
+		return appDowntimeHistoryEntityMapper.selectByExample(example);
+	}
+	
+	public AppDowntimeHistoryEntity get(Integer appId, Date startTime) {
+		AppDowntimeHistoryEntityExample example = new AppDowntimeHistoryEntityExample();
+		example.createCriteria().andAppIdEqualTo(appId).andStartTimeEqualTo(startTime);
+		List<AppDowntimeHistoryEntity> list = appDowntimeHistoryEntityMapper.selectByExample(example);
+		if(list.size() > 0) {
+			return list.get(0);
+		}
+		else {
+			return null;
+		}
 	}
 
 }

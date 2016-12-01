@@ -50,8 +50,7 @@ public class HttpServiceProxy implements InvocationHandler {
 
     private static final Logger logger = Loggers.getLogger(HttpServiceProxy.class);
 
-    private static String REQUEST_CONTENT_TYPE =
-            "application/x-java-serialized-object; class=com.appleframework.jmx.core.remote.RemoteInvocation";
+    private static String REQUEST_CONTENT_TYPE = "application/x-java-serialized-object; class=com.appleframework.jmx.core.remote.RemoteInvocation";
 
     private static URL remoteURL;
 
@@ -93,8 +92,7 @@ public class HttpServiceProxy implements InvocationHandler {
             RemoteInvocation invocation = new RemoteInvocation(method, args);
             return invoke(invocation);
         } catch (ConnectException e) {
-            throw new ServiceException(ErrorCodes.JMANAGE_SERVER_CONNECTION_FAILED,
-                    JManageProperties.getJManageURL());
+            throw new ServiceException(ErrorCodes.JMANAGE_SERVER_CONNECTION_FAILED, JManageProperties.getJManageURL());
         }
     }
 

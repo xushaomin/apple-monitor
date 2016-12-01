@@ -34,11 +34,9 @@ public class JManageProperties extends Properties{
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger logger =
-            Loggers.getLogger(JManageProperties.class);
+	private static final Logger logger = Loggers.getLogger(JManageProperties.class);
 
-    private String JMANAGE_PROPERTY_FILE = CoreUtils.getConfigDir() +
-            "/jmanage.properties";
+    private String JMANAGE_PROPERTY_FILE = CoreUtils.getConfigDir() + "/jmanage.properties";
 
     /* see jmanage.properties for documentation of these properties */
     public static String LOGIN_MAX_ATTEMPTS = "login.maxAttempts";
@@ -59,8 +57,7 @@ public class JManageProperties extends Properties{
     private static String  ALERT_EMAIL_FROM_EMAIL = "alert.email.from.email";
 
     /* display properties */
-    private static String DISPLAY_MBEAN_CANONICAL_NAME =
-            "jmanage.objectName.displayCanonicalName";
+    private static String DISPLAY_MBEAN_CANONICAL_NAME = "jmanage.objectName.displayCanonicalName";
 
     /* HTML input type for boolean attributes */
     private static String BOOLEAN_INPUT_TYPE = "jmanage.html.booleanInputType";
@@ -80,12 +77,10 @@ public class JManageProperties extends Properties{
     private JManageProperties(){
       super();
       try{
-        InputStream property =
-                new FileInputStream(JMANAGE_PROPERTY_FILE);
+        InputStream property = new FileInputStream(JMANAGE_PROPERTY_FILE);
         load(property);
       }catch(Throwable e){
-          logger.warn( "Error reading " +
-                  JMANAGE_PROPERTY_FILE + ". error: " + e.getMessage());
+          logger.warn( "Error reading " + JMANAGE_PROPERTY_FILE + ". error: " + e.getMessage());
       }
     }
 

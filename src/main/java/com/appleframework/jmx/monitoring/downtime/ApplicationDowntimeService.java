@@ -50,6 +50,9 @@ public class ApplicationDowntimeService {
     @Resource
     private DowntimeRecorder downtimeRecorder;
     
+    @Resource
+    private DowntimeAlert downtimeAlert;
+    
 	public void start() {
         for (ApplicationConfig appConfig : ApplicationConfigManager.getAllApplications()) {
             // only add non-cluster applications
@@ -62,6 +65,9 @@ public class ApplicationDowntimeService {
          
         /* Add the recorder to record the downtimes to the DB */
         eventSystem.addListener(downtimeRecorder, ApplicationEvent.class);
+        
+        /* Add the alert */
+        eventSystem.addListener(downtimeAlert, ApplicationEvent.class);
 
         /* application event listener to add */
 		eventSystem.addListener(new EventListener() {

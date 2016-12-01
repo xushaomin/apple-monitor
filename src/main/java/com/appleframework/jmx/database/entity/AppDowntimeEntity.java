@@ -5,9 +5,13 @@ import java.util.Date;
 
 public class AppDowntimeEntity implements Serializable {
 	
+    private static final long serialVersionUID = 1L;
+	
     private Integer id;
 
     private Short state;
+    
+    private Boolean isDown;
 
     private Date recordingStart;
 
@@ -16,8 +20,6 @@ public class AppDowntimeEntity implements Serializable {
     private Date createTime;
 
     private Date updateTime;
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -66,4 +68,13 @@ public class AppDowntimeEntity implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+	public Boolean getIsDown() {
+		return isDown;
+	}
+
+	public void setIsDown(Boolean isDown) {
+		this.isDown = isDown;
+	}
+    
 }

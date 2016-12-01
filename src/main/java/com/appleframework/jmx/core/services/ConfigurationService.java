@@ -23,17 +23,17 @@ import java.util.List;
 
 /**
  *
- * date:  Jan 9, 2005
- * @author	Rakesh Kalra
+ * date: Jan 9, 2005
+ * 
+ * @author Rakesh Kalra
  */
 public interface ConfigurationService {
 
-    public ApplicationConfigData addApplication(ServiceContext context,
-                                                ApplicationConfigData data);
+	public ApplicationConfigData addApplication(ServiceContext context, ApplicationConfigData data);
 
-    public List<ApplicationConfigData> getAllApplications(ServiceContext context);
+	public List<ApplicationConfigData> getAllApplications(ServiceContext context);
 
-    public List<MBeanData> getConfiguredMBeans(ServiceContext context)
-            throws ServiceException;
-    public GraphConfig addGraph(ServiceContext context, GraphConfig graphConfig);
+	public List<MBeanData> getConfiguredMBeans(ServiceContext context) throws ServiceException;
+
+	public GraphConfig addGraph(ServiceContext context, GraphConfig graphConfig);
 }

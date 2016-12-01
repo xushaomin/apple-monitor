@@ -16,6 +16,7 @@
 package com.appleframework.jmx.core.services;
 
 import com.appleframework.jmx.core.remote.client.HttpServiceProxy;
+import com.appleframework.jmx.core.services.impl.ServiceContextImpl;
 import com.appleframework.jmx.core.data.OperationResultData;
 
 /**
