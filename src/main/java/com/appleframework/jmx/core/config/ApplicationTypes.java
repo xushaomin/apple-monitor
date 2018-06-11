@@ -39,10 +39,7 @@ public class ApplicationTypes {
 
 	//private static final String CONFIG_FILE = "/config/system/application-type-config.xml";
 	
-    private static final String CONFIG_FILE = "jmx" +
-            File.separatorChar + "system" +
-            File.separatorChar + "application-type-config.xml";
-
+    private static final String CONFIG_FILE = "/jmx/system/application-type-config.xml";
 	
 	/* app type/id to ApplicationType mapping */
 	private static Map<String, ApplicationType> applications = new TreeMap<String, ApplicationType>();
