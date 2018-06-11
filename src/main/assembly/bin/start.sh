@@ -47,7 +47,8 @@ fi
 STDOUT_FILE=$LOGS_DIR/stdout.log
 
 LIB_DIR=$DEPLOY_DIR/lib
-LIB_JARS=`ls $LIB_DIR|grep .jar|awk '{print "'$LIB_DIR'/"$0}'|tr "\n" ":"`
+#LIB_JARS=`ls $LIB_DIR|grep .jar|awk '{print "'$LIB_DIR'/"$0}'|tr "\n" ":"`
+LIB_JARS=`ls $LIB_DIR|grep apple-monitor|awk '{print "'$LIB_DIR'/"$0}'|tr "\n" ":"`
 
 JAVA_OPTS=" -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true "
 JAVA_OPTS="$JAVA_OPTS -Djava.ext.dirs=$LIB_DIR:$JAVA_HOME/jre/lib/ext "
@@ -73,7 +74,7 @@ JAVA_MEM_OPTS=" -server -Xmx2g -Xms1g -Xmn256m -XX:PermSize=128m -Xss256k -XX:+D
 
 
 echo -e "Starting the $SERVER_NAME ...\c"
-nohup java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS -classpath $CONF_DIR com.appleframework.boot.Main env=$ENV > $STDOUT_FILE 2>&1 &
+nohup java $JAVA_OPTS $JAVA_MEM_OPTS $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS -classpath $CONF_DIR:$LIB_JARS com.appleframework.boot.Main env=$ENV > $STDOUT_FILE 2>&1 &
 
 COUNT=0
 while [ $COUNT -lt 1 ]; do    
