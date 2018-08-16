@@ -17,7 +17,7 @@
 		<boot.version>0.3.5.RELEASE</boot.version>
 		<orm.version>0.1.3.RELEASE</orm.version>
 		<aspectj.version>1.6.8</aspectj.version>
-		<jetty.version>8.1.17.v20150415</jetty.version>
+		<jetty.version>8.1.22.v20160922</jetty.version>
 	</properties>
 
 	<dependencies>
