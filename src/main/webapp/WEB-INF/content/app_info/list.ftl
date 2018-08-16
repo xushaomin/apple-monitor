@@ -16,7 +16,7 @@
 			var id = $(this).attr("operatId");
 			var title = $(this).attr("title");
 			
-			art.dialog.open('/jmx_log4j/view?id=' + id, {
+			art.dialog.open('/jmx_logging/view?id=' + id, {
 				id: 'viewFrame',
 				title: title,
 				close: function () {}
@@ -27,7 +27,7 @@
 			var id = $(this).attr("operatId");
 			var title = $(this).attr("title");
 			
-			art.dialog.open('/jmx_log4j/edit?id=' + id, {
+			art.dialog.open('/jmx_logging/edit?id=' + id, {
 				id: 'viewFrame',
 				title: title,
 				close: function () {}
@@ -99,7 +99,7 @@
                    ids += $(this).val() + ","
      		});
 
-			art.dialog.open('/jmx_log4j/level_select?ids=' + ids, {
+			art.dialog.open('/jmx_logging/level_select?ids=' + ids, {
 				id: 'logFrame',
 				title: '批量修改日志',
 				close: function () {}

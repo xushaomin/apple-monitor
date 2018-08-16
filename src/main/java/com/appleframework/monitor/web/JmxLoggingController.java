@@ -24,8 +24,8 @@ import com.appleframework.monitor.model.Log4jLevelOperation;
 import com.appleframework.monitor.model.Log4jLevelType;
 
 @Controller
-@RequestMapping("/jmx_log4j")
-public class JmxLog4jController extends BaseController {
+@RequestMapping("/jmx_logging")
+public class JmxLoggingController extends BaseController {
 		
 	@Resource
 	private MBeanService mbeanService;
@@ -36,9 +36,9 @@ public class JmxLog4jController extends BaseController {
 	@Resource
 	private AppInfoService appInfoService;
 	
-	private String viewModel = "jmx_log4j/";
+	private String viewModel = "jmx_logging/";
 	
-	private static final String MBEAN_NAME = "com.appleframework:type=container,id=LogContainer";
+	private static final String MBEAN_NAME = "com.appleframework:type=container,id=LoggingContainer";
 
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public String view(Model model, Integer id, HttpServletResponse response) throws Exception {
