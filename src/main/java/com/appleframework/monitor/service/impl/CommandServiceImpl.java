@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
 
+import com.appleframework.config.core.PropertyConfigurer;
 import com.appleframework.monitor.command.plus.CommandPlus;
 import com.appleframework.monitor.command.plus.CommandPlusFactory;
 import com.appleframework.monitor.model.AppCommandParam;
@@ -20,7 +21,7 @@ import com.appleframework.monitor.websocket.WebSocketServer;
 @Service("commandService")
 public class CommandServiceImpl implements CommandService {
 	
-	private static String COMMAND_PLUS = "shell";
+	private static String COMMAND_PLUS = PropertyConfigurer.getString("command.plus", "ssh");
 	
 	private static CommandPlus plus = CommandPlusFactory.create(COMMAND_PLUS);
 	
