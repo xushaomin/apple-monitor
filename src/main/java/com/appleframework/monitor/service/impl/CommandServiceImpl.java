@@ -30,13 +30,11 @@ public class CommandServiceImpl implements CommandService {
 
 	@Override
 	public void doLog(AppCommandParam param) {
-		// TODO Auto-generated method stub
 		
 	}
 	
 	public void doExe(final AppCommandParam param, final CommandExeType exeType) {
 		taskExecutor.execute(new Runnable() {
-            
             @Override  
             public void run() {
             	try {
