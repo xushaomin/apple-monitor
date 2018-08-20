@@ -20,8 +20,8 @@ import com.appleframework.jmx.core.services.impl.ServiceContextImpl;
 import com.appleframework.jmx.core.util.StringUtils;
 import com.appleframework.jmx.database.service.AppInfoService;
 import com.appleframework.jmx.webui.view.ApplicationViewHelper;
-import com.appleframework.monitor.model.Log4jLevelOperation;
-import com.appleframework.monitor.model.Log4jLevelType;
+import com.appleframework.monitor.model.LoggingLevelOperation;
+import com.appleframework.monitor.model.LoggingLevelType;
 
 @Controller
 @RequestMapping("/jmx_logging")
@@ -71,7 +71,7 @@ public class JmxLoggingController extends BaseController {
 	@RequestMapping(value = "/update")
 	public String update(Model model, Integer id, short level, HttpServletResponse response) {
 		try {
-			String operateName = Log4jLevelOperation.toLevelOperation(level);
+			String operateName = LoggingLevelOperation.toLevelOperation(level);
 			ApplicationConfig appConfig = ApplicationConfigManager.getApplicationConfig(id.toString());
 			ServiceContext serviceContext = new ServiceContextImpl(appConfig.getAppId(), MBEAN_NAME);
 			String [] dates = {};
@@ -84,7 +84,7 @@ public class JmxLoggingController extends BaseController {
 				}
 			}            
 			
-			appInfoService.updateLogLevel(id, Log4jLevelType.getName(level));
+			appInfoService.updateLogLevel(id, LoggingLevelType.getName(level));
 		} catch (Exception e) {
 			addErrorMessage(model, e.getMessage());
 			return "/commons/error_ajax";
@@ -93,8 +93,8 @@ public class JmxLoggingController extends BaseController {
 		return "/commons/success_ajax";
 	}
 	
-	public List<Log4jLevelType> getLog4jLevelTypes() {
-		return Arrays.asList(Log4jLevelType.values());
+	public List<LoggingLevelType> getLog4jLevelTypes() {
+		return Arrays.asList(LoggingLevelType.values());
 	}
 	
 	
@@ -108,8 +108,8 @@ public class JmxLoggingController extends BaseController {
 	@RequestMapping(value = "/batch_update")
 	public String batchUpdate(Model model, String ids, short level, HttpServletResponse response) {
 		try {
-			String operateName = Log4jLevelOperation.toLevelOperation(level);
-			String levelName = Log4jLevelType.getName(level);
+			String operateName = LoggingLevelOperation.toLevelOperation(level);
+			String levelName = LoggingLevelType.getName(level);
 			String[] idds = ids.split(",");
 			for (int j = 0; j < idds.length; j++) {
 				String id = idds[j];

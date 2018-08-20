@@ -1,6 +1,6 @@
 package com.appleframework.monitor.model;
 
-public enum Log4jLevelType {
+public enum LoggingLevelType {
 
 	//ALL("ALL", (short)1),
 	DEBUG("DEBUG", (short)2),
@@ -16,14 +16,14 @@ public enum Log4jLevelType {
 	private short index;
 
 	// 构造方法
-	private Log4jLevelType(String name, short index) {
+	private LoggingLevelType(String name, short index) {
 		this.name = name;
 		this.index = index;
 	}
 	
 	// 普通方法
 	public static String getName(int index) {
-		for (Log4jLevelType c : Log4jLevelType.values()) {
+		for (LoggingLevelType c : LoggingLevelType.values()) {
 			if (c.getIndex() == index) {
 				return c.name;
 			}

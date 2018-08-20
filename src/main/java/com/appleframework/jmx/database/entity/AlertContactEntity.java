@@ -12,6 +12,8 @@ public class AlertContactEntity implements Serializable {
     private String mobile;
 
     private String email;
+    
+    private String weixin;
 
     private Date createTime;
 
@@ -66,4 +68,13 @@ public class AlertContactEntity implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+	public String getWeixin() {
+		return weixin;
+	}
+
+	public void setWeixin(String weixin) {
+		this.weixin = weixin;
+	}
+    
 }

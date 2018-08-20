@@ -6,11 +6,12 @@
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
 		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="weixin" property="weixin" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, name, mobile, email, create_time, update_time
+		id, name, mobile, email, weixin, create_time, update_time
 	</sql>
 	
 	<select id="selectByPage" resultMap="BaseResultMap">

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,7 @@ import com.appleframework.model.page.Pagination;
 import com.appleframework.monitor.model.AppCommandParam;
 import com.appleframework.monitor.model.AppInfoSo;
 import com.appleframework.monitor.model.CommandExeType;
-import com.appleframework.monitor.model.Log4jLevelType;
+import com.appleframework.monitor.model.LoggingLevelType;
 import com.appleframework.monitor.service.AppInfoSearchService;
 import com.appleframework.monitor.service.CommandService;
 import com.appleframework.web.bean.Message;
@@ -153,12 +154,12 @@ public class AppInfoController extends BaseController {
 		}
 	}
 	
-	public List<Log4jLevelType> getLog4jLevelTypes() {
-		return Arrays.asList(Log4jLevelType.values());
+	public List<LoggingLevelType> getLog4jLevelTypes() {
+		return Arrays.asList(LoggingLevelType.values());
 	}
 	
 	@RequestMapping(value = "/command")
-	public String commandStart(Model model, Integer id, String command) {
+	public String commandStart(Model model, HttpServletRequest request, Integer id, String command) {
 		AppInfoEntity appInfo = appInfoService.get(id);
 		NodeInfoEntity nodeInfo = nodeInfoService.get(appInfo.getNodeId());
 		AppCommandParam param = AppCommandParam.create(id, nodeInfo.getHost(), 

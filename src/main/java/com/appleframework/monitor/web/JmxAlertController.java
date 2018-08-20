@@ -14,7 +14,7 @@ import com.appleframework.jmx.core.alert.source.NotificationAlertSource;
 import com.appleframework.jmx.core.config.AlertSourceConfig;
 import com.appleframework.jmx.core.config.ApplicationConfig;
 import com.appleframework.jmx.core.config.ApplicationConfigManager;
-import com.appleframework.monitor.model.Log4jLevelType;
+import com.appleframework.monitor.model.LoggingLevelType;
 
 @Controller
 @RequestMapping("/jmx_alert")
@@ -42,8 +42,8 @@ public class JmxAlertController extends BaseController {
 		return viewModel + "view";
 	}	
 	
-	public List<Log4jLevelType> getLog4jLevelTypes() {
-		return Arrays.asList(Log4jLevelType.values());
+	public List<LoggingLevelType> getLog4jLevelTypes() {
+		return Arrays.asList(LoggingLevelType.values());
 	}
 			
 }
