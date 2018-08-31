@@ -13,9 +13,9 @@ import com.appleframework.monitor.utils.HttpsUtils;
 import com.appleframework.monitor.utils.JsonUtils;
 import com.appleframework.monitor.utils.WeixinAccessTokenUtils;
 
-public class PushMessageWeixin implements ThirdPlus {
+public class WeixinPlus implements ThirdPlus {
 
-	private static final Log logger = LogFactory.getLog(PushMessageWeixin.class);
+	private static final Log logger = LogFactory.getLog(WeixinPlus.class);
 
 	private String appid;
 	private String secret;
@@ -48,12 +48,14 @@ public class PushMessageWeixin implements ThirdPlus {
 				Object errcode = map.get("errcode");
 				if ("0".contains(errcode.toString())) {
 					return true;
+				} else {
+					return false;
 				}
 			}
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			return false;
 		}
-		return false;
+		return true;
 	}
 	
 	private String getAccessToken() {

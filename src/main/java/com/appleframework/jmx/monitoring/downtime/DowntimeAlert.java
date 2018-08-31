@@ -45,7 +45,6 @@ import com.appleframework.jmx.monitoring.downtime.event.ApplicationUpEvent;
 @Service("downtimeAlert")
 public class DowntimeAlert implements EventListener {
 
-
 	private static Map<Integer, Integer> sendCountMap = new HashMap<Integer, Integer>();
 
 	@Resource

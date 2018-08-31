@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import com.appleframework.config.core.PropertyConfigurer;
 import com.appleframework.core.utils.ObjectUtility;
@@ -45,17 +46,16 @@ public class AlertTask {
 	
 	private DateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm");
 	
-	private final static String SMS_TMEP = "九指运维短信报警\r\n"
+	private final static String SMS_TMEP = "运维短信报警\r\n"
 			+ "IP: {0}\r\n"
 			+ "应用名: {1}\r\n"
 			+ "告警时间: {2}\r\n"
 			+ "告警内容: {3}\r\n"
-			+ "告警等级: {4}\r\n"
-			+ "【牙牙关注】";
+			+ "告警等级: {4}\r\n";
 	
 	public static Map<Integer, Integer> sendCountMap = new HashMap<Integer, Integer>();
 	
-	//@Scheduled(cron = "30 */1 * * * ?")
+	@Scheduled(cron = "30 */1 * * * ?")
     public void alert() {
 		String openFlag = PropertyConfigurer.getString("alert.send.flag", "true");
 		if(Boolean.valueOf(openFlag) == false)
