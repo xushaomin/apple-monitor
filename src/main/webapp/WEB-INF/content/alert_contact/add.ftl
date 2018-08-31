@@ -62,6 +62,7 @@ $().ready(function() {
                 		<label for="clusterName require" class="tit">邮件：<span class=" red">*</span></label>
                 		<input class="c_input_text required email" type="text" style="width:200px;" name="email" value="${(info.email)!}" realValue="请输入邮件" maxlength="200" />
                		</li>
+               		
             </ul>
 
         </div>

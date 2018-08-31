@@ -50,17 +50,11 @@ $().ready(function() {
 					        <tr>
 					        	<th width="5%">序号</th>
 					        	<th width="10%">名称</th>
-								<th width="10%">操作</th>
 					        </tr>
 					        <#list ALL_CONTACT_LIST as all>
 					        <tr class="even">
-					        	<td><input type="checkbox" name="ids" value="${all.id}" />${all.id}</td>
+					        	<td><input type="checkbox" name="contactIds" value="${all.id}" />${all.id}</td>
 					        	<td>${(all.name)!}</td>
-								<td>
-									<a class="btn_icon btn_edit"   href="javascript:;" operatId="${all.id}" title="编辑"></a>
-					           		<a class="btn_icon btn_delete" href="javascript:;" operatId="${all.id}" title="删除"></a>
-					           		<a class="btn_icon btn_online" href="javascript:;" operatId="${all.id}" title="联系人"></a>
-								</td>
 					        </tr>
 					        </#list>
 					        
