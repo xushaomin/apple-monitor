@@ -10,6 +10,7 @@
 			c.name as name,
 			c.mobile as mobile,
 			c.email as email,
+			c.weixin as weixin,
 			c.create_time as createTime,
 			c.update_time as updateTime
 		

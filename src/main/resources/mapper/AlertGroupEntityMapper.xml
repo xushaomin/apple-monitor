@@ -4,6 +4,9 @@
   <resultMap id="BaseResultMap" type="com.appleframework.jmx.database.entity.AlertGroupEntity" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+	<result column="need_sms" property="needSms" jdbcType="SMALLINT" />
+ 	<result column="need_mail" property="needMail" jdbcType="SMALLINT" />
+ 	<result column="need_weixin" property="needWeixin" jdbcType="SMALLINT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -66,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, create_time, update_time
+    id, name, need_sms, need_mail, need_weixin, create_time, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.appleframework.jmx.database.entity.AlertGroupEntityExample" >
     select
