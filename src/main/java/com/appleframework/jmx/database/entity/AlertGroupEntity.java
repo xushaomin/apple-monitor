@@ -4,9 +4,16 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class AlertGroupEntity implements Serializable {
+	
     private Integer id;
 
     private String name;
+    
+    private Boolean needSms;
+    
+    private Boolean needMail;
+    
+    private Boolean needWeixin;
 
     private Date createTime;
 
@@ -45,4 +52,29 @@ public class AlertGroupEntity implements Serializable {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+	public Boolean getNeedSms() {
+		return needSms;
+	}
+
+	public void setNeedSms(Boolean needSms) {
+		this.needSms = needSms;
+	}
+
+	public Boolean getNeedMail() {
+		return needMail;
+	}
+
+	public void setNeedMail(Boolean needMail) {
+		this.needMail = needMail;
+	}
+
+	public Boolean getNeedWeixin() {
+		return needWeixin;
+	}
+
+	public void setNeedWeixin(Boolean needWeixin) {
+		this.needWeixin = needWeixin;
+	}
+    
 }
