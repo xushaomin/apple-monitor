@@ -38,13 +38,15 @@ public class ApplicationViewHelper {
     
     @Resource
     private ApplicationDowntimeService applicationDowntimeService;
+    
+    @Resource
+    private DowntimeRecorder downtimeRecorder;
 
     public boolean isApplicationUp(ApplicationConfig appConfig) {
-        DowntimeRecorder recorder = applicationDowntimeService.getDowntimeRecorder();
         boolean isUp = true;
         if (appConfig.isCluster()) {
             for (ApplicationConfig childAppConfig : appConfig.getApplications()) {
-                if (!recorder.isApplicationUp(childAppConfig)) {
+                if (!downtimeRecorder.isApplicationUp(childAppConfig)) {
                     // once an application is detected that is down, there is no need to proceed further
                     isUp = false;
                     break;
@@ -52,14 +54,13 @@ public class ApplicationViewHelper {
             }
         }
         else {
-            isUp = recorder.isApplicationUp(appConfig);
+            isUp = downtimeRecorder.isApplicationUp(appConfig);
         }
         return isUp;
     }
     
     public String getRecordingSince(ApplicationConfig appConfig){
-        DowntimeRecorder recorder = applicationDowntimeService.getDowntimeRecorder();
-        ApplicationDowntimeHistory history = recorder.getDowntimeHistory(appConfig);
+        ApplicationDowntimeHistory history = downtimeRecorder.getDowntimeHistory(appConfig);
         return formatter.format(new Date(history.getRecordingSince()));
     }
 }

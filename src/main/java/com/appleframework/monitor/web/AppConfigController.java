@@ -50,6 +50,9 @@ public class AppConfigController extends BaseController {
 	@Resource
 	private NodeInfoService nodeInfoService;
 	
+	@Resource
+	private DowntimeRecorder downtimeRecorder;
+	
 	/*@Resource
 	private AppConfigService appConfigService;
 
@@ -142,7 +145,6 @@ public class AppConfigController extends BaseController {
 		}
 		System.out.println();
 		
-		DowntimeRecorder downtimeRecorder = applicationDowntimeService.getDowntimeRecorder();
 		Map<ApplicationConfig, ApplicationDowntimeHistory> map = downtimeRecorder.getDowntimesMap();
 		
 		for (ApplicationConfig config : map.keySet()) {
