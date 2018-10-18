@@ -22,8 +22,8 @@ import com.appleframework.jmx.database.entity.AppClusterEntity;
 import com.appleframework.jmx.database.entity.AppInfoEntity;
 import com.appleframework.jmx.database.entity.NodeInfoEntity;
 import com.appleframework.jmx.database.service.AppClusterService;
-import com.appleframework.jmx.database.service.AppDowntimeHistoryService;
-import com.appleframework.jmx.database.service.AppDowntimeService;
+//import com.appleframework.jmx.database.service.AppDowntimeHistoryService;
+//import com.appleframework.jmx.database.service.AppDowntimeService;
 import com.appleframework.jmx.database.service.AppInfoService;
 import com.appleframework.jmx.database.service.NodeInfoService;
 import com.appleframework.jmx.monitoring.downtime.ApplicationDowntimeService;
@@ -50,11 +50,11 @@ public class AppInfoInterceptor {
 	@Resource
 	private ApplicationDowntimeService applicationDowntimeService;
 	
-	@Resource
+	/*@Resource
 	private AppDowntimeService appDowntimeService;
 	
 	@Resource
-	private AppDowntimeHistoryService appDowntimeHistoryService;
+	private AppDowntimeHistoryService appDowntimeHistoryService;*/
 
 	@Resource
 	private ThreadPoolTaskExecutor taskExecutor;
@@ -136,7 +136,7 @@ public class AppInfoInterceptor {
 					logger.error(e.getMessage());
 				}
 
-				try {
+				/*try {
 					appDowntimeHistoryService.deleteByAppId(id);
 				} catch (Exception e) {
 					logger.error(e.getMessage());
@@ -146,7 +146,7 @@ public class AppInfoInterceptor {
 					appDowntimeService.delete(id);
 				} catch (Exception e) {
 					logger.error(e.getMessage());
-				}
+				}*/
 
 			}
 			appClusterService.calibratedAppNum(appInfo.getClusterId());
