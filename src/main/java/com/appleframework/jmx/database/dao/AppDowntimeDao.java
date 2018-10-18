@@ -1,4 +1,4 @@
-package com.appleframework.jmx.database.dao;
+/*package com.appleframework.jmx.database.dao;
 
 import java.util.Date;
 import java.util.List;
@@ -39,4 +39,4 @@ public class AppDowntimeDao {
 		return appDowntimeEntityMapper.selectByExample(example);
 	}
 
-}
+}*/

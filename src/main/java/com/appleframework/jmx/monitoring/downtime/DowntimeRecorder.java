@@ -15,9 +15,7 @@
  */
 package com.appleframework.jmx.monitoring.downtime;
 
-import java.util.Date;
 import java.util.EventObject;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,13 +31,10 @@ import com.appleframework.jmx.core.config.event.ApplicationEvent;
 import com.appleframework.jmx.core.config.event.ApplicationRemovedEvent;
 import com.appleframework.jmx.core.config.event.NewApplicationEvent;
 import com.appleframework.jmx.core.util.Loggers;
-import com.appleframework.jmx.database.entity.AppDowntimeEntity;
-import com.appleframework.jmx.database.entity.AppDowntimeHistoryEntity;
-import com.appleframework.jmx.database.service.AppDowntimeHistoryService;
-import com.appleframework.jmx.database.service.AppDowntimeService;
 import com.appleframework.jmx.event.EventListener;
 import com.appleframework.jmx.monitoring.downtime.event.ApplicationDownEvent;
 import com.appleframework.jmx.monitoring.downtime.event.ApplicationUpEvent;
+import com.appleframework.monitor.cache.DowntimeCache;
 
 /**
  * Records application downtime in the database.
@@ -55,30 +50,22 @@ public class DowntimeRecorder implements EventListener {
 
     private static final Logger logger = Loggers.getLogger(DowntimeRecorder.class);
     
-    private final Map<ApplicationConfig, ApplicationDowntimeHistory> downtimesMap = 
-        new HashMap<ApplicationConfig, ApplicationDowntimeHistory>();
-    
     @Resource
+    private DowntimeCache downtimeCache;
+    
+    /*@Resource
     private AppDowntimeService appDowntimeService;
     
     @Resource
-    private AppDowntimeHistoryService appDowntimeHistoryService;
+    private AppDowntimeHistoryService appDowntimeHistoryService;*/
     
 	public void init() {
-        // load applications from DB
-        initDowntimeMapFromDB();
-        // now add new applications to the DB
         final long recordingSince = System.currentTimeMillis();
         
         List<ApplicationConfig> allApplications = ApplicationConfigManager.getAllApplications();
         for (ApplicationConfig appConfig : allApplications) {
-            if(!downtimesMap.containsKey(appConfig)){
-            	try {
-            		addApplicationToDB(appConfig.getApplicationId(), recordingSince);
-				} catch (Exception e) {
-					logger.error(e);
-				}
-                downtimesMap.put(appConfig, new ApplicationDowntimeHistory(recordingSince));    
+            if(!downtimeCache.isExists(appConfig)){
+            	downtimeCache.update(appConfig, new ApplicationDowntimeHistory(recordingSince));    
             }
         }
     }
@@ -92,11 +79,20 @@ public class DowntimeRecorder implements EventListener {
         return history.isApplicationUp();
     }
     
+    /*public ApplicationDowntimeHistory getDowntimeHistory(ApplicationConfig appConfig){
+        if(appConfig == null){
+            throw new NullPointerException("appConfig must be specified");
+        }
+        ApplicationDowntimeHistory history = downtimeCache.getMap().get(appConfig);
+        assert history != null;
+        return history;
+    }*/
+    
     public ApplicationDowntimeHistory getDowntimeHistory(ApplicationConfig appConfig){
         if(appConfig == null){
             throw new NullPointerException("appConfig must be specified");
         }
-        ApplicationDowntimeHistory history = downtimesMap.get(appConfig);
+        ApplicationDowntimeHistory history = downtimeCache.get(appConfig);
         assert history != null;
         return history;
     }
@@ -106,8 +102,8 @@ public class DowntimeRecorder implements EventListener {
       	logger.info("Added application " + appConfig.getName() + " to the downtimesMap.");
         
         final long recordingSince = event.getTime();
-        addApplicationToDB(appConfig.getApplicationId(), recordingSince);
-        downtimesMap.put(appConfig, new ApplicationDowntimeHistory(recordingSince));
+        //addApplicationToDB(appConfig.getApplicationId(), recordingSince);
+        downtimeCache.update(appConfig, new ApplicationDowntimeHistory(recordingSince));
     }
     
     private void updateApplication(ApplicationChangedEvent event) {
@@ -115,18 +111,18 @@ public class DowntimeRecorder implements EventListener {
       	logger.info("Added application " + appConfig.getName() + " to the downtimesMap.");
         
         final long recordingSince = event.getTime();
-        try {
+        /*try {
             addApplicationToDB(appConfig.getApplicationId(), recordingSince);
 		} catch (Exception e) {
 			logger.error(e);
-		}
-        downtimesMap.put(appConfig, new ApplicationDowntimeHistory(recordingSince));
+		}*/
+        downtimeCache.update(appConfig, new ApplicationDowntimeHistory(recordingSince));
     }
     
     private void removeApplication(ApplicationRemovedEvent event) {
         ApplicationConfig appConfig = event.getApplicationConfig();
       	logger.info("removed application " + appConfig.getName() + " to the downtimesMap.");
-        downtimesMap.remove(appConfig);
+      	downtimeCache.remove(appConfig);
     }
 
     public void handleEvent(EventObject event) {
@@ -164,11 +160,11 @@ public class DowntimeRecorder implements EventListener {
         } else if(event instanceof ApplicationDownEvent){
             downtimeHistory.applicationWentDown(appEvent.getTime());
             // log the downtime to the db
-            recordDowntimeHistory(applicationConfig.getApplicationId(), downtimeHistory.getDowntimeBegin(), appEvent.getTime());
+            //recordDowntimeHistory(applicationConfig.getApplicationId(), downtimeHistory.getDowntimeBegin(), appEvent.getTime());
         }
         updateDowntimeMap(applicationConfig, downtimeHistory);
         
-        recordDowntime(applicationConfig.getApplicationId(), downtimeHistory.getRecordingSince(), downtimeHistory.isDown());
+        //recordDowntime(applicationConfig.getApplicationId(), downtimeHistory.getRecordingSince(), downtimeHistory.isDown());
     }
 
     public double getUnavailablePercentage(ApplicationConfig appConfig) {
@@ -176,22 +172,22 @@ public class DowntimeRecorder implements EventListener {
         return history.getUnavailablePercentage();
     }
     
-    private void addApplicationToDB(String applicationId, long recordingSince){
+    /*private void addApplicationToDB(String applicationId, long recordingSince){
     	Integer id = Integer.parseInt(applicationId);
     	appDowntimeService.saveOrUpdate(id, recordingSince);
-    }
+    }*/
 
-    private void recordDowntimeHistory(String applicationId, long downtimeBegin, long downtimeEnd){
+    /*private void recordDowntimeHistory(String applicationId, long downtimeBegin, long downtimeEnd){
     	Integer id = Integer.parseInt(applicationId);
     	appDowntimeHistoryService.saveOrUpdate(id, downtimeBegin, downtimeEnd);
-    }
+    }*/
     
-    private void recordDowntime(String applicationId, long downtimeBegin, boolean isDown){
+    /*private void recordDowntime(String applicationId, long downtimeBegin, boolean isDown){
     	Integer id = Integer.parseInt(applicationId);
     	appDowntimeService.saveOrUpdate(id, downtimeBegin, isDown);
-    }
+    }*/
 
-    private void initDowntimeMapFromDB(){
+    /*private void initDowntimeMapFromDB(){
         try{
             List<AppDowntimeEntity> list = appDowntimeService.findAll();
             for (AppDowntimeEntity appDowntime : list) {
@@ -212,18 +208,18 @@ public class DowntimeRecorder implements EventListener {
         } catch (Exception e) {
         	logger.error(e);
 		}
-    }
+    }*/
     
     private void updateDowntimeMap(ApplicationConfig appConfig, ApplicationDowntimeHistory history){
         try{
-        	downtimesMap.put(appConfig, history);
+        	downtimeCache.update(appConfig, history);
         } catch (Exception e) {
         	logger.error(e);
 		}
     }
 
     
-    private long getTotalDowntime(String applicationId) {
+    /*private long getTotalDowntime(String applicationId) {
         try {
         	List<AppDowntimeHistoryEntity> historyList = appDowntimeHistoryService.findListByAppId(Integer.parseInt(applicationId));
             long totalDowntime = 0;
@@ -243,10 +239,11 @@ public class DowntimeRecorder implements EventListener {
         } catch(Exception e){    
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
 	public Map<ApplicationConfig, ApplicationDowntimeHistory> getDowntimesMap() {
-		return downtimesMap;
+		//return downtimeCache.getMap();
+		return null;
 	}
     
 }

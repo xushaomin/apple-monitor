@@ -1,4 +1,4 @@
-package com.appleframework.jmx.database.service;
+/*package com.appleframework.jmx.database.service;
 
 import java.util.List;
 
@@ -20,4 +20,4 @@ public interface AppDowntimeService {
 	
 	public void delete(Integer id);
 	
-}
+}*/

@@ -1,4 +1,4 @@
-package com.appleframework.jmx.database.entity;
+/*package com.appleframework.jmx.database.entity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -559,4 +559,4 @@ public class AppDowntimeEntityExample {
             this(condition, value, secondValue, null);
         }
     }
-}
+}*/

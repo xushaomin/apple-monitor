@@ -15,6 +15,8 @@
  */
 package com.appleframework.jmx.monitoring.downtime;
 
+import java.io.Serializable;
+
 import org.apache.log4j.Logger;
 
 import com.appleframework.jmx.core.util.Loggers;
@@ -23,7 +25,9 @@ import com.appleframework.jmx.core.util.Loggers;
  * 
  * @author Rakesh Kalra
  */
-public class ApplicationDowntimeHistory {
+public class ApplicationDowntimeHistory implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private static final Logger logger = Loggers.getLogger(ApplicationDowntimeHistory.class);
 

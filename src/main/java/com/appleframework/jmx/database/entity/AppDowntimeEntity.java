@@ -1,4 +1,4 @@
-package com.appleframework.jmx.database.entity;
+/*package com.appleframework.jmx.database.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -77,4 +77,4 @@ public class AppDowntimeEntity implements Serializable {
 		this.isDown = isDown;
 	}
     
-}
+}*/

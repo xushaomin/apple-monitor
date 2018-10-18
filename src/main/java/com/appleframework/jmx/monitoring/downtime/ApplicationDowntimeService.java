@@ -94,10 +94,6 @@ public class ApplicationDowntimeService {
         }
         threads.clear();
     }
-
-    public DowntimeRecorder getDowntimeRecorder(){
-        return downtimeRecorder;
-    }
     
     public void addOrUpdateApplication(ApplicationConfig appConfig) {
     	boolean isExistThread = false;

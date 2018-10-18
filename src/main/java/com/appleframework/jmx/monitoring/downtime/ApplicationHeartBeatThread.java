@@ -77,6 +77,7 @@ public class ApplicationHeartBeatThread extends Thread {
 
     private void checkApplicationStatus() {
         final boolean isOpen = isOpen();
+        logger.debug(appConfig.getAppId() + "---->" +isOpen);
         if(!isOpen){
             // application went down
             EventSystem.getInstance().fireEvent(new ApplicationDownEvent(appConfig, System.currentTimeMillis()));

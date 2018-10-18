@@ -81,7 +81,7 @@ public class AlertDeliveryImpl implements AlertDelivery {
 		List<AlertContactEntity> contactList = alertGroupContactService
 					.findAlertContactListByGroupId(config.getAlertGroupId());
 		boolean sendFlag = false;
-		Map<String, String> data = new HashMap<>();
+		Map<String, String> data = new HashMap<String, String>();
 		data.put("ip", applicationConfig.getHost());
 		data.put("applicationName", applicationConfig.getName());
 		data.put("alertTime", dateFormat.format(new Date()));

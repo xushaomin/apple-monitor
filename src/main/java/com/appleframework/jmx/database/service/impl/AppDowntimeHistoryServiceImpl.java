@@ -1,4 +1,4 @@
-package com.appleframework.jmx.database.service.impl;
+/*package com.appleframework.jmx.database.service.impl;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -65,4 +65,4 @@ public class AppDowntimeHistoryServiceImpl implements AppDowntimeHistoryService 
 		appDowntimeHistoryDao.deleteByAppId(appId);
 	}
 
-}
+}*/

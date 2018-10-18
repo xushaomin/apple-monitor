@@ -1,4 +1,4 @@
-package com.appleframework.jmx.database.mapper;
+/*package com.appleframework.jmx.database.mapper;
 
 import com.appleframework.jmx.database.entity.AppDowntimeEntity;
 import com.appleframework.jmx.database.entity.AppDowntimeEntityExample;
@@ -30,4 +30,4 @@ public interface AppDowntimeEntityMapper {
     int updateByPrimaryKeySelective(AppDowntimeEntity record);
 
     int updateByPrimaryKey(AppDowntimeEntity record);
-}
+}*/

@@ -15,6 +15,8 @@
  */
 package com.appleframework.jmx.core.modules.jsr160;
 
+import java.io.Serializable;
+
 import com.appleframework.jmx.core.config.ApplicationConfig;
 
 /**
@@ -22,8 +24,10 @@ import com.appleframework.jmx.core.config.ApplicationConfig;
  * date:  Sep 13, 2004
  * @author	Rakesh Kalra
  */
-public class JSR160ApplicationConfig extends ApplicationConfig {
-	
+public class JSR160ApplicationConfig extends ApplicationConfig implements Serializable {
+ 
+	private static final long serialVersionUID = 1L;
+
 	public static String URL_FORMAT = "service:jmx:rmi:///jndi/rmi://{0}:{1}/jmxrmi";
 	
 	public static String APPLICATION_CONFIG_KEY = "jsr160";
