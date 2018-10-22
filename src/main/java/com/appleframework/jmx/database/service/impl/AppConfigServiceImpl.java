@@ -6,6 +6,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.jmx.database.dao.AppConfigDao;
@@ -19,20 +21,24 @@ public class AppConfigServiceImpl implements AppConfigService {
 	private AppConfigDao appConfigDao;
 
 	@Override
+	@CacheEvict(value = "appConfigCache", key = "#id", beforeInvocation = true)
 	public void updateIsAlert(Integer id, boolean isAlert) {
 		AppConfigEntity entity = this.get(id);
 		entity.setIsAlert(isAlert);
 		appConfigDao.update(entity);
 	}
 
+	@Cacheable(value = "appConfigCache", key = "#id")
 	public AppConfigEntity get(Integer id) {
 		return appConfigDao.get(id);
 	}
 
+	@CacheEvict(value = "appConfigCache", key = "#appConfig.id", beforeInvocation = true)
 	public void update(AppConfigEntity appConfig) {
 		appConfigDao.update(appConfig);
 	}
 
+	@CacheEvict(value = "appConfigCache", key = "#appConfig.id", beforeInvocation = true)
 	public void insert(AppConfigEntity appConfig) {
 		Date now = new Date();
 		appConfig.setCreateTime(now);
@@ -41,6 +47,7 @@ public class AppConfigServiceImpl implements AppConfigService {
 		appConfigDao.insert(appConfig);
 	}
 
+	@CacheEvict(value = "appConfigCache", key = "#appConfig.id", beforeInvocation = true)
 	public AppConfigEntity saveOrUpdate(AppConfigEntity appConfig) {
 		AppConfigEntity existAppConfig = this.get(appConfig.getId());
 		if (null == existAppConfig) {

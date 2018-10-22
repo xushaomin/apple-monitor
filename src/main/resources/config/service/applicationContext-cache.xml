@@ -30,6 +30,7 @@
 				<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="alertGroupContactCache" />
 				<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="alertGroupCache" />
 				<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="alertTemplCache" />
+				<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="appConfigCache" />
 			</set>
 		</property>
 	</bean>
