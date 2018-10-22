@@ -2,6 +2,7 @@ package com.appleframework.jmx.database.service.impl;
 
 import javax.annotation.Resource;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.jmx.database.dao.AlertTemplDao;
@@ -26,6 +27,7 @@ public class AlertTemplServiceImpl implements AlertTemplService {
 		alertTemplDao.insert(entity);
 	}
 	
+	@Cacheable(value = "alertTemplCache", key = "'getByTypeAndCode.' + #type + '.' + #code ")
 	public AlertTemplEntity getByTypeAndCode(Integer type, String code) {
 		return alertTemplDao.selectByTypeAndCode(type, code);
 	}

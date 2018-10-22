@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.exception.AppleException;
@@ -27,6 +28,7 @@ public class AlertGroupServiceImpl implements AlertGroupService {
 		return alertGroupDao.findAll();
 	}
 	
+	@Cacheable(value = "alertGroupCache", key = "'get.' + #id")
 	public AlertGroupEntity get(Integer id) {
 		return alertGroupDao.get(id);
 	}

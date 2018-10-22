@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.appleframework.jmx.database.dao.AlertGroupContactDao;
@@ -18,6 +19,7 @@ public class AlertGroupContactServiceImpl implements AlertGroupContactService {
 	@Resource
 	private AlertGroupContactDao alertGroupContactDao;
 
+	@Cacheable(value = "alertGroupContactCache", key = "'findAlertContactListByGroupId.' + #alertGroupId")
 	public List<AlertContactEntity> findAlertContactListByGroupId(Integer alertGroupId) {
 		return alertGroupContactDao.findAlertContactListByGroupId(alertGroupId);
 	}
