@@ -1,11 +1,9 @@
 package com.appleframework.monitor.cache;
 
-import java.util.concurrent.TimeUnit;
-
 import javax.annotation.Resource;
 
 import org.redisson.Redisson;
-import org.redisson.api.RBlockingQueue;
+import org.redisson.api.RQueue;
 import org.redisson.client.codec.Codec;
 import org.redisson.codec.SerializationCodec;
 import org.springframework.stereotype.Component;
@@ -27,15 +25,11 @@ public class AlertQueue {
 	}
 	
 	public AlertDeliveryBo get() {
-		try {
-			return getQueue().poll(1, TimeUnit.MINUTES);
-		} catch (InterruptedException e) {
-			return null;
-		}
+		return getQueue().poll();
 	}
 		
-	private RBlockingQueue<AlertDeliveryBo> getQueue() {
-		return redisson.getBlockingQueue(CACHE_KEY, codec);
+	private RQueue<AlertDeliveryBo> getQueue() {
+		return redisson.getQueue(CACHE_KEY, codec);
 	}
 	
 }

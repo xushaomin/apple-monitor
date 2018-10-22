@@ -17,8 +17,9 @@ import com.appleframework.monitor.model.AlertDeliveryBo;
 @Lazy(false)
 public class AlertQueueTask {
 		
-	private ExecutorService executor = Executors.newFixedThreadPool(1);
+	private ExecutorService executor;
 
+	@Resource
 	private AlertQueue alertQueue;
 	
 	@Resource
@@ -26,13 +27,20 @@ public class AlertQueueTask {
 	
 	@PostConstruct
     public void init() {
-		
+		executor = Executors.newFixedThreadPool(1);
 		executor.submit(new Runnable() {
 			public void run() {
 				while(true) {
-					AlertDeliveryBo bo = alertQueue.get();
-					if(null != bo) {
-						alertDelivery.deliver(bo);
+					try {
+						AlertDeliveryBo bo = alertQueue.get();
+						if(null != bo) {
+							alertDelivery.deliver(bo);
+						}
+						else {
+							Thread.sleep(1000);
+						}
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
 				}
 			}
