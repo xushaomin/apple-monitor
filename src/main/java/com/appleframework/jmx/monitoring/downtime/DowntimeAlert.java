@@ -16,8 +16,6 @@
 package com.appleframework.jmx.monitoring.downtime;
 
 import java.util.EventObject;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -32,6 +30,9 @@ import com.appleframework.jmx.event.EventListener;
 import com.appleframework.jmx.monitoring.downtime.alert.AlertDelivery;
 import com.appleframework.jmx.monitoring.downtime.event.ApplicationDownEvent;
 import com.appleframework.jmx.monitoring.downtime.event.ApplicationUpEvent;
+import com.appleframework.monitor.cache.AlertCache;
+import com.appleframework.monitor.cache.AlertQueue;
+import com.appleframework.monitor.model.AlertDeliveryBo;
 
 /**
  * Records application downtime in the database.
@@ -45,7 +46,11 @@ import com.appleframework.jmx.monitoring.downtime.event.ApplicationUpEvent;
 @Service("downtimeAlert")
 public class DowntimeAlert implements EventListener {
 
-	private static Map<Integer, Integer> sendCountMap = new HashMap<Integer, Integer>();
+	@Resource
+	private AlertCache alertCache;
+	
+	@Resource
+	private AlertQueue alertQueue;
 
 	@Resource
 	private AppConfigService appConfigService;
@@ -70,19 +75,23 @@ public class DowntimeAlert implements EventListener {
 				// 处理恢复后
 				// 发送恢复消息
 				// plus.doSend
-				sendCountMap.put(config.getId(), 0);
+				alertCache.init(applicationConfig);
 				
 			} else if (event instanceof ApplicationDownEvent) {
-				Integer count = sendCountMap.get(config.getId());
-				if (null == count) {
-					count = 0;
-				}
-				count ++;
+				Long count = alertCache.incrementAndGet(applicationConfig);
 				if (count > 1) {
-					alertDelivery.deliver(applicationConfig, config);
-					count = 0;
+					//alertDelivery.deliver(AlertDeliveryBo bo);
+					//count = 0L;
+					AlertDeliveryBo bo = new AlertDeliveryBo();
+					bo.setAlertGroupId(config.getAlertGroupId());
+					bo.setHost(applicationConfig.getHost());
+					bo.setName(applicationConfig.getName());
+					alertQueue.add(bo);
+					alertCache.init(applicationConfig);
 				}
-				sendCountMap.put(config.getId(), count);
+				else {
+					alertCache.increment(applicationConfig);
+				}
 			}
 		}
 	}

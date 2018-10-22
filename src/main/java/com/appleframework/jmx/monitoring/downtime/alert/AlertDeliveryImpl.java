@@ -30,15 +30,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.appleframework.jmx.core.config.ApplicationConfig;
 import com.appleframework.jmx.database.constant.PlusType;
 import com.appleframework.jmx.database.entity.AlertContactEntity;
 import com.appleframework.jmx.database.entity.AlertGroupEntity;
 import com.appleframework.jmx.database.entity.AlertTemplEntity;
-import com.appleframework.jmx.database.entity.AppConfigEntity;
 import com.appleframework.jmx.database.service.AlertGroupContactService;
 import com.appleframework.jmx.database.service.AlertGroupService;
 import com.appleframework.jmx.database.service.AlertTemplService;
+import com.appleframework.monitor.model.AlertDeliveryBo;
 import com.appleframework.monitor.plus.ThirdPlus;
 import com.appleframework.monitor.service.PlusService;
 
@@ -72,18 +71,17 @@ public class AlertDeliveryImpl implements AlertDelivery {
 	@Resource
 	private PlusService plusService;
 	
-	public void deliver(ApplicationConfig applicationConfig, AppConfigEntity config) {
+	public void deliver(AlertDeliveryBo bo) {
 		String code = "downtimeAlert";
 		
-		
-		AlertGroupEntity group = alertGroupService.get(config.getAlertGroupId());
+		AlertGroupEntity group = alertGroupService.get(bo.getAlertGroupId());
 		
 		List<AlertContactEntity> contactList = alertGroupContactService
-					.findAlertContactListByGroupId(config.getAlertGroupId());
+					.findAlertContactListByGroupId(bo.getAlertGroupId());
 		boolean sendFlag = false;
 		Map<String, String> data = new HashMap<String, String>();
-		data.put("ip", applicationConfig.getHost());
-		data.put("applicationName", applicationConfig.getName());
+		data.put("ip", bo.getHost());
+		data.put("applicationName", bo.getName());
 		data.put("alertTime", dateFormat.format(new Date()));
 		data.put("alertContent", "DOWN");
 		data.put("alertLevel", "严重");

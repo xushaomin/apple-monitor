@@ -13,8 +13,7 @@
 */
 package com.appleframework.jmx.monitoring.downtime.alert;
 
-import com.appleframework.jmx.core.config.ApplicationConfig;
-import com.appleframework.jmx.database.entity.AppConfigEntity;
+import com.appleframework.monitor.model.AlertDeliveryBo;
 
 /**
  *
@@ -23,6 +22,6 @@ import com.appleframework.jmx.database.entity.AppConfigEntity;
  */
 public interface AlertDelivery {
 
-    public void deliver(ApplicationConfig applicationConfig, AppConfigEntity record);
+    public void deliver(AlertDeliveryBo bo);
     
 }
